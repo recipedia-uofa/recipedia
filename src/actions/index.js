@@ -1,7 +1,6 @@
 // @flow
-import type { ExecuteSearchAction } from './search'
+import type { SearchActions } from './search'
 
 export { EXECUTE_SEARCH_ACTION, executeSearch } from './search';
 
-export type Action =
-  ExecuteSearchAction;
+export type Action = SearchActions;

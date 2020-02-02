@@ -8,3 +8,5 @@ export type ExecuteSearchAction = {
 export const executeSearch = (): ExecuteSearchAction => ({
   type: EXECUTE_SEARCH_ACTION,
 });
+
+export type SearchActions = ExecuteSearchAction;
