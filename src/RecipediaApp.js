@@ -13,6 +13,7 @@ const style = {
     fontSize: '6em',
     fontStyle: 'bold',
     marginBottom: '2em',
+    alignText: 'center',
   },
 };
 
