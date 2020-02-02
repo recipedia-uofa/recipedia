@@ -7,12 +7,16 @@ import RecipediaApp from './RecipediaApp';
 import configureStore from './configureStore';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <Provider store={configureStore()}>
-    <RecipediaApp />
-  </Provider>,
-  document.getElementById('root')
-);
+const root = document.getElementById('root');
+
+if (root) {
+  ReactDOM.render(
+    <Provider store={configureStore()}>
+      <RecipediaApp />
+    </Provider>,
+    root
+  );
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

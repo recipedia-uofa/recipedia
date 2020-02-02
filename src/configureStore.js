@@ -4,9 +4,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from './reducers/rootReducer';
 
-import type { State } from './reducers';
-
-export default function configureStore(initialState: State={}) {
+export default function configureStore(initialState:Object = {}) {
   return createStore(
    rootReducer,
    initialState,

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { executeSearch } from 'actions';
@@ -8,6 +9,7 @@ const COLOR_ORANGE = '#fdbb1d';
 
 type Props = {|
   text: string,
+  executeSearch: () => void,
 |};
 
 const BORDER_WIDTH = 2;

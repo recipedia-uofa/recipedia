@@ -1,1 +1,2 @@
-export type State = any;
+// @flow
+export type { State } from './rootReducer';
