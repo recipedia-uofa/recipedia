@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import SearchBar from 'components/SearchBar';
+import RecipeCard from 'components/RecipeCard';
 
 const style = {
   upperContainer: {
@@ -22,6 +23,8 @@ const RecipediaApp = () => (
     <div>
       <span style={style.title}>Recipedia</span>
       <SearchBar />
+      <br />
+      <RecipeCard />
     </div>
   </div>
 );
