@@ -1,6 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import TokenInput from 'react-customize-token-input';
+// Be sure to include styles at some point, probably during your bootstraping
+import 'react-customize-token-input/dist/react-customize-token-input.css';
+
 import { executeSearch } from 'actions';
 
 // const red = '#fd5e25';
@@ -12,7 +16,7 @@ type Props = {|
   executeSearch: () => void,
 |};
 
-const BORDER_WIDTH = 2;
+const BORDER_WIDTH = 1;
 const CORNER_RADIUS = 20;
 
 const style = {
@@ -23,24 +27,34 @@ const style = {
     paddingLeft: CORNER_RADIUS,
     paddingBottom: 0,
     boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)',
-    height: 21,
+    height: 'auto',
+    display: 'flex',
+    flexWrap: 'nowrap',
+    boxSizing: 'border-box',
+    width: '100%',
   },
-  editBox: {},
+  editBox: {
+    flex: '2 1 100%',
+    alignSelf: 'stretch',
+    border: 'none',
+    boxSizing: 'border-box',
+    height: 40,
+  },
   searchButton: {
-    height: 'inherit',
-    width: CORNER_RADIUS + 50,
-    float: 'right',
+    height: 'auto',
+    flex: `0 1 ${CORNER_RADIUS + 50}`,
+    alignSelf: 'stretch',
     backgroundColor: COLOR_ORANGE,
     borderBottomRightRadius: CORNER_RADIUS - BORDER_WIDTH,
   },
 };
 
-class SearchBar extends React.Component<Props> {
+class SearchBar extends React.PureComponent<Props> {
   render() {
-    const { text } = this.props;
+    // const { text } = this.props;
     return (
       <div style={style.outerSearchBox}>
-        <span style={style.editBox}>{text}</span>
+        <TokenInput style={style.editBox} autoFocus="true" />
         <button type="button" className="searchButton"
           style={style.searchButton} onClick={this.props.executeSearch}>
             Search

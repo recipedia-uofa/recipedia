@@ -5,22 +5,26 @@ import RecipeCard from 'components/RecipeCard';
 
 const style = {
   upperContainer: {
-    height: '10em',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
   },
+  verticalContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   title: {
-    fontSize: '6em',
+    fontSize: '4em',
     fontStyle: 'bold',
-    marginBottom: '2em',
     alignText: 'center',
   },
 };
 
 const RecipediaApp = () => (
   <div style={style.upperContainer}>
-    <div>
+    <div style={style.verticalContainer}>
       <span style={style.title}>Recipedia</span>
       <SearchBar />
       <br />
