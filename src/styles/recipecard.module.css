@@ -140,6 +140,7 @@
     box-sizing: border-box;
     text-align: center;
     font-size: 20px;
+    font-weight: 600;
     float: left;
     width: 100%;
     color: #EAEAEA;
@@ -161,7 +162,7 @@
     overflow-y: hidden;
     position: relative;
     background-color: white;
-    height: auto;
+    height: 50%;
     z-index: 3;
 }
 
@@ -189,7 +190,7 @@ For now, the colour will be hard coded*/
     width: 80px;
     position: absolute;
     z-index: 5;
-    transform: translate(10%, 10%);
+    transform: translate(25%, 25%);
 }
 
 .RecipeCardSiteLogo
@@ -218,7 +219,7 @@ For now, the colour will be hard coded*/
     width: 80px;
     position: absolute;
     z-index: 5;
-    transform: translate(20%, 20%);
+    transform: translate(25%, 25%);
 }
 
 .RecipeCardSiteLogoImage2

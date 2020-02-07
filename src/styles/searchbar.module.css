@@ -1,0 +1,38 @@
+/*The following are the main colours that I want to use
+    - Light green: #4BBF84
+    - Egg-white: #EAEAEA
+    - Purple: #89609E
+    - Red: #B04632
+    - Blue: #0079BF
+    - Mustard yellow: #D29034
+*/
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.searchContainer {
+    width: 100%;
+    margin-top: 5%;
+}
+
+.searchButtonAttitude {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+    border: none;
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    background-color: rgb(225, 225, 225);
+    box-shadow: 0px 8px 15px rgba(119, 119, 119, 0.1);
+}
+
+.searchButtonAttitude:hover {
+    background-color: #4BBF84;
+    padding: 15px;
+    color: white !important;
+}
