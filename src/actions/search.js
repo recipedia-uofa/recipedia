@@ -1,5 +1,5 @@
 // @flow
-export const EXECUTE_SEARCH_ACTION = 'EXECUTE_SEARCH_ACTION';
+import { EXECUTE_SEARCH_ACTION } from 'constants/actionTypes';
 
 export type ExecuteSearchAction = {
   type: 'EXECUTE_SEARCH_ACTION',

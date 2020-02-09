@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import SearchBar from 'components/SearchBar';
-import RecipeCard from 'components/RecipeCard';
+import RecipeView from 'components/RecipeView';
 
 const style = {
   upperContainer: {
@@ -23,13 +23,15 @@ const style = {
 };
 
 const RecipediaApp = () => (
-  <div style={style.upperContainer}>
-    <div style={style.verticalContainer}>
-      <span style={style.title}>Recipedia</span>
-      <SearchBar />
+  <div>
+      <div style={style.upperContainer}>
+        <div style={style.verticalContainer}>
+          <span style={style.title}>Recipedia</span>
+          <SearchBar />
+        </div>
+      </div>
       <br />
-      <RecipeCard />
-    </div>
+      <RecipeView />
   </div>
 );
 
