@@ -1,6 +1,6 @@
 // @flow
-import { EXECUTE_SEARCH_ACTION } from '../actions';
-import type { Action } from '../actions';
+import { EXECUTE_SEARCH_ACTION } from 'constants/actionTypes';
+import type { Action } from 'actions';
 
 export type SearchState = $Exact<{
   +text: string; // the search string
