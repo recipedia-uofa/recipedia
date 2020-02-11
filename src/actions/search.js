@@ -1,12 +1,51 @@
 // @flow
-import { EXECUTE_SEARCH_ACTION } from 'constants/actionTypes';
+import axios, { AxiosError } from 'axios';
+import { EXECUTE_SEARCH, RECEIVE_SEARCH, INVALID_SEARCH } from 'constants/actionTypes';
 
-export type ExecuteSearchAction = {
-  type: 'EXECUTE_SEARCH_ACTION',
+import type { ExecuteSearch, ReceiveSearch, InvalidSearch } from 'constants/actionTypes';
+
+type ExecuteSearchAction = { type: ExecuteSearch };
+
+type ReceiveSearchAction = {
+    type: ReceiveSearch,
+    recipes: Array<string>,
 };
 
-export const executeSearch = (): ExecuteSearchAction => ({
-  type: EXECUTE_SEARCH_ACTION,
+type InvalidSearchAction = { type: InvalidSearch };
+
+const requestSearch = (): ExecuteSearchAction => ({
+    type: EXECUTE_SEARCH,
 });
 
-export type SearchActions = ExecuteSearchAction;
+const receiveSearch = (recipes: Array<string>): ReceiveSearchAction => ({
+    type: RECEIVE_SEARCH,
+    recipes,
+});
+
+const invalidSearch = (): InvalidSearchAction => ({
+    type: INVALID_SEARCH,
+});
+
+const mockRecipeReturn: Array<string> = [
+  'Soup with eggs',
+  'Lasagna',
+  'Broccoli and Cheese',
+];
+
+export const executeSearch = () => {
+    // (dispatch, getState) =>
+    return (dispatch: *) => {
+        dispatch(requestSearch());
+        // TODO: Use actual API call and get url based on state
+        return axios.get('http://localhost:8080')
+            .then((res) => dispatch(receiveSearch(mockRecipeReturn)))
+            .catch((err) => dispatch(receiveSearch(mockRecipeReturn))) // TODO: remove this line
+            .catch((err: AxiosError) => {
+                console.error(err);
+                dispatch(invalidSearch());
+            });
+    };
+};
+
+export type SearchActions =
+    ExecuteSearchAction | ReceiveSearchAction | InvalidSearchAction;
