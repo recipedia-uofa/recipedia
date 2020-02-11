@@ -1,9 +1,14 @@
 // @flow
 import React from 'react';
+import { connect } from 'react-redux';
 import SearchBar from 'components/SearchBar';
 import RecipeView from 'components/RecipeView';
 
-const style = {
+type Props = {|
+    +showResults: boolean,
+|};
+
+const noResultsStyle = {
   upperContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -22,17 +27,51 @@ const style = {
   },
 };
 
-const RecipediaApp = () => (
-  <div>
-      <div style={style.upperContainer}>
-        <div style={style.verticalContainer}>
-          <span style={style.title}>Recipedia</span>
-          <SearchBar />
-        </div>
-      </div>
-      <br />
-      <RecipeView />
-  </div>
-);
+const withResultsStyle = {
+  upperContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: '2em',
+    fontStyle: 'bold',
+    verticalAlign: 'middle',
+    marginLeft: '1em',
+    marginRight: '1em',
+  },
+};
 
-export default RecipediaApp;
+class RecipediaApp extends React.Component<Props> {
+  render() {
+      if (this.props.showResults) {
+          const style = withResultsStyle;
+          return (
+              <div>
+                  <div style={style.upperContainer}>
+                      <span style={style.title}>Recipedia</span>
+                      <SearchBar />
+                  </div>
+                  <br />
+                  <RecipeView />
+              </div>
+          );
+      }
+
+      const style = noResultsStyle;
+      return (
+          <div style={style.upperContainer}>
+            <div style={style.verticalContainer}>
+              <span style={style.title}>Recipedia</span>
+              <SearchBar />
+            </div>
+          </div>
+      );
+  }
+};
+
+const mapStateToProps = (state, ownProps) => ({
+    showResults: state.results.visible,
+});
+
+export default connect(mapStateToProps)(RecipediaApp);

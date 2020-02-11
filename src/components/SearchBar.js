@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import TokenInput from 'react-customize-token-input';
 // Be sure to include styles at some point, probably during your bootstraping
 import 'react-customize-token-input/dist/react-customize-token-input.css';
@@ -59,7 +60,7 @@ class SearchBar extends React.PureComponent<Props> {
     return (
       <div className={styles.searchContainer}>
         <div style={style.outerSearchBox}>
-          <TokenInput style={style.editBox} autoFocus="true" />
+          <TokenInput style={style.editBox} autoFocus={true} />
         </div>
         <div className={styles.buttonContainer}>
           <button type="button" className={styles.searchButtonAttitude}
@@ -73,12 +74,11 @@ class SearchBar extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  ...ownProps,
   text: 'SomeText',
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  executeSearch: () => dispatch(executeSearch()),
-});
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    executeSearch,
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

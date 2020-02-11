@@ -1,5 +1,5 @@
 // @flow
-import { EXECUTE_SEARCH_ACTION } from 'constants/actionTypes';
+import { EXECUTE_SEARCH } from 'constants/actionTypes';
 import type { Action } from 'actions';
 
 export type SearchState = $Exact<{
@@ -12,7 +12,7 @@ const initialState: SearchState = {
 
 export default (state: SearchState = initialState, action: Action): SearchState => {
   switch (action.type) {
-    case EXECUTE_SEARCH_ACTION:
+    case EXECUTE_SEARCH:
       return state;
     default:
       return state
