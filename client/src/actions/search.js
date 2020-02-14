@@ -26,20 +26,18 @@ const invalidSearch = (): InvalidSearchAction => ({
     type: INVALID_SEARCH,
 });
 
-const mockRecipeReturn: Array<string> = [
-  'Soup with eggs',
-  'Lasagna',
-  'Broccoli and Cheese',
-];
+type RecipeReturn = {
+    data: Array<string>,
+};
 
 export const executeSearch = () => {
     // (dispatch, getState) =>
     return (dispatch: *) => {
         dispatch(requestSearch());
         // TODO: Use actual API call and get url based on state
-        return axios.get('http://localhost:8080')
-            .then((res) => dispatch(receiveSearch(mockRecipeReturn)))
-            .catch((err) => dispatch(receiveSearch(mockRecipeReturn))) // TODO: remove this line
+        return axios.get('http://localhost:9000/recipes')
+            .then((res: RecipeReturn) => dispatch(receiveSearch(res.data)))
+            // .catch((err) => dispatch(receiveSearch(mockRecipeReturn))) // TODO: remove this line
             .catch((err: AxiosError) => {
                 console.error(err);
                 dispatch(invalidSearch());
