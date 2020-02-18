@@ -1,19 +1,19 @@
 // @flow
 import { combineReducers } from 'redux';
-import searchReducer from './searchReducer';
+import searchbarReducer from './searchbarReducer';
 import resultsReducer from './resultsReducer';
 
 import type { Action } from 'actions';
-import type { SearchState } from './searchReducer';
+import type { SearchbarState } from './searchbarReducer';
 import type { ResultsState } from './resultsReducer';
 
 export type State = {|
-  search: SearchState,
+  searchbar: SearchbarState,
   results: ResultsState,
 |};
 
 const rootReducer: (state: State, action: Action) => State = combineReducers({
-  search: searchReducer,
+  searchbar: searchbarReducer,
   results: resultsReducer,
 });
 
