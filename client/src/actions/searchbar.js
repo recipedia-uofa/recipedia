@@ -4,6 +4,7 @@ import {
     REMOVE_SEARCH_TOKEN,
     CLEAR_SEARCH_TOKENS,
     INVALID_SEARCH_ENTRY,
+    CHANGE_SEARCH_TEXT,
 } from 'constants/actionTypes';
 
 import type {
@@ -11,9 +12,10 @@ import type {
     RemoveSearchToken,
     ClearSearchTokens,
     InvalidSearchEntry,
+    ChangeSearchText,
 } from 'constants/actionTypes';
 import type { SearchToken } from 'types/tokens';
-import type { State } from 'reducers';
+import type { State, GetState } from 'types/states';
 
 type AddSearchTokenAction = {
     type: AddSearchToken,
@@ -34,7 +36,12 @@ type InvalidSearchEntryAction = {
     message: string,
 };
 
-const invalidSearchToken = (message: string) => ({
+type ChangeSearchTextAction = {
+    type: ChangeSearchText,
+    text: string,
+};
+
+const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
     type: INVALID_SEARCH_ENTRY,
     message,
 });
@@ -49,7 +56,7 @@ const addSearchToken = (token: SearchToken): AddSearchTokenAction => ({
 });
 
 export const tryAddSearchToken = (token: SearchToken) => {
-    return (dispatch: *, getState: *) => {
+    return (dispatch: *, getState: GetState) => {
         if (!isValidToken(token, getState())) {
             dispatch(invalidSearchToken("Your input is not valid"));
             return;
@@ -68,5 +75,11 @@ export const clearSearchTokens = (): ClearSearchTokensAction => ({
     type: CLEAR_SEARCH_TOKENS,
 });
 
+export const changeSearchText = (text: string): ChangeSearchTextAction => ({
+    type: CHANGE_SEARCH_TEXT,
+    text,
+});
+
 export type SearchBarActions =
-    AddSearchTokenAction | RemoveSearchTokenAction | ClearSearchTokensAction;
+    AddSearchTokenAction | RemoveSearchTokenAction | ClearSearchTokensAction |
+    InvalidSearchEntryAction | ChangeSearchTextAction;

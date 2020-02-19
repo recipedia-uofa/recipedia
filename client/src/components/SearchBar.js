@@ -2,13 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import TokenInput from 'react-customize-token-input';
-// Be sure to include styles at some point, probably during your bootstraping
-import 'react-customize-token-input/dist/react-customize-token-input.css';
+// import TokenInput from 'react-customize-token-input';
 import styles from 'styles/searchbar.module.css';
 import * as colours from 'constants/colours';
-
 import { executeSearch } from 'actions';
+import TokenCreator from 'components/TokenCreator';
 
 type Props = {|
   text: string,
@@ -55,7 +53,7 @@ class SearchBar extends React.PureComponent<Props> {
     return (
       <div className={styles.searchContainer}>
         <div style={style.outerSearchBox}>
-          <TokenInput style={style.editBox} autoFocus/>
+          <TokenCreator style={style.editBox} autoFocus/>
         </div>
         <div className={styles.buttonContainer}>
           <button type="button" className={styles.searchButtonAttitude}

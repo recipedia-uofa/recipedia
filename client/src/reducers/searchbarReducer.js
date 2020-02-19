@@ -1,12 +1,7 @@
 // @flow
-import { ADD_SEARCH_TOKEN } from 'constants/actionTypes';
+import { ADD_SEARCH_TOKEN, CHANGE_SEARCH_TEXT } from 'constants/actionTypes';
 import type { Action } from 'actions';
-import type { SearchToken } from 'types/tokens';
-
-export type SearchbarState = {|
-    +text: string,                // the search string
-    +tokens: Array<SearchToken>,  // list of search tokens
-|};
+import type { SearchbarState } from 'types/states';
 
 const initialState: SearchbarState = {
     text: '',
@@ -15,6 +10,11 @@ const initialState: SearchbarState = {
 
 export default (state: SearchbarState = initialState, action: Action): SearchbarState => {
     switch (action.type) {
+        case CHANGE_SEARCH_TEXT:
+            return {
+                ...state,
+                text: action.text,
+            };
         case ADD_SEARCH_TOKEN:
             return {
                 ...state,

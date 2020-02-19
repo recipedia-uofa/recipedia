@@ -28,3 +28,6 @@ export type ClearSearchTokens = 'searchbar/CLEAR_TOKENS';
 // Display an error message
 export const INVALID_SEARCH_ENTRY = 'searchbar/INVALID_ENTRY';
 export type InvalidSearchEntry = 'searchbar/INVALID_ENTRY';
+
+export const CHANGE_SEARCH_TEXT = 'searchbar/CHANGE_TEXT';
+export type ChangeSearchText = 'searchbar/CHANGE_TEXT';

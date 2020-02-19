@@ -36,3 +36,25 @@
     padding: 15px;
     color: white !important;
 }
+
+.autosizedWrapper {
+    display: block;
+    float: left;
+    overflow: hidden;
+    margin-right: 4px;
+    height: 24px;
+    vertical-align: middle;
+
+    input {
+        height: 24px;
+        vertical-align: inherit;
+        border: 0;
+        outline: 0; /* remove focuse border style of mac sysytem*/
+        padding: 0;
+        margin: 0;
+        cursor: text;
+        box-shadow: none;
+        background: none;
+        color: #222222;
+    }
+}
