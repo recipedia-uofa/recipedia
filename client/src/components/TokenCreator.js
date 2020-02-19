@@ -9,31 +9,15 @@ import styles from 'styles/searchbar.module.css';
 
 import type { State } from 'types/states';
 
-// import styles from '/styles.styl';
-
-// TokenCreator.propTypes = {
-//     separators: PropTypes.array.isRequired,
-//     placeholder: PropTypes.string.isRequired,
-//     autoFocus: PropTypes.bool.isRequired,
-//     onFocus: PropTypes.func.isRequired,
-//     onBlur: PropTypes.func.isRequired,
-//     addTokens: PropTypes.func.isRequired,
-//     onDeleteLastToken: PropTypes.func.isRequired,
-//     buildDataFromValue: PropTypes.func.isRequired,
-//     onInputValueChange: PropTypes.func.isRequired,
-//     preprocessor: PropTypes.func.isRequired
-// };
-
 type Props = {
     autoFocus: boolean,
     placeholder: string,
     //redux
     value: string,
-    updateValue: (string) => any,
-    tryAddToken: (input: string) => any,
+    updateValue: string => any,
+    tryAddToken: string => any,
     deleteLastToken: () => any,
 };
-
 
 const mapStateToProps = (state: State, ownProps) => ({
     value: state.searchbar.text,
