@@ -8,53 +8,53 @@
 */
 
 .buttonContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .searchContainer {
-    width: 100%;
-    margin-top: 5%;
+  width: 100%;
+  margin-top: 5%;
 }
 
 .searchButtonAttitude {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 500;
-    border: none;
-    transition: all 0.3s ease 0s;
-    cursor: pointer;
-    outline: none;
-    background-color: rgb(225, 225, 225);
-    box-shadow: 0px 8px 15px rgba(119, 119, 119, 0.1);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  border: none;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+  background-color: rgb(225, 225, 225);
+  box-shadow: 0px 8px 15px rgba(119, 119, 119, 0.1);
 }
 
 .searchButtonAttitude:hover {
-    background-color: #4BBF84;
-    padding: 15px;
-    color: white !important;
+  background-color: #4bbf84;
+  padding: 15px;
+  color: white !important;
 }
 
 .autosizedWrapper {
-    display: block;
-    float: left;
-    overflow: hidden;
-    margin-right: 4px;
-    height: 24px;
-    vertical-align: middle;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin-right: 4px;
+  height: 24px;
+  vertical-align: middle;
 
-    input {
-        height: 24px;
-        vertical-align: inherit;
-        border: 0;
-        outline: 0; /* remove focuse border style of mac sysytem*/
-        padding: 0;
-        margin: 0;
-        cursor: text;
-        box-shadow: none;
-        background: none;
-        color: #222222;
-    }
+  input {
+    height: 24px;
+    vertical-align: inherit;
+    border: 0;
+    outline: 0; /* remove focuse border style of mac sysytem*/
+    padding: 0;
+    margin: 0;
+    cursor: text;
+    box-shadow: none;
+    background: none;
+    color: #222222;
+  }
 }

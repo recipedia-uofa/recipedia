@@ -7,251 +7,219 @@
     - Mustard yellow: #D29034
 */
 
-.DemoRowContainer
-{
-    display: flex;
-    flex-direction: row;
+.DemoRowContainer {
+  display: flex;
+  flex-direction: row;
 }
 
-.RecipeCardContainer
-{
-    border-radius: 70px;
-    position: relative;
-    cursor: pointer;
-    left: 0px;
-    top: 0px;
-    width: 400px;
-    color: #000000;
-    background-color: white;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    -webkit-display: flex;
-    -webkit-flex-direction: column;
-    display: flex;
-    flex-direction: column;
-    height: 500px;
-    box-shadow: 5px 5px 20px grey;
-    margin: 25px;
-    z-index: inherit;
-    transition: transform 1s;
-    transform: scale(1.0);
+.RecipeCardContainer {
+  border-radius: 70px;
+  position: relative;
+  cursor: pointer;
+  left: 0px;
+  top: 0px;
+  width: 400px;
+  color: #000000;
+  background-color: white;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-display: flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  box-shadow: 5px 5px 20px grey;
+  margin: 25px;
+  z-index: inherit;
+  transition: transform 1s;
+  transform: scale(1);
 }
 
-.RecipeCardContainer:hover
-{
-    transform: scale(1.1);
-    z-index: 2;
+.RecipeCardContainer:hover {
+  transform: scale(1.1);
+  z-index: 2;
 }
 
-.RecipeCardContainer:hover .RecipeCardImageContainer
-{
-    transform: scale(1.1);
+.RecipeCardContainer:hover .RecipeCardImageContainer {
+  transform: scale(1.1);
 }
 
-.RecipeCardContainer2
-{
-    border-radius: 70px;
-    position: relative;
-    cursor: pointer;
-    left: 0px;
-    top: 0px;
-    width: 400px;
-    color: #000000;
-    background-color: white;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    -webkit-display: flex;
-    -webkit-flex-direction: column;
-    display: flex;
-    flex-direction: column;
-    height: 500px;
-    box-shadow: 5px 5px 20px grey;
-    margin: 25px;
-    z-index: inherit;
-    transition: width 1s, height 1s;
+.RecipeCardContainer2 {
+  border-radius: 70px;
+  position: relative;
+  cursor: pointer;
+  left: 0px;
+  top: 0px;
+  width: 400px;
+  color: #000000;
+  background-color: white;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-display: flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  box-shadow: 5px 5px 20px grey;
+  margin: 25px;
+  z-index: inherit;
+  transition: width 1s, height 1s;
 }
 
-.RecipeCardContainer2:hover
-{
-    width: 500px;
-    height: 450px;
+.RecipeCardContainer2:hover {
+  width: 500px;
+  height: 450px;
 }
 
-.RecipeCardContainer3
-{
-    border-radius: 70px;
-    position: relative;
-    cursor: pointer;
-    left: 0px;
-    top: 0px;
-    width: 400px;
-    color: #000000;
-    background-color: white;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    -webkit-display: flex;
-    -webkit-flex-direction: column;
-    display: flex;
-    flex-direction: column;
-    height: 500px;
-    box-shadow: 5px 5px 20px grey;
-    margin: 25px;
-    z-index: inherit;
-    transition: transform 1s;
-    transform: scale(1.0);
+.RecipeCardContainer3 {
+  border-radius: 70px;
+  position: relative;
+  cursor: pointer;
+  left: 0px;
+  top: 0px;
+  width: 400px;
+  color: #000000;
+  background-color: white;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-display: flex;
+  -webkit-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  box-shadow: 5px 5px 20px grey;
+  margin: 25px;
+  z-index: inherit;
+  transition: transform 1s;
+  transform: scale(1);
 }
 
-.RecipeCardContainer3:hover
-{
-    transform: scale(1.1);
-    z-index: 2;
+.RecipeCardContainer3:hover {
+  transform: scale(1.1);
+  z-index: 2;
 }
 
-.RecipeCardImageContainer
-{
-    width: 100%;
-    height: 50%;
-    overflow-y: hidden;
-    position: relative;
-    transform: scale(1.0);
-    transition: transform 1s;
-    z-index: inherit;
+.RecipeCardImageContainer {
+  width: 100%;
+  height: 50%;
+  overflow-y: hidden;
+  position: relative;
+  transform: scale(1);
+  transition: transform 1s;
+  z-index: inherit;
 }
 
-.RecipeCardImage
-{
-    float: left;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    object-fit: cover;
-    /* object-position: bottom; */
+.RecipeCardImage {
+  float: left;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  object-fit: cover;
+  /* object-position: bottom; */
 }
 
-.RecipeCardTitle
-{
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 600;
-    float: left;
-    width: 100%;
-    color: #EAEAEA;
-    background-color: #4BBF84;
-    padding: 10px 10px 10px 10px;
-    white-space: normal;
-    height: auto;
-    z-index: 3;
+.RecipeCardTitle {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  float: left;
+  width: 100%;
+  color: #eaeaea;
+  background-color: #4bbf84;
+  padding: 10px 10px 10px 10px;
+  white-space: normal;
+  height: auto;
+  z-index: 3;
 }
 
-.RecipeCardDescription
-{
-    padding: 25px;
-    font-size: 15px;
-    text-align: center;
-    color: rgb(125,125,125);
-    line-height: 25px;
-    white-space: normal;
-    overflow-y: hidden;
-    position: relative;
-    background-color: white;
-    height: 50%;
-    z-index: 3;
+.RecipeCardDescription {
+  padding: 25px;
+  font-size: 15px;
+  text-align: center;
+  color: rgb(125, 125, 125);
+  line-height: 25px;
+  white-space: normal;
+  overflow-y: hidden;
+  position: relative;
+  background-color: white;
+  height: 50%;
+  z-index: 3;
 }
 
-.RecipeCardNutritionContainer
-{
-
+.RecipeCardNutritionContainer {
 }
 
-.RecipeCardNutrition
-{
-
+.RecipeCardNutrition {
 }
 
-.RecipeCardMisc
-{
-
+.RecipeCardMisc {
 }
 
 /*Would like to match the colour of the site logo. Use the following site for inspiration:
 https://lokeshdhakar.com/projects/color-thief/
 
 For now, the colour will be hard coded*/
-.LogoContainer
-{
-    width: 80px;
-    position: absolute;
-    z-index: 5;
-    transform: translate(25%, 25%);
+.LogoContainer {
+  width: 80px;
+  position: absolute;
+  z-index: 5;
+  transform: translate(25%, 25%);
 }
 
-.RecipeCardSiteLogo
-{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #FF6702;
-    padding: 25% 0;
+.RecipeCardSiteLogo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #ff6702;
+  padding: 25% 0;
 }
 
-.RecipeCardSiteLogoImage
-{
-    width: 50%;
-    height: 50%;
-    position: relative;
-    bottom: -25%;
-    left: 25%;
-    object-fit: cover;
-    transform: scale(1.4);
+.RecipeCardSiteLogoImage {
+  width: 50%;
+  height: 50%;
+  position: relative;
+  bottom: -25%;
+  left: 25%;
+  object-fit: cover;
+  transform: scale(1.4);
 }
 
 /*TODO: Make a second one for the lowest card and have it grow WITH the card (within the image)*/
-.LogoContainer2
-{
-    width: 80px;
-    position: absolute;
-    z-index: 5;
-    transform: translate(25%, 25%);
+.LogoContainer2 {
+  width: 80px;
+  position: absolute;
+  z-index: 5;
+  transform: translate(25%, 25%);
 }
 
-.RecipeCardSiteLogoImage2
-{
-    width: 50%;
-    height: 50%;
-    bottom: -25%;
-    left: 25%;
-    object-fit: cover;
-    transform: scale(1.4);
+.RecipeCardSiteLogoImage2 {
+  width: 50%;
+  height: 50%;
+  bottom: -25%;
+  left: 25%;
+  object-fit: cover;
+  transform: scale(1.4);
 }
-
 
 /*The intention is for the background colour to change based on the food group that
   the ingredient is a part of*/
-.RecipeIngredient
-{
-
+.RecipeIngredient {
 }
 
 /*For the optional "flip" animation*/
-.RecipeCardFront
-{
-
+.RecipeCardFront {
 }
 
-.RecipeCardBack
-{
-
+.RecipeCardBack {
 }
 
-.RecipeCardFrostedGlass
-{
-
+.RecipeCardFrostedGlass {
 }

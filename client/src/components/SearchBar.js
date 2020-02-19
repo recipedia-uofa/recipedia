@@ -1,16 +1,16 @@
 // @flow
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 // import TokenInput from 'react-customize-token-input';
-import styles from 'styles/searchbar.module.css';
-import * as colours from 'constants/colours';
-import { executeSearch } from 'actions';
-import TokenCreator from 'components/TokenCreator';
+import styles from "styles/searchbar.module.css";
+import * as colours from "constants/colours";
+import { executeSearch } from "actions";
+import TokenCreator from "components/TokenCreator";
 
 type Props = {|
   text: string,
-  executeSearch: () => void,
+  executeSearch: () => void
 |};
 
 const BORDER_WIDTH = 1;
@@ -22,29 +22,29 @@ const style = {
     border: `${BORDER_WIDTH}px solid ${colours.LIGHT_BACKGROUND_DEFAULT_COLOUR}`,
     borderRadius: `${CORNER_RADIUS}px`,
     padding: CORNER_RADIUS - BORDER_WIDTH,
-    boxShadow: '0px 8px 15px rgba(0, 0, 0, 0.1)',
-    height: 'auto',
-    display: 'flex',
-    flexWrap: 'nowrap',
-    boxSizing: 'border-box',
-    width: '100%',
+    boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+    height: "auto",
+    display: "flex",
+    flexWrap: "nowrap",
+    boxSizing: "border-box",
+    width: "100%"
   },
   editBox: {
-    flex: '2 1 100%',
-    alignSelf: 'stretch',
-    border: 'none',
-    boxSizing: 'border-box',
-    height: 40,
+    flex: "2 1 100%",
+    alignSelf: "stretch",
+    border: "none",
+    boxSizing: "border-box",
+    height: 40
   },
   searchButton: {
     flex: `0 1 ${CORNER_RADIUS + 50}`,
-    alignSelf: 'stretch',
-    color: 'grey',
+    alignSelf: "stretch",
+    color: "grey",
     borderRadius: `${CORNER_RADIUS}px`,
-    margin: '0 auto',
+    margin: "0 auto",
     marginTop: `${CORNER_RADIUS}px`,
-    padding: `${CORNER_RADIUS}px`,
-  },
+    padding: `${CORNER_RADIUS}px`
+  }
 };
 
 class SearchBar extends React.PureComponent<Props> {
@@ -53,12 +53,16 @@ class SearchBar extends React.PureComponent<Props> {
     return (
       <div className={styles.searchContainer}>
         <div style={style.outerSearchBox}>
-          <TokenCreator style={style.editBox} autoFocus/>
+          <TokenCreator style={style.editBox} autoFocus />
         </div>
         <div className={styles.buttonContainer}>
-          <button type="button" className={styles.searchButtonAttitude}
-            style={style.searchButton} onClick={this.props.executeSearch}>
-              Search
+          <button
+            type="button"
+            className={styles.searchButtonAttitude}
+            style={style.searchButton}
+            onClick={this.props.executeSearch}
+          >
+            Search
           </button>
         </div>
       </div>
@@ -67,11 +71,15 @@ class SearchBar extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  text: 'SomeText',
+  text: "SomeText"
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    executeSearch,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      executeSearch
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
