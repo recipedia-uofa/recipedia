@@ -1,11 +1,7 @@
 // @flow
 import { RECEIVE_SEARCH } from 'constants/actionTypes';
 import type { Action } from 'actions';
-
-export type ResultsState = $Exact<{
-  +recipes: Array<string>,
-  +visible: boolean,
-}>;
+import type { ResultsState } from 'types/states';
 
 const initialState: ResultsState = {
   recipes: [],

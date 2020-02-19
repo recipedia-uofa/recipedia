@@ -4,13 +4,7 @@ import searchbarReducer from './searchbarReducer';
 import resultsReducer from './resultsReducer';
 
 import type { Action } from 'actions';
-import type { SearchbarState } from './searchbarReducer';
-import type { ResultsState } from './resultsReducer';
-
-export type State = {|
-  searchbar: SearchbarState,
-  results: ResultsState,
-|};
+import type { State } from 'types/states';
 
 const rootReducer: (state: State, action: Action) => State = combineReducers({
   searchbar: searchbarReducer,
