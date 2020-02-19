@@ -1,13 +1,13 @@
 // @flow
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
-import './index.css';
-import RecipediaApp from './RecipediaApp';
-import configureStore from './configureStore';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import "./index.css";
+import RecipediaApp from "./RecipediaApp";
+import configureStore from "./configureStore";
+import * as serviceWorker from "./serviceWorker";
 
-const root = document.getElementById('root');
+const root = document.getElementById("root");
 
 if (root) {
   ReactDOM.render(
