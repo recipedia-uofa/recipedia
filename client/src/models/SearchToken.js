@@ -5,7 +5,7 @@ import type { Ingredient } from "models/ingredient";
 import type { Diet } from "models/diets";
 import type { Keyword } from "models/keywords";
 
-export class SearchToken {
+export default class SearchToken {
   keyword: Keyword;
   value: ?(Diet | Ingredient);
 
@@ -31,5 +31,13 @@ export class SearchToken {
 
   isBlacklist(): boolean {
     return this.keyword === keywords.NOT;
+  }
+
+  hasKeyword(): boolean {
+    return this.keyword !== keywords.NONE;
+  }
+
+  hash(): string {
+    return `${this.keyword}_${this.value || ""}`;
   }
 }

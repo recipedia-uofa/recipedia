@@ -9,11 +9,11 @@ const keywords = {
 export type Keyword = $Keys<typeof keywords>;
 
 export const isValidKeyword = (str: string): boolean => {
-  return str in keywords;
+  return str.toUpperCase() in keywords;
 };
 
 export const toKeyword = (str: string): Keyword => {
-  return keywords[str];
+  return keywords[str.toUpperCase()];
 };
 
 export default keywords;

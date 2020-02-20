@@ -11,7 +11,7 @@ import {
 
 import keywords, { isValidKeyword, toKeyword } from "models/keywords";
 import { isValidDiet } from "models/diets";
-import { SearchToken } from "models/SearchToken";
+import SearchToken from "models/SearchToken";
 
 import type {
   AddSearchToken,
@@ -66,7 +66,6 @@ const isValidInput = (
   input: string,
   currentTokens: Array<SearchToken>
 ): boolean => {
-  const hasLastToken = currentTokens.length > 0;
   if (currentTokens.length === 0) {
     return isValidAny(input);
   }

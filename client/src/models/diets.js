@@ -8,11 +8,11 @@ const diets = {
 export type Diet = $Keys<typeof diets>;
 
 export const isValidDiet = (str: string): boolean => {
-  return str in diets;
+  return str.toUpperCase() in diets;
 };
 
 export const toDiet = (str: string): Diet => {
-  return diets[str];
+  return diets[str.toUpperCase()].toLowerCase();
 };
 
 export default diets;
