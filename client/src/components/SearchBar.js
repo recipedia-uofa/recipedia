@@ -6,16 +6,15 @@ import { bindActionCreators } from "redux";
 import styles from "styles/searchbar.module.css";
 import * as colours from "constants/colours";
 import { executeSearch } from "actions";
-import TokenCreator from "components/TokenCreator";
+// import TokenCreator from "components/TokenCreator";
+import TokenInput from "components/TokenInput";
 
 type Props = {|
-  text: string,
   executeSearch: () => void
 |};
 
 const BORDER_WIDTH = 1;
 const CORNER_RADIUS = 15;
-const KEYWORD_MARGIN = 5;
 
 const style = {
   outerSearchBox: {
@@ -28,13 +27,6 @@ const style = {
     flexWrap: "nowrap",
     boxSizing: "border-box",
     width: "100%"
-  },
-  editBox: {
-    flex: "2 1 100%",
-    alignSelf: "stretch",
-    border: "none",
-    boxSizing: "border-box",
-    height: 40
   },
   searchButton: {
     flex: `0 1 ${CORNER_RADIUS + 50}`,
@@ -49,11 +41,10 @@ const style = {
 
 class SearchBar extends React.PureComponent<Props> {
   render() {
-    // const { text } = this.props;
     return (
       <div className={styles.searchContainer}>
         <div style={style.outerSearchBox}>
-          <TokenCreator style={style.editBox} autoFocus />
+          <TokenInput autoFocus />
         </div>
         <div className={styles.buttonContainer}>
           <button
@@ -70,10 +61,6 @@ class SearchBar extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  text: "SomeText"
-});
-
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
@@ -82,4 +69,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(null, mapDispatchToProps)(SearchBar);

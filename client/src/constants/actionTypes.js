@@ -18,8 +18,8 @@ export const ADD_SEARCH_TOKEN = "searchbar/ADD_TOKEN";
 export type AddSearchToken = "searchbar/ADD_TOKEN";
 
 // Remove a particular token
-export const REMOVE_SEARCH_TOKEN = "searchbar/REMOVE_TOKEN";
-export type RemoveSearchToken = "searchbar/REMOVE_TOKEN";
+export const DELETE_SEARCH_TOKEN = "searchbar/DELETE_TOKEN";
+export type DeleteSearchToken = "searchbar/DELETE_TOKEN";
 
 // Clear all tokens
 export const CLEAR_SEARCH_TOKENS = "searchbar/CLEAR_TOKENS";
