@@ -3,7 +3,7 @@ import * as R from "ramda";
 
 import {
   ADD_SEARCH_TOKEN,
-  REMOVE_SEARCH_TOKEN,
+  DELETE_SEARCH_TOKEN,
   CLEAR_SEARCH_TOKENS,
   INVALID_SEARCH_ENTRY,
   CHANGE_SEARCH_TEXT
@@ -15,7 +15,7 @@ import SearchToken from "models/SearchToken";
 
 import type {
   AddSearchToken,
-  RemoveSearchToken,
+  DeleteSearchToken,
   ClearSearchTokens,
   InvalidSearchEntry,
   ChangeSearchText
@@ -28,8 +28,8 @@ type AddSearchTokenAction = {
   token: SearchToken
 };
 
-type RemoveSearchTokenAction = {
-  type: RemoveSearchToken,
+type DeleteSearchTokenAction = {
+  type: DeleteSearchToken,
   index: number
 };
 
@@ -51,6 +51,24 @@ const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
   type: INVALID_SEARCH_ENTRY,
   message
 });
+
+export const deleteSearchToken = (index: number): DeleteSearchTokenAction => ({
+  type: DELETE_SEARCH_TOKEN,
+  index
+});
+
+export const deleteLastSearchToken = () => {
+  return (dispatch: *, getState: GetState) => {
+      const numTokens = getState().searchbar.tokens.length;
+
+      // Do nothing if there are no tokens
+      if (numTokens === 0) {
+        return;
+      }
+
+      dispatch(deleteSearchToken(numTokens - 1));
+  };
+};
 
 const isValidIngredient = (input: string): boolean => {
   return true;
@@ -114,15 +132,10 @@ export const tryAddSearchToken = (input: string) => {
     // merge the token with the last keyword
     const lastToken = tokens[tokens.length - 1];
     const mergedToken = new SearchToken(lastToken.keyword, input);
-    dispatch(removeSearchToken(tokens.length - 1));
+    dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
   };
 };
-
-export const removeSearchToken = (index: number): RemoveSearchTokenAction => ({
-  type: REMOVE_SEARCH_TOKEN,
-  index
-});
 
 export const clearSearchTokens = (): ClearSearchTokensAction => ({
   type: CLEAR_SEARCH_TOKENS
@@ -135,7 +148,7 @@ export const changeSearchText = (text: string): ChangeSearchTextAction => ({
 
 export type SearchBarActions =
   | AddSearchTokenAction
-  | RemoveSearchTokenAction
+  | DeleteSearchTokenAction
   | ClearSearchTokensAction
   | InvalidSearchEntryAction
   | ChangeSearchTextAction;

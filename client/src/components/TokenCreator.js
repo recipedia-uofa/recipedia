@@ -3,7 +3,11 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Autosized from "react-input-autosize";
-import { tryAddSearchToken, changeSearchText } from "actions/searchbar";
+import {
+  tryAddSearchToken,
+  deleteLastSearchToken,
+  changeSearchText
+} from "actions/searchbar";
 
 import styles from "styles/searchbar.module.css";
 
@@ -23,16 +27,15 @@ const mapStateToProps = (state: State, ownProps) => ({
   value: state.searchbar.text
 });
 
-const mapDispatchToProps = dispatch => ({
-  deleteLastToken: () => {},
-  ...bindActionCreators(
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
     {
+      deleteLastToken: deleteLastSearchToken,
       updateValue: changeSearchText,
       tryAddToken: tryAddSearchToken
     },
     dispatch
-  )
-});
+  );
 
 class TokenCreator extends PureComponent<Props> {
   tokenCreator: any;

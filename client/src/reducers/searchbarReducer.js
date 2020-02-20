@@ -1,7 +1,7 @@
 // @flow
 import {
   ADD_SEARCH_TOKEN,
-  REMOVE_SEARCH_TOKEN,
+  DELETE_SEARCH_TOKEN,
   INVALID_SEARCH_ENTRY,
   CHANGE_SEARCH_TEXT
 } from "constants/actionTypes";
@@ -25,7 +25,7 @@ export default (
         text: "",
         tokens: [...state.tokens, action.token]
       };
-    case REMOVE_SEARCH_TOKEN:
+    case DELETE_SEARCH_TOKEN:
       return {
         ...state,
         tokens: [
