@@ -11,7 +11,7 @@ import type {
 const CORNER_RADIUS = 15;
 const KEYWORD_MARGIN = 5;
 
-// NOTE: For the full token container, need to add a margin-right of 5px
+// NOTE: For general styling, we may consider the border radius to be smaller: around 5px-10px
 const style = {
   partialTokenContainer: {
     borderTopLeftRadius: `${CORNER_RADIUS}px`,
@@ -29,7 +29,7 @@ const style = {
     padding: "8px"
   },
   fullTokenContainer: {
-    borderadius: `${CORNER_RADIUS - 10}px`,
+    borderRadius: `${CORNER_RADIUS}px`,
     display: "flex",
     flexDirection: "row",
     width: "max-content",
@@ -37,7 +37,6 @@ const style = {
     overflow: "hidden"
   },
   fullTokenName: {
-    marginRight: `${KEYWORD_MARGIN}px`,
     borderTopLeftRadius: `${CORNER_RADIUS - 5}px`,
     borderBottomLeftRadius: `${CORNER_RADIUS - 5}px`,
     fontWeight: "600",
@@ -48,10 +47,9 @@ const style = {
   },
   tokenContent: {
     margin: "9px",
-    marginLeft: "0",
     padding: "2px",
-    borderTopLeftRadius: `${CORNER_RADIUS - 5}px`,
-    borderBottomLeftRadius: `${CORNER_RADIUS - 5}px`,
+    borderTopRightRadius: `${CORNER_RADIUS - 5}px`,
+    borderBottomRightRadius: `${CORNER_RADIUS - 5}px`,
     color: "white"
   }
 };
