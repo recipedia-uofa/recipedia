@@ -59,8 +59,7 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
 
     return (
       <div
-        className={classNames(
-          styles.inputContainer, {
+        className={classNames(styles.inputContainer, {
           [styles.focused]: focused,
           [styles.errors]: hasError
         })}

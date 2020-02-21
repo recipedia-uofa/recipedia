@@ -59,14 +59,14 @@ export const deleteSearchToken = (index: number): DeleteSearchTokenAction => ({
 
 export const deleteLastSearchToken = () => {
   return (dispatch: *, getState: GetState) => {
-      const numTokens = getState().searchbar.tokens.length;
+    const numTokens = getState().searchbar.tokens.length;
 
-      // Do nothing if there are no tokens
-      if (numTokens === 0) {
-        return;
-      }
+    // Do nothing if there are no tokens
+    if (numTokens === 0) {
+      return;
+    }
 
-      dispatch(deleteSearchToken(numTokens - 1));
+    dispatch(deleteSearchToken(numTokens - 1));
   };
 };
 
