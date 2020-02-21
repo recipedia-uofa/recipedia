@@ -55,7 +55,7 @@
   outline: 0; /* remove focuse border style of mac system */
   border: none;
 
-  transition: all .2s linear 0s;
+  transition: all 0.2s linear 0s;
 }
 
 .inputContainer .focused {
@@ -128,7 +128,7 @@ input {
   padding: 2px 0 2px 4px;
   cursor: pointer;
   color: #222222;
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .deleteButton:hover {
@@ -136,5 +136,5 @@ input {
 }
 
 .deleteButton:after {
-  content: 'x';
+  content: "x";
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import * as colours from "constants/colours";
-import keywords from 'models/keywords';
+import keywords from "models/keywords";
 
 import type {
   PartialSearchToken,
@@ -94,7 +94,7 @@ const renderPartialToken = (token: PartialSearchToken) => {
 const renderFullToken = (token: FullSearchToken) => {
   const tokenColour = getTokenColour(token);
   const keyword = token.keyword.toUpperCase();
-  const content = (token.value || '').toUpperCase();
+  const content = (token.value || "").toUpperCase();
   return (
     <div
       style={{
