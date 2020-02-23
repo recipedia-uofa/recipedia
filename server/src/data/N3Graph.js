@@ -43,7 +43,7 @@ export default class N3Graph extends Graph {
     this._store = new Store();
   }
 
-  insert (triple) {
+  insert(triple) {
     return new Promise((resolve, reject) => {
       try {
         this._store.addQuad(triple.subject, triple.predicate, triple.object);
@@ -54,7 +54,7 @@ export default class N3Graph extends Graph {
     })
   }
 
-  delete (triple) {
+  delete(triple) {
     return new Promise((resolve, reject) => {
       try {
         this._store.removeQuad(triple.subject, triple.predicate, triple.object);
@@ -65,15 +65,14 @@ export default class N3Graph extends Graph {
     })
   }
 
-  find (triple) {
+  find(triple) {
     // console.log(triple);
     const { subject, predicate, object } = formatTriplePattern(triple);
-    console.log({ subject, predicate, object });
     return this._store.getQuads(subject, predicate, object).map(toAlgebraTriple);
   }
 
-  estimateCardinality (triple) {
+  estimateCardinality(triple) {
     const { subject, predicate, object } = formatTriplePattern(triple);
     return Promise.resolve(this._store.countQuads(subject, predicate, object));
   }
-}
+};
