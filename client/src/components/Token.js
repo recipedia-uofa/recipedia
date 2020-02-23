@@ -19,7 +19,9 @@ const style = {
     display: "flex",
     flexDirection: "row",
     width: "max-content",
-    margin: `${KEYWORD_MARGIN * 2}px`,
+    height: "max-content",
+    marginRight: `${KEYWORD_MARGIN}px`,
+    marginLeft: `${KEYWORD_MARGIN}px`,
     border: `3px solid ${colours.SHADE_LVL1}`
   },
   partialTokenName: {
@@ -33,7 +35,9 @@ const style = {
     display: "flex",
     flexDirection: "row",
     width: "max-content",
-    margin: `${KEYWORD_MARGIN * 2}px`,
+    height: "max-content",
+    marginRight: `${KEYWORD_MARGIN}px`,
+    marginLeft: `${KEYWORD_MARGIN}px`,
     overflow: "hidden"
   },
   fullTokenName: {
