@@ -44,7 +44,7 @@ class TokenCreator extends PureComponent<Props> {
   static defaultProps = {
     autoFocus: false,
     placeholder: "",
-    inputRef: (el) => {} // dummy function
+    inputRef: el => {} // dummy function
   };
 
   actions = {

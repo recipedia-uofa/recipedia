@@ -81,7 +81,7 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
           })}
         </div>
         <TokenCreator
-          inputRef={(node) => {
+          inputRef={node => {
             this.tokenCreator = node;
           }}
           placeholder={placeholder}
