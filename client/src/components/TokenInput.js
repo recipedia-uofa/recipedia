@@ -28,7 +28,7 @@ const mapStateToProps = (state: State, ownProps) => ({
 });
 
 class TokenInput extends PureComponent<Props, TokenInputState> {
-  tokenCreator: any;
+  tokenCreator: ?any;
 
   static defaultProps = {
     autoFocus: false,
@@ -38,6 +38,7 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
   constructor(props) {
     super(props);
     this.state = { focused: false };
+    this.tokenCreator = null;
   }
 
   actions = {
@@ -80,7 +81,7 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
           })}
         </div>
         <TokenCreator
-          ref={node => {
+          inputRef={(node) => {
             this.tokenCreator = node;
           }}
           placeholder={placeholder}

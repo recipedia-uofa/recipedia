@@ -16,6 +16,7 @@ import type { State } from "types/states";
 type Props = {
   autoFocus: boolean,
   placeholder: string,
+  inputRef: (el: any) => void,
   //redux
   value: string,
   updateValue: string => any,
@@ -42,7 +43,8 @@ class TokenCreator extends PureComponent<Props> {
 
   static defaultProps = {
     autoFocus: false,
-    placeholder: ""
+    placeholder: "",
+    inputRef: (el) => {} // dummy function
   };
 
   actions = {
@@ -97,9 +99,9 @@ class TokenCreator extends PureComponent<Props> {
         return;
       }
     },
-    handleFocus: e => {
-      // this.props.onFocus(e);
-    },
+    // handleFocus: e => {
+    //   this.focus();
+    // },
     handleBlur: e => {
       this.actions.createToken();
       // this.props.onBlur(e);
@@ -112,23 +114,21 @@ class TokenCreator extends PureComponent<Props> {
     }
   };
 
-  focus = () => {
-    this.tokenCreator.input && this.tokenCreator.input.focus();
-  };
+  // focus = () => {
+  //   console.log(this.tokenCreator);
+  //   this.tokenCreator.input && this.tokenCreator.input.focus();
+  // };
 
   render() {
-    const { placeholder, autoFocus, value } = this.props;
+    const { placeholder, autoFocus, value, inputRef } = this.props;
 
     return (
       <div className={styles.autosizedWrapper}>
         <Autosized
-          ref={node => {
-            this.tokenCreator = node;
-          }}
+          inputRef={inputRef}
           placeholder={placeholder}
           value={value}
           autoFocus={autoFocus}
-          onFocus={this.actions.handleFocus}
           onBlur={this.actions.handleBlur}
           onChange={this.actions.handleChangeValue}
           onKeyDown={this.actions.handleKeyDown}
