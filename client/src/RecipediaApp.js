@@ -18,7 +18,8 @@ const noResultsStyle = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    maxWidth: "90%"
   },
   title: {
     fontSize: "4em",
@@ -31,7 +32,10 @@ const withResultsStyle = {
   upperContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    width: "81%",
+    marginLeft: "7%",
+    maxWidth: "90%"
   },
   title: {
     fontSize: "2em",

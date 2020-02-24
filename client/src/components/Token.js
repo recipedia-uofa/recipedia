@@ -20,8 +20,7 @@ const style = {
     flexDirection: "row",
     width: "max-content",
     height: "max-content",
-    marginRight: `${KEYWORD_MARGIN}px`,
-    marginLeft: `${KEYWORD_MARGIN}px`,
+    margin: `${KEYWORD_MARGIN}px`,
     border: `3px solid ${colours.SHADE_LVL1}`
   },
   partialTokenName: {
@@ -36,8 +35,7 @@ const style = {
     flexDirection: "row",
     width: "max-content",
     height: "max-content",
-    marginRight: `${KEYWORD_MARGIN}px`,
-    marginLeft: `${KEYWORD_MARGIN}px`,
+    margin: `${KEYWORD_MARGIN}px`,
     overflow: "hidden"
   },
   fullTokenName: {

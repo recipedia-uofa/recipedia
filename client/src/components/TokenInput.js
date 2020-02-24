@@ -79,8 +79,7 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
               />
             );
           })}
-        </div>
-        <TokenCreator
+          <TokenCreator
           inputRef={node => {
             this.tokenCreator = node;
           }}
@@ -88,7 +87,8 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
           autoFocus={autoFocus}
           onFocus={this.actions.onFocus}
           onBlur={this.actions.onBlur}
-        />
+          />
+        </div>
       </div>
     );
   }
