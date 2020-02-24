@@ -39,8 +39,6 @@ const mapDispatchToProps = dispatch =>
   );
 
 class TokenCreator extends PureComponent<Props> {
-  tokenCreator: any;
-
   static defaultProps = {
     autoFocus: false,
     placeholder: "",
@@ -64,7 +62,6 @@ class TokenCreator extends PureComponent<Props> {
       this.props.tryAddToken(trimmedValue);
     },
     handleKeyDown: e => {
-      // const { value } = e.target;
       const { value } = this.props;
 
       let eventKey;
@@ -99,12 +96,8 @@ class TokenCreator extends PureComponent<Props> {
         return;
       }
     },
-    // handleFocus: e => {
-    //   this.focus();
-    // },
     handleBlur: e => {
       this.actions.createToken();
-      // this.props.onBlur(e);
     },
     handlePaste: e => {
       e.preventDefault();
@@ -113,11 +106,6 @@ class TokenCreator extends PureComponent<Props> {
       this.actions.createToken(pastedText);
     }
   };
-
-  // focus = () => {
-  //   console.log(this.tokenCreator);
-  //   this.tokenCreator.input && this.tokenCreator.input.focus();
-  // };
 
   render() {
     const { placeholder, autoFocus, value, inputRef } = this.props;
