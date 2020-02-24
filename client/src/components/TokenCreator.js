@@ -8,7 +8,7 @@ import {
   deleteLastSearchToken,
   changeSearchText
 } from "actions/searchbar";
-
+import { executeSearch } from "actions/search";
 import styles from "styles/searchbar.module.css";
 
 import type { State } from "types/states";
@@ -21,7 +21,8 @@ type Props = {
   value: string,
   updateValue: string => any,
   tryAddToken: string => any,
-  deleteLastToken: () => any
+  deleteLastToken: () => any,
+  executeSearch: () => any
 };
 
 const mapStateToProps = (state: State, ownProps) => ({
@@ -33,7 +34,8 @@ const mapDispatchToProps = dispatch =>
     {
       deleteLastToken: deleteLastSearchToken,
       updateValue: changeSearchText,
-      tryAddToken: tryAddSearchToken
+      tryAddToken: tryAddSearchToken,
+      executeSearch
     },
     dispatch
   );
@@ -63,6 +65,7 @@ class TokenCreator extends PureComponent<Props> {
     },
     handleKeyDown: e => {
       const { value } = this.props;
+      const trimmedValue = value.trim();
 
       let eventKey;
 
@@ -92,7 +95,11 @@ class TokenCreator extends PureComponent<Props> {
       // }
 
       if (eventKey === "Enter") {
-        this.actions.createToken();
+        if (trimmedValue.length === 0) {
+          this.props.executeSearch();
+        } else {
+          this.actions.createToken();
+        }
         return;
       }
     },
