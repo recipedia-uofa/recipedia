@@ -2,10 +2,10 @@ FROM node:12.16.0
 WORKDIR /code
 COPY package.json .
 
-RUN npm install
+RUN yarn install
 
 EXPOSE 9000
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
 
 COPY src/ .
