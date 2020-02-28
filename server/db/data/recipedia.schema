@@ -1,0 +1,18 @@
+# Define Types
+
+type Ingredient {
+  xid
+}
+
+type Recipe {
+  xid
+  name
+  rating
+  contains
+}
+
+# Define Directives and index
+xid: string @index(exact) .
+name: string .
+rating: float .
+contains: [uid] @reverse .

@@ -1,0 +1,52 @@
+
+_:butter <xid> "butter" .
+_:butter <dgraph.type> "Ingredient" .
+
+_:leek <xid> "leek" .
+_:leek <dgraph.type> "Ingredient" .
+
+_:chicken_broth <xid> "chicken_broth" .
+_:chicken_broth <dgraph.type> "Ingredient" .
+
+_:cornstarch <xid> "cornstarch" .
+_:cornstarch <dgraph.type> "Ingredient" .
+
+_:potato <xid> "potato" .
+_:potato <dgraph.type> "Ingredient" .
+
+_:cream <xid> "cream" .
+_:cream <dgraph.type> "Ingredient" .
+
+_:garlic <xid> "garlic" .
+_:garlic <dgraph.type> "Ingredient" .
+
+_:chicken_bouillon <xid> "chicken_bouillon" .
+_:chicken_bouillon <dgraph.type> "Ingredient" .
+
+_:sour_cream <xid> "sour_cream" .
+_:sour_cream <dgraph.type> "Ingredient" .
+
+_:cream_cheese <xid> "cream_cheese" .
+_:cream_cheese <dgraph.type> "Ingredient" .
+
+_:25708 <xid> "https://www.allrecipes.com/recipe/25708" .
+_:25708 <dgraph.type> "Recipe" .
+_:25708 <name> "Potato Leek Soup III" .
+_:25708 <rating> "4.5" .
+_:25708 <contains> _:butter .
+_:25708 <contains> _:leek .
+_:25708 <contains> _:chicken_broth .
+_:25708 <contains> _:cornstarch .
+_:25708 <contains> _:potato .
+_:25708 <contains> _:cream .
+
+_:25895 <xid> "https://www.allrecipes.com/recipe/25895" .
+_:25895 <dgraph.type> "Recipe" .
+_:25895 <name> "Slow Cooker Mashed Potatoes" .
+_:25895 <rating> "4.5" .
+_:25895 <contains> _:potato .
+_:25895 <contains> _:garlic .
+_:25895 <contains> _:chicken_bouillon .
+_:25895 <contains> _:sour_cream .
+_:25895 <contains> _:cream_cheese .
+_:25895 <contains> _:butter .
