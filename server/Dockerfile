@@ -8,4 +8,4 @@ EXPOSE 9000
 
 CMD [ "yarn", "start" ]
 
-COPY src/ .
+ADD src/ ./src
