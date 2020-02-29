@@ -20,7 +20,7 @@ app.use(cors());
 // Setup routes
 app.get('/ingredients', async (req, res) => {
   try {
-    const allIngredients = await getAllIngredients();
+    const allIngredients: Array<string> = await getAllIngredients();
     res.send(allIngredients);
   } catch (err) {
     console.err(err);
