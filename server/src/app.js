@@ -1,9 +1,10 @@
+// @flow
 import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import logger from 'morgan';
-import RecipeStore from './data/RecipeStore';
+import getAllIngredients from './getAllIngredients';
 
 const app = express();
 
@@ -17,13 +18,9 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(cors());
 
 // Setup routes
-app.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
-});
-
 app.get('/ingredients', async (req, res) => {
   try {
-    const allIngredients = await RecipeStore.allIngredients();
+    const allIngredients: Array<string> = await getAllIngredients();
     res.send(allIngredients);
   } catch (err) {
     console.err(err);
