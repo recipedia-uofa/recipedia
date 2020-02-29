@@ -15,9 +15,9 @@ import servingsizeImg from "assets/icons/Fork_1.svg";
 
 import type { Recipe } from "models/recipe";
 
-type Props = {|
+type Props = {
   recipe: Recipe
-|};
+};
 
 class RecipeCard extends React.PureComponent<Props> {
   render() {
@@ -38,7 +38,7 @@ class RecipeCard extends React.PureComponent<Props> {
             <img
               className={styles.RecipeCardImage}
               src={eggPhoto}
-              alt="Recipe"
+              alt={recipe.title}
             />
           </div>
           <div className={styles.RecipeCardTitle}>{recipe.title}</div>

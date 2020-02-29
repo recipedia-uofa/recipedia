@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import RecipeCard from "components/RecipeCard";
 import type { Recipe } from "models/recipe";
 
-type Props = {|
+type Props = {
   recipes: Array<Recipe>
-|};
+};
 
 const style = {
   recipeView: {
