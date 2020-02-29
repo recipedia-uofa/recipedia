@@ -13,7 +13,7 @@ import proteinImg from "assets/icons/protein.svg";
 import sugarImg from "assets/icons/Sugar_Cube.svg";
 import servingsizeImg from "assets/icons/Fork_1.svg";
 
-import type {Recipe} from "models/recipe";
+import type { Recipe } from "models/recipe";
 
 type Props = {|
   recipe: Recipe
@@ -45,14 +45,30 @@ class RecipeCard extends React.PureComponent<Props> {
           <div className={styles.RecipeCardDescription}>
             <div className={styles.RecipeCardIngredientContainer}>
               <div className={styles.RecipeCardIngredientBox}>
-                {recipe.ingredientsMatched.map(i => <div className={styles.RecipeCardIngredientItem}>{i}</div>)}
-                {recipe.ingredientsNotMatched.map(i => <div className={classNames(styles.RecipeCardIngredientItem, styles.NotMatchedIngredient)}>{i}</div>)}
+                {recipe.ingredientsMatched.map(i => (
+                  <div className={styles.RecipeCardIngredientItem}>{i}</div>
+                ))}
+                {recipe.ingredientsNotMatched.map(i => (
+                  <div
+                    className={classNames(
+                      styles.RecipeCardIngredientItem,
+                      styles.NotMatchedIngredient
+                    )}
+                  >
+                    {i}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
         <div className={styles.SecondaryRecipeCardContainer}>
-          <div className={classNames(styles.SecondaryRecipeCard, styles.CaloriesColor)}>
+          <div
+            className={classNames(
+              styles.SecondaryRecipeCard,
+              styles.CaloriesColor
+            )}
+          >
             <div className={styles.RecipeCardOffset}>
               <div className={styles.NutritionDescriptionItem}>
                 <img
@@ -60,15 +76,28 @@ class RecipeCard extends React.PureComponent<Props> {
                   src={calorieImg}
                   alt="Calories"
                 />
-                <div className={classNames(styles.LargeWordFont, styles.DietTitle)}>Calories</div>
-                <div className={classNames(styles.Center, styles.NutritionDescriptionItem)}>
-                  <div className={styles.Bold}>{recipe.nutritionalInfo.calories}</div>
+                <div
+                  className={classNames(styles.LargeWordFont, styles.DietTitle)}
+                >
+                  Calories
+                </div>
+                <div
+                  className={classNames(
+                    styles.Center,
+                    styles.NutritionDescriptionItem
+                  )}
+                >
+                  <div className={styles.Bold}>
+                    {recipe.nutritionalInfo.calories}
+                  </div>
                   <div className={styles.SmallFont}>kcal</div>
                 </div>
               </div>
             </div>
           </div>
-          <div className={classNames(styles.SecondaryRecipeCard, styles.FatColor)}>
+          <div
+            className={classNames(styles.SecondaryRecipeCard, styles.FatColor)}
+          >
             <div className={styles.RecipeCardOffset}>
               <div className={styles.NutritionDescriptionItem}>
                 <img
@@ -77,13 +106,25 @@ class RecipeCard extends React.PureComponent<Props> {
                   alt="Fat"
                 />
                 <div className={styles.DietTitle}>Fat</div>
-                <div className={classNames(styles.Center, styles.NutritionDescriptionItem)}>
-                  <div className={styles.Bold}>{recipe.nutritionalInfo.fat}g</div>
+                <div
+                  className={classNames(
+                    styles.Center,
+                    styles.NutritionDescriptionItem
+                  )}
+                >
+                  <div className={styles.Bold}>
+                    {recipe.nutritionalInfo.fat}g
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className={classNames(styles.SecondaryRecipeCard, styles.CarbsColor)}>
+          <div
+            className={classNames(
+              styles.SecondaryRecipeCard,
+              styles.CarbsColor
+            )}
+          >
             <div className={styles.RecipeCardOffset}>
               <div className={styles.NutritionDescriptionItem}>
                 <img
@@ -92,13 +133,25 @@ class RecipeCard extends React.PureComponent<Props> {
                   alt="Carbs"
                 />
                 <div className={styles.DietTitle}>Carbs</div>
-                <div className={classNames(styles.Center, styles.NutritionDescriptionItem)}>
-                  <div className={styles.Bold}>{recipe.nutritionalInfo.carbs}g</div>
+                <div
+                  className={classNames(
+                    styles.Center,
+                    styles.NutritionDescriptionItem
+                  )}
+                >
+                  <div className={styles.Bold}>
+                    {recipe.nutritionalInfo.carbs}g
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className={classNames(styles.SecondaryRecipeCard, styles.ProteinColor)}>
+          <div
+            className={classNames(
+              styles.SecondaryRecipeCard,
+              styles.ProteinColor
+            )}
+          >
             <div className={styles.RecipeCardOffset}>
               <div className={styles.NutritionDescriptionItem}>
                 <img
@@ -107,13 +160,25 @@ class RecipeCard extends React.PureComponent<Props> {
                   alt="Protein"
                 />
                 <div className={styles.DietTitle}>Protein</div>
-                <div className={classNames(styles.Center, styles.NutritionDescriptionItem)}>
-                  <div className={styles.Bold}>{recipe.nutritionalInfo.protein}g</div>
+                <div
+                  className={classNames(
+                    styles.Center,
+                    styles.NutritionDescriptionItem
+                  )}
+                >
+                  <div className={styles.Bold}>
+                    {recipe.nutritionalInfo.protein}g
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className={classNames(styles.SecondaryRecipeCard, styles.SugarColor)}>
+          <div
+            className={classNames(
+              styles.SecondaryRecipeCard,
+              styles.SugarColor
+            )}
+          >
             <div className={styles.RecipeCardOffset}>
               <div className={styles.NutritionDescriptionItem}>
                 <img
@@ -122,13 +187,25 @@ class RecipeCard extends React.PureComponent<Props> {
                   alt="Sugar"
                 />
                 <div className={styles.DietTitle}>Sugar</div>
-                <div className={classNames(styles.Center, styles.NutritionDescriptionItem)}>
-                  <div className={styles.Bold}>{recipe.nutritionalInfo.sugar}g</div>
+                <div
+                  className={classNames(
+                    styles.Center,
+                    styles.NutritionDescriptionItem
+                  )}
+                >
+                  <div className={styles.Bold}>
+                    {recipe.nutritionalInfo.sugar}g
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className={classNames(styles.SecondaryRecipeCard, styles.ServingSize)}>
+          <div
+            className={classNames(
+              styles.SecondaryRecipeCard,
+              styles.ServingSize
+            )}
+          >
             <div className={styles.RecipeCardOffset}>
               <div className={styles.NutritionDescriptionItem}>
                 <img
@@ -136,8 +213,17 @@ class RecipeCard extends React.PureComponent<Props> {
                   src={servingsizeImg}
                   alt="ServingSize"
                 />
-                <div className={classNames(styles.LargeWordFont, styles.DietTitle)}>Serving<br></br>Size</div>
-                <div className={classNames(styles.Center, styles.NutritionDescriptionItem)}>
+                <div
+                  className={classNames(styles.LargeWordFont, styles.DietTitle)}
+                >
+                  Serving<br></br>Size
+                </div>
+                <div
+                  className={classNames(
+                    styles.Center,
+                    styles.NutritionDescriptionItem
+                  )}
+                >
                   <div className={styles.Bold}>{recipe.servingSize}</div>
                   <div className={styles.SmallFont}>people</div>
                 </div>

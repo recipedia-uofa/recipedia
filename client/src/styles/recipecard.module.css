@@ -8,7 +8,7 @@
 */
 
 .RecipeCards {
-    position: relative;
+  position: relative;
 }
 
 .RecipeCardContainer {
@@ -32,7 +32,7 @@
   margin: 25px;
   z-index: 1;
   transition: transform 0.7s;
-  transform: scale(1.0);
+  transform: scale(1);
 }
 
 .RecipeCardImageContainer {
@@ -40,7 +40,7 @@
   height: 50%;
   overflow-y: hidden;
   position: relative;
-  transform: scale(1.0);
+  transform: scale(1);
   transition: transform 1s;
   z-index: inherit;
 }
@@ -65,7 +65,7 @@
   font-weight: 600;
   float: left;
   width: 100%;
-  color: #EAEAEA;
+  color: #eaeaea;
   background-color: #4bbf84;
   padding: 11px;
   white-space: normal;
@@ -116,7 +116,7 @@
 }
 
 .NotMatchedIngredient {
-    background-color: grey;
+  background-color: grey;
 }
 
 /*Would like to match the colour of the site logo. Use the following site for inspiration:
@@ -177,7 +177,7 @@ For now, the colour will be hard coded*/
   margin: 25px;
   z-index: 0;
   transition: transform 0.9s;
-  transform: scale(1.0);
+  transform: scale(1);
 }
 
 .SecondaryRecipeCard {
@@ -233,7 +233,7 @@ For now, the colour will be hard coded*/
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-family: 'Heebo';
+  font-family: "Heebo";
   font-size: 42px;
 }
 

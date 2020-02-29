@@ -1,6 +1,6 @@
 // @flow
 import type SearchToken from "models/SearchToken";
-import type { Recipe } from 'models/recipe';
+import type { Recipe } from "models/recipe";
 
 export type SearchbarState = {|
   +text: string, // the search string

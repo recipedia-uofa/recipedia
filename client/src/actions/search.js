@@ -11,7 +11,7 @@ import type {
   ReceiveSearch,
   InvalidSearch
 } from "constants/actionTypes";
-import type { Recipe } from 'models/recipe';
+import type { Recipe } from "models/recipe";
 
 type ExecuteSearchAction = { type: ExecuteSearch };
 

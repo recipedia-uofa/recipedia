@@ -2,7 +2,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import RecipeCard from "components/RecipeCard";
-import type {Recipe} from "models/recipe";
+import type { Recipe } from "models/recipe";
 
 type Props = {|
   recipes: Array<Recipe>
@@ -16,7 +16,7 @@ const style = {
     alignItems: "center",
     justifyContent: "center",
     maxWidth: "90%",
-    marginLeft: "5%",
+    marginLeft: "5%"
   }
 };
 
