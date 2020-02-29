@@ -4,7 +4,7 @@ services:
   server:
     build: .
     ports:
-      - "9000:9000"
+      - 9000:9000
   zero:
     image: dgraph/dgraph:latest
     volumes:

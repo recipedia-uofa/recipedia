@@ -2,7 +2,7 @@
 import type { Ingredient } from "models/ingredient";
 
 type NutritionalInfo = {
-  calories: number,
+  calories: number, // in kcal
   fat: number, // in grams
   carbs: number, // in grams
   protein: number, // in grams
