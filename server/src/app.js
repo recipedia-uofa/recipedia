@@ -1,24 +1,24 @@
 // @flow
-import express from 'express';
-import path from 'path';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import logger from 'morgan';
-import getAllIngredients from './getAllIngredients';
+import express from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import logger from "morgan";
+import getAllIngredients from "./getAllIngredients";
 
 const app = express();
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Express middleware
 app.use(cors());
 
 // Setup routes
-app.get('/ingredients', async (req, res) => {
+app.get("/ingredients", async (req, res) => {
   try {
     const allIngredients: Array<string> = await getAllIngredients();
     res.send(allIngredients);
@@ -28,14 +28,24 @@ app.get('/ingredients', async (req, res) => {
   }
 });
 
-app.get('/recipes', (req, res) => {
+app.get("/recipes", (req, res) => {
   const mockRecipeReturn = [
     {
-      url: 'fake',
-      title: 'Soup with eggs',
-      ingredientsMatched: ["Carrots", "Potato", "Milk", "Eggs", "Bread", "Oil", "Butter", "Peanuts", "Gravy"],
+      url: "fake",
+      title: "Soup with eggs",
+      ingredientsMatched: [
+        "Carrots",
+        "Potato",
+        "Milk",
+        "Eggs",
+        "Bread",
+        "Oil",
+        "Butter",
+        "Peanuts",
+        "Gravy"
+      ],
       ingredientsNotMatched: ["Chicken", "Liver"],
-      nutritionalInfo : {
+      nutritionalInfo: {
         calories: 300,
         fat: 10,
         carbs: 30,
@@ -44,14 +54,22 @@ app.get('/recipes', (req, res) => {
       },
       imageUrl: "fake",
       nutritionScore: 98,
-      servingSize: 4,
+      servingSize: 4
     },
     {
-      url: 'fake',
-      title: 'Lasagna',
-      ingredientsMatched: ["Pasta", "Potato", "Milk", "Eggs", "Bread", "Oil", "Butter"],
+      url: "fake",
+      title: "Lasagna",
+      ingredientsMatched: [
+        "Pasta",
+        "Potato",
+        "Milk",
+        "Eggs",
+        "Bread",
+        "Oil",
+        "Butter"
+      ],
       ingredientsNotMatched: ["Chicken", "Liver"],
-      nutritionalInfo : {
+      nutritionalInfo: {
         calories: 550,
         fat: 13,
         carbs: 90,
@@ -60,14 +78,14 @@ app.get('/recipes', (req, res) => {
       },
       imageUrl: "fake",
       nutritionScore: 94,
-      servingSize: 8,
+      servingSize: 8
     },
     {
-      url: 'fake',
-      title: 'American Cheeseburger',
+      url: "fake",
+      title: "American Cheeseburger",
       ingredientsMatched: ["Potato", "Milk", "Eggs", "Bread", "Oil", "Gravy"],
       ingredientsNotMatched: ["Chicken", "Liver", "Wasabi"],
-      nutritionalInfo : {
+      nutritionalInfo: {
         calories: 620,
         fat: 30,
         carbs: 51,
@@ -76,8 +94,8 @@ app.get('/recipes', (req, res) => {
       },
       imageUrl: "fake",
       nutritionScore: 85,
-      servingSize: 2,
-    },
+      servingSize: 2
+    }
   ];
 
   res.send(mockRecipeReturn);

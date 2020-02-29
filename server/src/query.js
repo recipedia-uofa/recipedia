@@ -1,6 +1,6 @@
 // @flow
-import dgraph from 'dgraph-js';
-import grpc from 'grpc';
+import dgraph from "dgraph-js";
+import grpc from "grpc";
 
 const clientStub = new dgraph.DgraphClientStub(
   "localhost:9080",
