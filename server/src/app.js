@@ -6,6 +6,8 @@ import cors from "cors";
 import logger from "morgan";
 import getAllIngredients from "./getAllIngredients";
 
+import type { Recipe } from "models/recipe";
+
 const app = express();
 
 app.use(logger("dev"));
@@ -29,7 +31,7 @@ app.get("/ingredients", async (req, res) => {
 });
 
 app.get("/recipes", (req, res) => {
-  const mockRecipeReturn = [
+  const mockRecipeReturn: Array<Recipe> = [
     {
       url: "fake",
       title: "Soup with eggs",
