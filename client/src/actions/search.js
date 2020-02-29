@@ -11,12 +11,13 @@ import type {
   ReceiveSearch,
   InvalidSearch
 } from "constants/actionTypes";
+import type { Recipe } from 'models/recipe';
 
 type ExecuteSearchAction = { type: ExecuteSearch };
 
 type ReceiveSearchAction = {
   type: ReceiveSearch,
-  recipes: Array<string>
+  recipes: Array<Recipe>
 };
 
 type InvalidSearchAction = { type: InvalidSearch };
@@ -25,7 +26,7 @@ const requestSearch = (): ExecuteSearchAction => ({
   type: EXECUTE_SEARCH
 });
 
-const receiveSearch = (recipes: Array<string>): ReceiveSearchAction => ({
+const receiveSearch = (recipes: Array<Recipe>): ReceiveSearchAction => ({
   type: RECEIVE_SEARCH,
   recipes
 });
@@ -35,7 +36,7 @@ const invalidSearch = (): InvalidSearchAction => ({
 });
 
 type RecipeReturn = {
-  data: Array<string>
+  data: Array<Recipe>
 };
 
 export const executeSearch = () => {
