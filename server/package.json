@@ -44,14 +44,29 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-flow": "^7.8.3",
+    "babel-plugin-module-resolver": "^4.0.0",
     "flow-bin": "^0.119.1",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2"
   },
   "babel": {
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./src"
+          ],
+          "alias": {
+            "test": "./test",
+            "underscore": "lodash"
+          }
+        }
+      ]
+    ],
     "presets": [
-      "@babel/preset-flow",
-      "@babel/preset-env"
+      "@babel/preset-env",
+      "@babel/preset-flow"
     ]
   }
 }
