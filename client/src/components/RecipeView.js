@@ -2,23 +2,28 @@
 import React from "react";
 import { connect } from "react-redux";
 import RecipeCard from "components/RecipeCard";
+import type {Recipe} from "models/recipe";
 
 type Props = {|
-  recipes: Array<string>
+  recipes: Array<Recipe>
 |};
 
 const style = {
   recipeView: {
     display: "flex",
+    flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "center",
+    maxWidth: "90%",
+    marginLeft: "5%",
   }
 };
 
 class RecipeView extends React.PureComponent<Props> {
   render() {
     const { recipes } = this.props;
-    const recipeItems = recipes.map(r => <RecipeCard key={r} title={r} />);
+    const recipeItems = recipes.map(r => <RecipeCard recipe={r} />);
 
     return <div style={style.recipeView}>{recipeItems}</div>;
   }
