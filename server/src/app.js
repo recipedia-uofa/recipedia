@@ -33,9 +33,54 @@ app.get('/ingredients', async (req, res) => {
 
 app.get('/recipes', (req, res) => {
   const mockRecipeReturn = [
-    'Soup with eggs',
-    'Lasagna',
-    'Broccoli and Cheese',
+    {
+      url: 'fake',
+      title: 'Soup with eggs',
+      ingredientsMatched: ["Carrots", "Potato", "Milk", "Eggs", "Bread", "Oil", "Butter", "Peanuts", "Gravy"],
+      ingredientsNotMatched: ["Chicken", "Liver"],
+      nutritionalInfo : {
+        calories: 300,
+        fat: 10,
+        carbs: 30,
+        protein: 11,
+        sugar: 7
+      },
+      imageUrl: "fake",
+      nutritionScore: 98,
+      servingSize: 4,
+    },
+    {
+      url: 'fake',
+      title: 'Lasagna',
+      ingredientsMatched: ["Pasta", "Potato", "Milk", "Eggs", "Bread", "Oil", "Butter"],
+      ingredientsNotMatched: ["Chicken", "Liver"],
+      nutritionalInfo : {
+        calories: 550,
+        fat: 13,
+        carbs: 90,
+        protein: 15,
+        sugar: 13
+      },
+      imageUrl: "fake",
+      nutritionScore: 94,
+      servingSize: 8,
+    },
+    {
+      url: 'fake',
+      title: 'American Cheeseburger',
+      ingredientsMatched: ["Potato", "Milk", "Eggs", "Bread", "Oil", "Gravy"],
+      ingredientsNotMatched: ["Chicken", "Liver", "Wasabi"],
+      nutritionalInfo : {
+        calories: 620,
+        fat: 30,
+        carbs: 51,
+        protein: 19,
+        sugar: 8
+      },
+      imageUrl: "fake",
+      nutritionScore: 85,
+      servingSize: 2,
+    },
   ];
 
   res.send(mockRecipeReturn);

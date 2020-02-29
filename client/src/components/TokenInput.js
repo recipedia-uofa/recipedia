@@ -80,13 +80,13 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
             );
           })}
           <TokenCreator
-          inputRef={node => {
-            this.tokenCreator = node;
-          }}
-          placeholder={placeholder}
-          autoFocus={autoFocus}
-          onFocus={this.actions.onFocus}
-          onBlur={this.actions.onBlur}
+            inputRef={node => {
+              this.tokenCreator = node;
+            }}
+            placeholder={placeholder}
+            autoFocus={autoFocus}
+            onFocus={this.actions.onFocus}
+            onBlur={this.actions.onBlur}
           />
         </div>
       </div>

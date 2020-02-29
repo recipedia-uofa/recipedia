@@ -1,5 +1,6 @@
 // @flow
 import type SearchToken from "models/SearchToken";
+import type { Recipe } from "models/recipe";
 
 export type SearchbarState = {|
   +text: string, // the search string
@@ -8,7 +9,7 @@ export type SearchbarState = {|
 |};
 
 export type ResultsState = {|
-  +recipes: Array<string>,
+  +recipes: Array<Recipe>,
   +visible: boolean
 |};
 
