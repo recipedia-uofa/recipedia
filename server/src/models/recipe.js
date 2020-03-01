@@ -12,6 +12,7 @@ type NutritionalInfo = {
 export type Recipe = {
   url: string, // unique
   title: string,
+  rating: number, // 1-5
   ingredientsMatched: Array<Ingredient>,
   ingredientsNotMatched: Array<Ingredient>,
   nutritionalInfo: NutritionalInfo,

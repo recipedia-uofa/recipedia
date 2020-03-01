@@ -4,9 +4,14 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import logger from "morgan";
+import SearchToken from "models/SearchToken";
 import getAllIngredients from "./getAllIngredients";
+import matchRecipes from "./matchRecipes";
 
 import type { Recipe } from "models/recipe";
+
+const BAD_REQUEST = 400;
+const SERVER_ERROR = 500;
 
 const app = express();
 
@@ -14,7 +19,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "../public")));
 
 // Express middleware
 app.use(cors());
@@ -25,82 +29,42 @@ app.get("/ingredients", async (req, res) => {
     const allIngredients: Array<string> = await getAllIngredients();
     res.send(allIngredients);
   } catch (err) {
-    console.err(err);
-    res.status(304).send({ error: err });
+    console.error(err);
+    res.status(SERVER_ERROR).send({ error: err });
   }
 });
 
-app.get("/recipes", (req, res) => {
-  const mockRecipeReturn: Array<Recipe> = [
-    {
-      url: "fake",
-      title: "Soup with eggs",
-      ingredientsMatched: [
-        "Carrots",
-        "Potato",
-        "Milk",
-        "Eggs",
-        "Bread",
-        "Oil",
-        "Butter",
-        "Peanuts",
-        "Gravy"
-      ],
-      ingredientsNotMatched: ["Chicken", "Liver"],
-      nutritionalInfo: {
-        calories: 300,
-        fat: 10,
-        carbs: 30,
-        protein: 11,
-        sugar: 7
-      },
-      imageUrl: "fake",
-      nutritionScore: 98,
-      servingSize: 4
-    },
-    {
-      url: "fake",
-      title: "Lasagna",
-      ingredientsMatched: [
-        "Pasta",
-        "Potato",
-        "Milk",
-        "Eggs",
-        "Bread",
-        "Oil",
-        "Butter"
-      ],
-      ingredientsNotMatched: ["Chicken", "Liver"],
-      nutritionalInfo: {
-        calories: 550,
-        fat: 13,
-        carbs: 90,
-        protein: 15,
-        sugar: 13
-      },
-      imageUrl: "fake",
-      nutritionScore: 94,
-      servingSize: 8
-    },
-    {
-      url: "fake",
-      title: "American Cheeseburger",
-      ingredientsMatched: ["Potato", "Milk", "Eggs", "Bread", "Oil", "Gravy"],
-      ingredientsNotMatched: ["Chicken", "Liver", "Wasabi"],
-      nutritionalInfo: {
-        calories: 620,
-        fat: 30,
-        carbs: 51,
-        protein: 19,
-        sugar: 8
-      },
-      imageUrl: "fake",
-      nutritionScore: 85,
-      servingSize: 2
-    }
-  ];
+app.get("/recipes", async (req, res) => {
+  if (!req.query.q) {
+    // If there are no tokens in the query, return the empty array
+    res.send([]);
+    return;
+  }
 
-  res.send(mockRecipeReturn);
+  let q: Array<string> | string = req.query.q;
+  let searchTokens: Array<SearchToken> = [];
+
+  // Convert to array if only one element was passed
+  if (typeof q === 'string' || q instanceof String) {
+    q = [q];
+  }
+
+  for (const tTerm of q) {
+    const token = SearchToken.decode(tTerm);
+    if (token === null) {
+      res.status(BAD_REQUEST).send({ error: `Bad token: "${tTerm}"`});
+      return;
+    }
+    searchTokens.push(token);
+  }
+
+  try {
+    const matchedRecipes = await matchRecipes(searchTokens);
+    res.send(matchedRecipes);
+  } catch (err) {
+    console.error(err);
+    res.status(SERVER_ERROR).send({ error: err });
+  }
 });
 
 export default app;
