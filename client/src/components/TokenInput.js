@@ -71,7 +71,7 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
           {tokens.map((token, index) => {
             return (
               <Token
-                key={token.hash()}
+                key={token.encode()}
                 index={index}
                 data={token}
                 // TODO: Bind onDelete to index

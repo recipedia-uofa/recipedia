@@ -19,6 +19,7 @@ const matchQuery = (ingredients: Array<string>) => {
 
     matchedRecipes(func: uid(matchedRecipes)) {
       xid
+      name
       rating
       matchedIngredients: contains @filter(uid(tokens)) {
         xid
@@ -31,18 +32,19 @@ const matchQuery = (ingredients: Array<string>) => {
 };
 
 type IngredientResult = {
-  xid: string,
-}
+  xid: string
+};
 
 type MatchedRecipeResult = {
   xid: string,
+  name: string,
   rating: number,
   matchedIngredients: Array<IngredientResult>,
-  contains:  Array<IngredientResult>
+  contains: Array<IngredientResult>
 };
 
 type QueryResult = {
-  matchedRecipes: Array<MatchedRecipeResult>,
+  matchedRecipes: Array<MatchedRecipeResult>
 };
 
 const resultToIngredient: IngredientResult => Ingredient = i => i.xid;
@@ -52,8 +54,8 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
   const ingredientsMatched = resultToIngredientArray(result.matchedIngredients);
   const recipeIngredients = resultToIngredientArray(result.contains);
   return {
-    url: "https://google.com",
-    title: result.xid,
+    url: result.xid,
+    title: result.name,
     rating: result.rating,
     ingredientsMatched,
     ingredientsNotMatched: R.difference(recipeIngredients, ingredientsMatched),
@@ -71,7 +73,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
 };
 
 const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
-  R.path(['matchedRecipes']),
+  R.path(["matchedRecipes"]),
   R.map(resultToRecipe)
 );
 

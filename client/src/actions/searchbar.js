@@ -12,6 +12,7 @@ import {
 import keywords, { isValidKeyword, toKeyword } from "models/keywords";
 import { isValidDiet } from "models/diets";
 import SearchToken from "models/SearchToken";
+import { executeSearch } from "actions/search";
 
 import type {
   AddSearchToken,
@@ -67,6 +68,7 @@ export const deleteLastSearchToken = () => {
     }
 
     dispatch(deleteSearchToken(numTokens - 1));
+    dispatch(executeSearch());
   };
 };
 
@@ -116,16 +118,17 @@ export const tryAddSearchToken = (input: string) => {
 
     const hasLastToken = tokens.length > 0;
     if (!hasLastToken || !tokens[tokens.length - 1].isPartial()) {
-      let newToken: SearchToken;
       if (isValidKeyword(input)) {
         // create a partial token
-        newToken = new SearchToken(toKeyword(input));
-      } else {
-        // create an ingredient token
-        newToken = new SearchToken(keywords.NONE, input);
+        const newToken = new SearchToken(toKeyword(input));
+        dispatch(addSearchToken(newToken));
+        return;
       }
 
+      // create an ingredient token
+      const newToken = new SearchToken(keywords.NONE, input);
       dispatch(addSearchToken(newToken));
+      dispatch(executeSearch());
       return;
     }
 
@@ -134,6 +137,7 @@ export const tryAddSearchToken = (input: string) => {
     const mergedToken = new SearchToken(lastToken.keyword, input);
     dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
+    dispatch(executeSearch());
   };
 };
 

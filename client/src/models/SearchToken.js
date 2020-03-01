@@ -1,5 +1,5 @@
 // @flow
-import keywords from "models/keywords";
+import keywords, { toKeyword, isValidKeyword } from "models/keywords";
 
 import type { Ingredient } from "models/ingredient";
 import type { Diet } from "models/diets";
@@ -37,7 +37,17 @@ export default class SearchToken {
     return this.keyword !== keywords.NONE;
   }
 
-  hash(): string {
+  encode(): string {
     return `${this.keyword}_${this.value || ""}`;
+  }
+
+  static decode(str: string): SearchToken | null {
+    const [keywordStr, valueStr] = str.split("_");
+
+    if (!isValidKeyword(keywordStr)) {
+      return null;
+    }
+
+    return new SearchToken(toKeyword(keywordStr), valueStr);
   }
 }
