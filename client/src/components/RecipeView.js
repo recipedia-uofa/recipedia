@@ -23,7 +23,7 @@ const style = {
 class RecipeView extends React.PureComponent<Props> {
   render() {
     const { recipes } = this.props;
-    const recipeItems = recipes.map(r => <RecipeCard recipe={r} />);
+    const recipeItems = recipes.map(r => <RecipeCard key={r.url} recipe={r} />);
 
     return <div style={style.recipeView}>{recipeItems}</div>;
   }
