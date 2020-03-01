@@ -32,19 +32,19 @@ const matchQuery = (ingredients: Array<string>) => {
 };
 
 type IngredientResult = {
-  xid: string,
-}
+  xid: string
+};
 
 type MatchedRecipeResult = {
   xid: string,
   name: string,
   rating: number,
   matchedIngredients: Array<IngredientResult>,
-  contains:  Array<IngredientResult>
+  contains: Array<IngredientResult>
 };
 
 type QueryResult = {
-  matchedRecipes: Array<MatchedRecipeResult>,
+  matchedRecipes: Array<MatchedRecipeResult>
 };
 
 const resultToIngredient: IngredientResult => Ingredient = i => i.xid;
@@ -73,7 +73,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
 };
 
 const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
-  R.path(['matchedRecipes']),
+  R.path(["matchedRecipes"]),
   R.map(resultToRecipe)
 );
 

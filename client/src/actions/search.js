@@ -5,7 +5,9 @@ import {
   RECEIVE_SEARCH,
   INVALID_SEARCH
 } from "constants/actionTypes";
+import SearchToken from "models/SearchToken";
 
+import type { GetState } from "types/states";
 import type {
   ExecuteSearch,
   ReceiveSearch,
@@ -39,13 +41,24 @@ type RecipeReturn = {
   data: Array<Recipe>
 };
 
+const recipeRequestBase = "http://localhost:9000/recipes";
+
+const tokenToRequestArg = (token: SearchToken): string => `q=${token.encode()}`;
+
+const buildRecipeRequest = (tokens: Array<SearchToken>): string => {
+  return `${recipeRequestBase}/?${tokens.map(tokenToRequestArg).join("&")}`;
+};
+
 export const executeSearch = () => {
   // (dispatch, getState) =>
-  return (dispatch: *) => {
+  return (dispatch: *, getState: GetState) => {
+    const tokens = getState().searchbar.tokens;
+    const requestUrl = buildRecipeRequest(tokens);
+
     dispatch(requestSearch());
     // TODO: Use actual API call and get url based on state
     return axios
-      .get("http://localhost:9000/recipes")
+      .get(requestUrl)
       .then((res: RecipeReturn) => dispatch(receiveSearch(res.data)))
       .catch((err: AxiosError) => {
         console.error(err);

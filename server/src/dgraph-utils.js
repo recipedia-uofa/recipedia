@@ -10,4 +10,4 @@ export const extractResult = (queryName: string) => {
 
 export const toVarArray = (vars: Array<string>): string => {
   return `["${vars.join('","')}"]`;
-}
+};

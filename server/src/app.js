@@ -45,14 +45,14 @@ app.get("/recipes", async (req, res) => {
   let searchTokens: Array<SearchToken> = [];
 
   // Convert to array if only one element was passed
-  if (typeof q === 'string' || q instanceof String) {
+  if (typeof q === "string" || q instanceof String) {
     q = [q];
   }
 
   for (const tTerm of q) {
     const token = SearchToken.decode(tTerm);
     if (token === null) {
-      res.status(BAD_REQUEST).send({ error: `Bad token: "${tTerm}"`});
+      res.status(BAD_REQUEST).send({ error: `Bad token: "${tTerm}"` });
       return;
     }
     searchTokens.push(token);
