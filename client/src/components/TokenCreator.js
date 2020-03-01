@@ -96,7 +96,7 @@ class TokenCreator extends PureComponent<Props> {
 
       if (eventKey === "Enter") {
         if (trimmedValue.length === 0) {
-          this.props.executeSearch();
+          // this.props.executeSearch();
         } else {
           this.actions.createToken();
         }
