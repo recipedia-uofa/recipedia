@@ -46,7 +46,9 @@ class RecipeCard extends React.PureComponent<Props> {
             <div className={styles.RecipeCardIngredientContainer}>
               <div className={styles.RecipeCardIngredientBox}>
                 {recipe.ingredientsMatched.map(i => (
-                  <div key={i} className={styles.RecipeCardIngredientItem}>{i}</div>
+                  <div key={i} className={styles.RecipeCardIngredientItem}>
+                    {i}
+                  </div>
                 ))}
                 {recipe.ingredientsNotMatched.map(i => (
                   <div
