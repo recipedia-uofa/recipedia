@@ -15,8 +15,12 @@ if (process.env.NODE_ENV === "development") {
   dgraphClient.setDebugMode(false);
 }
 
-const runQuery = async (query: string) => {
-  const res = await dgraphClient.newTxn().query(query);
+const runQuery = async (query: string, vars: ?Object) => {
+  const txn = dgraphClient.newTxn({ readOnly: true });
+  const res = !vars
+    ? await txn.query(query)
+    : await txn.queryWithVars(query, vars);
+
   return res.getJson();
 };
 
