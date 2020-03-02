@@ -13,14 +13,19 @@ import proteinImg from "assets/icons/protein.svg";
 import sugarImg from "assets/icons/Sugar_Cube.svg";
 import servingsizeImg from "assets/icons/Fork_1.svg";
 
+import type { Node } from "react";
 import type { Recipe } from "models/recipe";
 import type { Ingredient } from "models/ingredient";
+
+type Props = {
+  recipe: Recipe
+};
 
 type NutritionInfoProps = {
   className: string,
   details: number,
   icon: string,
-  title: string,
+  title: Node | string,
   tag: string,
   isLargeTitle: boolean,
 };
@@ -54,10 +59,68 @@ class NutritionInfoCard extends React.PureComponent<NutritionInfoProps> {
               )}
             >
               <div className={styles.Bold}>{details}</div>
-              <div className={styles.SmallFont}>{tag}</div>
+              <div className={isLargeTitle ? styles.SmallFont : styles.Bold}>{tag}</div>
             </div>
           </div>
         </div>
+      </div>
+    );
+  }
+}
+
+class SecondaryRecipeCards extends React.PureComponent<Props> {
+  render() {
+    const { recipe } = this.props;
+    return (
+      <div className={styles.SecondaryRecipeCardContainer}>
+        <NutritionInfoCard 
+          details={recipe.nutritionalInfo.calories}
+          icon={calorieImg}
+          title="Calories"
+          tag="kcal"
+          className={styles.CaloriesColor}
+          isLargeTitle={true}
+        />
+        <NutritionInfoCard 
+          details={recipe.nutritionalInfo.fat}
+          icon={fatImg}
+          title="Fat"
+          tag="g"
+          className={styles.FatColor}
+          isLargeTitle={false}
+        />
+        <NutritionInfoCard 
+          details={recipe.nutritionalInfo.carbs}
+          icon={carbsImg}
+          title="Carbs"
+          tag="g"
+          className={styles.CarbsColor}
+          isLargeTitle={false}
+        />
+        <NutritionInfoCard 
+          details={recipe.nutritionalInfo.protein}
+          icon={proteinImg}
+          title="Protein"
+          tag="g"
+          className={styles.ProteinColor}
+          isLargeTitle={false}
+        />
+        <NutritionInfoCard 
+          details={recipe.nutritionalInfo.sugar}
+          icon={sugarImg}
+          title="Sugar"
+          tag="g"
+          className={styles.SugarColor}
+          isLargeTitle={false}
+        />
+        <NutritionInfoCard 
+          details={recipe.servingSize}
+          icon={servingsizeImg}
+          title={<span>Serving<br></br>Size</span>}
+          tag="people"
+          className={styles.ServingSize}
+          isLargeTitle={true}
+        />
       </div>
     );
   }
@@ -141,10 +204,6 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
   }
 }
 
-type Props = {
-  recipe: Recipe
-};
-
 class PrimaryRecipeCard extends React.PureComponent<Props> {
   render() {
     const { recipe } = this.props;
@@ -163,64 +222,6 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
             <RecipeIngredientBox matchedIngredients={recipe.ingredientsMatched} notMatchedIngredients={recipe.ingredientsNotMatched}/>
           </div>
         </div>
-      </div>
-    );
-  }
-}
-
-class SecondaryRecipeCards extends React.PureComponent<Props> {
-  render() {
-    const { recipe } = this.props;
-    return (
-      <div className={styles.SecondaryRecipeCardContainer}>
-        <NutritionInfoCard 
-          details={recipe.nutritionalInfo.calories}
-          icon={calorieImg}
-          title="Calories"
-          tag="kcal"
-          className={styles.CaloriesColor}
-          isLargeTitle={true}
-        />
-        <NutritionInfoCard 
-          details={recipe.nutritionalInfo.fat}
-          icon={fatImg}
-          title="Fat"
-          tag="g"
-          className={styles.FatColor}
-          isLargeTitle={false}
-        />
-        <NutritionInfoCard 
-          details={recipe.nutritionalInfo.carbs}
-          icon={carbsImg}
-          title="Carbs"
-          tag="g"
-          className={styles.CarbsColor}
-          isLargeTitle={false}
-        />
-        <NutritionInfoCard 
-          details={recipe.nutritionalInfo.protein}
-          icon={proteinImg}
-          title="Protein"
-          tag="g"
-          className={styles.ProteinColor}
-          isLargeTitle={false}
-        />
-        <NutritionInfoCard 
-          details={recipe.nutritionalInfo.sugar}
-          icon={sugarImg}
-          title="Sugar"
-          tag="g"
-          className={styles.SugarColor}
-          isLargeTitle={false}
-        />
-        <NutritionInfoCard 
-          details={recipe.servingSize}
-          icon={servingsizeImg}
-          title="Serving<br></br>Size"
-          tag="people"
-          className={styles.SugarColor}
-          isLargeTitle={true}
-        />
       </div>
     );
   }
