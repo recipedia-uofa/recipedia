@@ -4,7 +4,7 @@ import * as dgraph from "dgraph-js";
 import grpc from "grpc";
 
 const clientStub = new dgraph.DgraphClientStub(
-  "localhost:9080",
+  "alpha:9080",
   grpc.credentials.createInsecure()
 );
 const dgraphClient = new dgraph.DgraphClient(clientStub);
