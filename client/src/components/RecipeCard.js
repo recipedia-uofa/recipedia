@@ -65,6 +65,13 @@ class RecipeCard extends React.PureComponent<Props> {
             </div>
           </div>
         </div>
+        <div className={styles.ScoreContainer}>
+          <div className={styles.ScoreCircle}>
+            <div className={styles.ScoreNumber} alt="0%">
+              {recipe.nutritionScore}%
+            </div>
+          </div>
+        </div>
         <div className={styles.SecondaryRecipeCardContainer}>
           <div
             className={classNames(
