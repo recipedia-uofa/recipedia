@@ -169,7 +169,12 @@ type ValidIngredientReturn = {
 };
 
 export const loadValidIngredients = () => {
-  return (dispatch: *) => {
+  return (dispatch: *, getState: GetState) => {
+    if (getState().searchbar.validIngredients.length > 0) {
+      // We already have valid ingredients
+      return;
+    }
+
     axios.get("http://localhost:9000/ingredients")
       .then((res: ValidIngredientReturn) => dispatch(receiveValidIngredients(res.data)))
       .catch((err: AxiosError) => {

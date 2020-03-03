@@ -46,7 +46,6 @@ export default (
         text: action.text
       };
     case RECIEVE_VALID_INGREDIENTS:
-      console.log(`Loaded ingredients:\n${action.ingredients.toString()}`);
       return {
         ...state,
         validIngredients: action.ingredients,
