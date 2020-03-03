@@ -3,7 +3,7 @@ import * as R from "ramda";
 import query from "./query";
 import SearchToken from "models/SearchToken";
 import keywords from "models/keywords";
-import { extractResult, toVarArray } from "./dgraph-utils";
+import { toVarArray } from "./dgraph-utils";
 
 import type { Ingredient } from "models/ingredient";
 import type { Recipe } from "models/recipe";

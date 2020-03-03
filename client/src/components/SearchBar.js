@@ -6,11 +6,13 @@ import { bindActionCreators } from "redux";
 import styles from "styles/searchbar.module.css";
 import * as colours from "constants/colours";
 import { executeSearch } from "actions";
+import { loadValidIngredients } from "actions/searchbar";
 // import TokenCreator from "components/TokenCreator";
 import TokenInput from "components/TokenInput";
 
 type Props = {|
-  executeSearch: () => void
+  executeSearch: () => void,
+  loadValidIngredients: () => void,
 |};
 
 const BORDER_WIDTH = 1;
@@ -40,6 +42,10 @@ const style = {
 };
 
 class SearchBar extends React.PureComponent<Props> {
+  componentDidMount() {
+    this.props.loadValidIngredients();
+  }
+
   render() {
     return (
       <div className={styles.searchContainer}>
@@ -64,7 +70,8 @@ class SearchBar extends React.PureComponent<Props> {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      executeSearch
+      executeSearch,
+      loadValidIngredients,
     },
     dispatch
   );

@@ -31,3 +31,6 @@ export type InvalidSearchEntry = "searchbar/INVALID_ENTRY";
 
 export const CHANGE_SEARCH_TEXT = "searchbar/CHANGE_TEXT";
 export type ChangeSearchText = "searchbar/CHANGE_TEXT";
+
+export const RECIEVE_VALID_INGREDIENTS = "searchbar/RECEIVE_INGREDIENTS";
+export type RecieveValidIngredients = "searchbar/RECEIVE_INGREDIENTS";
