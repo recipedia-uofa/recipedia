@@ -62,6 +62,11 @@ const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
   message
 });
 
+const clearSearchError = (): InvalidSearchEntryAction => ({
+  type: INVALID_SEARCH_ENTRY,
+  message: ""
+});
+
 export const deleteSearchToken = (index: number): DeleteSearchTokenAction => ({
   type: DELETE_SEARCH_TOKEN,
   index
@@ -83,7 +88,6 @@ export const deleteLastSearchToken = () => {
 
 const INVALID_INGREDIENT_MESSAGE = "Entered an invalid ingredient";
 const INVALID_DIET_MESSAGE = "Entered an invalid diet";
-const INVALID_KEYWORD_MESSAGE = "Entered an invalid keyword";
 const INVALID_KEY_OR_INGREDIENT_MESSAGE = "Entered an invalid keyword or ingredient";
 
 // Returns if the ingredient is valid, and the appropriate error message IF
@@ -138,12 +142,14 @@ export const tryAddSearchToken = (input: string) => {
         // create a partial token
         const newToken = new SearchToken(toKeyword(input));
         dispatch(addSearchToken(newToken));
+        dispatch(clearSearchError());
         return;
       }
 
       // create an ingredient token
       const newToken = new SearchToken(keywords.NONE, input);
       dispatch(addSearchToken(newToken));
+      dispatch(clearSearchError());
       dispatch(executeSearch());
       return;
     }
@@ -153,6 +159,7 @@ export const tryAddSearchToken = (input: string) => {
     const mergedToken = new SearchToken(lastToken.keyword, input);
     dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
+    dispatch(clearSearchError());
     dispatch(executeSearch());
   };
 };
