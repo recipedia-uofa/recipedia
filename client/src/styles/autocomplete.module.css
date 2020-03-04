@@ -3,36 +3,36 @@
 */
 
 .autocomplete {
-    /*the container must be positioned relative:*/
-    position: absolute;
-    display: inline-block;
-    transform: translateY(30%);
+  /*the container must be positioned relative:*/
+  position: absolute;
+  display: inline-block;
+  transform: translateY(30%);
 }
 .autocompleteItems {
-    /* position: absolute; */
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #d4d4d4;
-    border-bottom: none;
-    border-top: none;
-    z-index: 99;
-    /*position the autocomplete items to be the same width as the container:*/
-    top: 100%;
-    left: 0;
-    right: 0;
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
 }
 .autocompleteItems div {
-    padding: 10px;
-    cursor: pointer;
-    background-color: #fff;
-    border-bottom: 1px solid #d4d4d4;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
 }
 .autocompleteItems div:hover {
-    /*when hovering an item:*/
-    background-color: #e9e9e9;
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
 }
 .autocompleteActive {
-    /*when navigating through the items using the arrow keys:*/
-    background-color: DodgerBlue !important;
-    color: #ffffff;
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
 }
