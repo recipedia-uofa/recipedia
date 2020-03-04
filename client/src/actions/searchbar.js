@@ -1,12 +1,14 @@
 // @flow
 import * as R from "ramda";
+import axios, { AxiosError } from "axios";
 
 import {
   ADD_SEARCH_TOKEN,
   DELETE_SEARCH_TOKEN,
   CLEAR_SEARCH_TOKENS,
   INVALID_SEARCH_ENTRY,
-  CHANGE_SEARCH_TEXT
+  CHANGE_SEARCH_TEXT,
+  RECIEVE_VALID_INGREDIENTS
 } from "constants/actionTypes";
 
 import keywords, { isValidKeyword, toKeyword } from "models/keywords";
@@ -19,9 +21,11 @@ import type {
   DeleteSearchToken,
   ClearSearchTokens,
   InvalidSearchEntry,
-  ChangeSearchText
+  ChangeSearchText,
+  RecieveValidIngredients
 } from "constants/actionTypes";
 
+import type { Ingredient } from "models/ingredient";
 import type { GetState } from "types/states";
 
 type AddSearchTokenAction = {
@@ -46,6 +50,11 @@ type InvalidSearchEntryAction = {
 type ChangeSearchTextAction = {
   type: ChangeSearchText,
   text: string
+};
+
+type RecieveValidIngredientsAction = {
+  type: RecieveValidIngredients,
+  ingredients: Array<Ingredient>,
 };
 
 const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
@@ -150,9 +159,34 @@ export const changeSearchText = (text: string): ChangeSearchTextAction => ({
   text
 });
 
+const receiveValidIngredients = (ingredients: Array<Ingredient>): RecieveValidIngredientsAction => ({
+  type: RECIEVE_VALID_INGREDIENTS,
+  ingredients,
+});
+
+type ValidIngredientReturn = {
+  data: Array<Ingredient>,
+};
+
+export const loadValidIngredients = () => {
+  return (dispatch: *, getState: GetState) => {
+    if (getState().searchbar.validIngredients.length > 0) {
+      // We already have valid ingredients
+      return;
+    }
+
+    axios.get("http://localhost:9000/ingredients")
+      .then((res: ValidIngredientReturn) => dispatch(receiveValidIngredients(res.data)))
+      .catch((err: AxiosError) => {
+        console.error(err);
+      });
+  }
+};
+
 export type SearchBarActions =
   | AddSearchTokenAction
   | DeleteSearchTokenAction
   | ClearSearchTokensAction
   | InvalidSearchEntryAction
-  | ChangeSearchTextAction;
+  | ChangeSearchTextAction
+  | RecieveValidIngredientsAction;
