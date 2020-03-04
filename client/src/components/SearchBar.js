@@ -42,18 +42,18 @@ type Props = {
   // redux
   errorMessage: string,
   executeSearch: () => void,
-  loadValidIngredients: () => void,
+  loadValidIngredients: () => void
 };
 
 const mapStateToProps = (state: State, ownProps) => ({
-  errorMessage: state.searchbar.error,
+  errorMessage: state.searchbar.error
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       executeSearch,
-      loadValidIngredients,
+      loadValidIngredients
     },
     dispatch
   );
@@ -82,9 +82,7 @@ class SearchBar extends React.PureComponent<Props> {
             Search
           </button>
         </div>
-        {showError &&
-          <span style={{color: "red"}}>{errorMessage}</span>
-        }
+        {showError && <span style={{ color: "red" }}>{errorMessage}</span>}
       </div>
     );
   }

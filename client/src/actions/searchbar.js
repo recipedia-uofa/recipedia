@@ -54,7 +54,7 @@ type ChangeSearchTextAction = {
 
 type RecieveValidIngredientsAction = {
   type: RecieveValidIngredients,
-  ingredients: Array<Ingredient>,
+  ingredients: Array<Ingredient>
 };
 
 const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
@@ -88,7 +88,8 @@ export const deleteLastSearchToken = () => {
 
 const INVALID_INGREDIENT_MESSAGE = "Entered an invalid ingredient";
 const INVALID_DIET_MESSAGE = "Entered an invalid diet";
-const INVALID_KEY_OR_INGREDIENT_MESSAGE = "Entered an invalid keyword or ingredient";
+const INVALID_KEY_OR_INGREDIENT_MESSAGE =
+  "Entered an invalid keyword or ingredient";
 
 // Returns if the ingredient is valid, and the appropriate error message IF
 // it is invalid
@@ -130,7 +131,11 @@ export const tryAddSearchToken = (input: string) => {
     const state = getState();
     const { tokens, validIngredients } = state.searchbar;
 
-    const [isValid, errorMessage] = isValidInput(input, tokens, validIngredients);
+    const [isValid, errorMessage] = isValidInput(
+      input,
+      tokens,
+      validIngredients
+    );
     if (!isValid) {
       dispatch(invalidSearchToken(errorMessage));
       return;
@@ -173,13 +178,15 @@ export const changeSearchText = (text: string): ChangeSearchTextAction => ({
   text
 });
 
-const receiveValidIngredients = (ingredients: Array<Ingredient>): RecieveValidIngredientsAction => ({
+const receiveValidIngredients = (
+  ingredients: Array<Ingredient>
+): RecieveValidIngredientsAction => ({
   type: RECIEVE_VALID_INGREDIENTS,
-  ingredients,
+  ingredients
 });
 
 type ValidIngredientReturn = {
-  data: Array<Ingredient>,
+  data: Array<Ingredient>
 };
 
 export const loadValidIngredients = () => {
@@ -189,12 +196,15 @@ export const loadValidIngredients = () => {
       return;
     }
 
-    axios.get("http://localhost:9000/ingredients")
-      .then((res: ValidIngredientReturn) => dispatch(receiveValidIngredients(res.data)))
+    axios
+      .get("http://localhost:9000/ingredients")
+      .then((res: ValidIngredientReturn) =>
+        dispatch(receiveValidIngredients(res.data))
+      )
       .catch((err: AxiosError) => {
         console.error(err);
       });
-  }
+  };
 };
 
 export type SearchBarActions =

@@ -27,19 +27,14 @@ type NutritionInfoProps = {
   icon: string,
   title: Node | string,
   tag: string,
-  isLargeTitle: boolean,
+  isLargeTitle: boolean
 };
 
 class NutritionInfoCard extends React.PureComponent<NutritionInfoProps> {
   render() {
     const { className, details, icon, title, tag, isLargeTitle } = this.props;
     return (
-      <div
-        className={classNames(
-          styles.SecondaryRecipeCard,
-          className
-        )}
-      >
+      <div className={classNames(styles.SecondaryRecipeCard, className)}>
         <div className={styles.RecipeCardOffset}>
           <div className={styles.NutritionDescriptionItem}>
             <img
@@ -48,7 +43,11 @@ class NutritionInfoCard extends React.PureComponent<NutritionInfoProps> {
               alt={title}
             />
             <div
-              className={isLargeTitle ? classNames(styles.LargeWordFont, styles.DietTitle) : styles.DietTitle}
+              className={
+                isLargeTitle
+                  ? classNames(styles.LargeWordFont, styles.DietTitle)
+                  : styles.DietTitle
+              }
             >
               {title}
             </div>
@@ -59,7 +58,9 @@ class NutritionInfoCard extends React.PureComponent<NutritionInfoProps> {
               )}
             >
               <div className={styles.Bold}>{details}</div>
-              <div className={isLargeTitle ? styles.SmallFont : styles.Bold}>{tag}</div>
+              <div className={isLargeTitle ? styles.SmallFont : styles.Bold}>
+                {tag}
+              </div>
             </div>
           </div>
         </div>
@@ -73,7 +74,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
     const { recipe } = this.props;
     return (
       <div className={styles.SecondaryRecipeCardContainer}>
-        <NutritionInfoCard 
+        <NutritionInfoCard
           details={recipe.nutritionalInfo.calories}
           icon={calorieImg}
           title="Calories"
@@ -81,7 +82,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
           className={styles.CaloriesColor}
           isLargeTitle={true}
         />
-        <NutritionInfoCard 
+        <NutritionInfoCard
           details={recipe.nutritionalInfo.fat}
           icon={fatImg}
           title="Fat"
@@ -89,7 +90,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
           className={styles.FatColor}
           isLargeTitle={false}
         />
-        <NutritionInfoCard 
+        <NutritionInfoCard
           details={recipe.nutritionalInfo.carbs}
           icon={carbsImg}
           title="Carbs"
@@ -97,7 +98,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
           className={styles.CarbsColor}
           isLargeTitle={false}
         />
-        <NutritionInfoCard 
+        <NutritionInfoCard
           details={recipe.nutritionalInfo.protein}
           icon={proteinImg}
           title="Protein"
@@ -105,7 +106,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
           className={styles.ProteinColor}
           isLargeTitle={false}
         />
-        <NutritionInfoCard 
+        <NutritionInfoCard
           details={recipe.nutritionalInfo.sugar}
           icon={sugarImg}
           title="Sugar"
@@ -113,10 +114,14 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
           className={styles.SugarColor}
           isLargeTitle={false}
         />
-        <NutritionInfoCard 
+        <NutritionInfoCard
           details={recipe.servingSize}
           icon={servingsizeImg}
-          title={<span>Serving<br></br>Size</span>}
+          title={
+            <span>
+              Serving<br></br>Size
+            </span>
+          }
           tag="people"
           className={styles.ServingSize}
           isLargeTitle={true}
@@ -128,14 +133,24 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
 
 type IngredientTokenProps = {
   ingredient: Ingredient,
-  isMatched: boolean,
+  isMatched: boolean
 };
 
 class RecipeIngredientToken extends React.PureComponent<IngredientTokenProps> {
   render() {
     const { ingredient, isMatched } = this.props;
     return (
-      <div key={ingredient} className={isMatched ?  styles.RecipeCardIngredientItem : classNames(styles.RecipeCardIngredientItem, styles.NotMatchedIngredient)}>
+      <div
+        key={ingredient}
+        className={
+          isMatched
+            ? styles.RecipeCardIngredientItem
+            : classNames(
+                styles.RecipeCardIngredientItem,
+                styles.NotMatchedIngredient
+              )
+        }
+      >
         {ingredient}
       </div>
     );
@@ -143,8 +158,8 @@ class RecipeIngredientToken extends React.PureComponent<IngredientTokenProps> {
 }
 
 type ScoreProps = {
-  recipeScore: number,
-}
+  recipeScore: number
+};
 
 class RecipeScore extends React.PureComponent<ScoreProps> {
   render() {
@@ -185,8 +200,8 @@ class RecipeLogo extends React.PureComponent<LogoProps> {
 
 type IngredientBoxProps = {
   matchedIngredients: Array<Ingredient>,
-  notMatchedIngredients: Array<Ingredient>,
-}
+  notMatchedIngredients: Array<Ingredient>
+};
 
 class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
   render() {
@@ -194,10 +209,10 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
     return (
       <div className={styles.RecipeCardIngredientBox}>
         {matchedIngredients.map(i => (
-          <RecipeIngredientToken ingredient={i} isMatched={true}/>
+          <RecipeIngredientToken ingredient={i} isMatched={true} />
         ))}
         {notMatchedIngredients.map(i => (
-          <RecipeIngredientToken ingredient={i} isMatched={false}/>
+          <RecipeIngredientToken ingredient={i} isMatched={false} />
         ))}
       </div>
     );
@@ -219,7 +234,10 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
         <div className={styles.RecipeCardTitle}>{recipe.title}</div>
         <div className={styles.RecipeCardDescription}>
           <div className={styles.RecipeCardIngredientContainer}>
-            <RecipeIngredientBox matchedIngredients={recipe.ingredientsMatched} notMatchedIngredients={recipe.ingredientsNotMatched}/>
+            <RecipeIngredientBox
+              matchedIngredients={recipe.ingredientsMatched}
+              notMatchedIngredients={recipe.ingredientsNotMatched}
+            />
           </div>
         </div>
       </div>
@@ -232,10 +250,10 @@ class RecipeCard extends React.PureComponent<Props> {
     const { recipe } = this.props;
     return (
       <div className={styles.RecipeCards}>
-        <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R"/>
-        <PrimaryRecipeCard recipe={recipe}/>
-        <RecipeScore recipeScore={recipe.nutritionScore}/>
-        <SecondaryRecipeCards recipe={recipe}/>
+        <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
+        <PrimaryRecipeCard recipe={recipe} />
+        <RecipeScore recipeScore={recipe.nutritionScore} />
+        <SecondaryRecipeCards recipe={recipe} />
       </div>
     );
   }

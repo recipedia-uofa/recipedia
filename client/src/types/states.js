@@ -7,7 +7,7 @@ export type SearchbarState = {|
   +text: string, // the search string
   +tokens: Array<SearchToken>, // list of search tokens
   +error: string,
-  +validIngredients: IngredientMap, // map of valid ingredients
+  +validIngredients: IngredientMap // map of valid ingredients
 |};
 
 export type ResultsState = {|
