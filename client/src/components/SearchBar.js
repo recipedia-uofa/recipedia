@@ -6,12 +6,11 @@ import { bindActionCreators } from "redux";
 import styles from "styles/searchbar.module.css";
 import * as colours from "constants/colours";
 import { executeSearch } from "actions";
+import { loadValidIngredients } from "actions/searchbar";
 // import TokenCreator from "components/TokenCreator";
 import TokenInput from "components/TokenInput";
 
-type Props = {|
-  executeSearch: () => void
-|};
+import type { State } from "types/states";
 
 const BORDER_WIDTH = 1;
 const CORNER_RADIUS = 15;
@@ -39,8 +38,35 @@ const style = {
   }
 };
 
+type Props = {
+  // redux
+  errorMessage: string,
+  executeSearch: () => void,
+  loadValidIngredients: () => void
+};
+
+const mapStateToProps = (state: State, ownProps) => ({
+  errorMessage: state.searchbar.error
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      executeSearch,
+      loadValidIngredients
+    },
+    dispatch
+  );
+
 class SearchBar extends React.PureComponent<Props> {
+  componentDidMount() {
+    this.props.loadValidIngredients();
+  }
+
   render() {
+    const { errorMessage } = this.props;
+    const showError = errorMessage !== "";
+
     return (
       <div className={styles.searchContainer}>
         <div style={style.outerSearchBox}>
@@ -56,17 +82,10 @@ class SearchBar extends React.PureComponent<Props> {
             Search
           </button>
         </div>
+        {showError && <span style={{ color: "red" }}>{errorMessage}</span>}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      executeSearch
-    },
-    dispatch
-  );
-
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

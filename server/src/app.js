@@ -45,7 +45,7 @@ app.get("/recipes", async (req, res) => {
   let searchTokens: Array<SearchToken> = [];
 
   // Convert to array if only one element was passed
-  if (typeof q === "string" || q instanceof String) {
+  if (typeof q === "string") {
     q = [q];
   }
 

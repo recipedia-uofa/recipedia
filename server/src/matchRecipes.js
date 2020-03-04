@@ -3,21 +3,32 @@ import * as R from "ramda";
 import query from "./query";
 import SearchToken from "models/SearchToken";
 import keywords from "models/keywords";
-import { extractResult, toVarArray } from "./dgraph-utils";
+import { varArray } from "./dgraph-utils";
 
 import type { Ingredient } from "models/ingredient";
 import type { Recipe } from "models/recipe";
 
-const matchQuery = (ingredients: Array<string>) => {
+type MatchQueryOpts = {
+  limit: number
+};
+
+const matchQuery = (
+  ingredients: Array<string>,
+  opts: MatchQueryOpts = { limit: 50 }
+) => {
   return `
   {
-    tokens as var(func: eq(xid, ${toVarArray(ingredients)}))
+    tokens as var(func: eq(xid, ${varArray(ingredients)}))
 
     var(func: uid(tokens)) {
-      matchedRecipes as ~contains
+      matchedRecipes as ~contains {
+        numMatched as count(contains @filter(uid(tokens)))
+      }
     }
 
-    matchedRecipes(func: uid(matchedRecipes)) {
+    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
+      opts.limit
+    }) {
       xid
       name
       rating
