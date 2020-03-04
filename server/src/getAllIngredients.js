@@ -10,15 +10,15 @@ type IngredientResult = {
 
 type QueryResult = {
   data: {
-    allIngredients: Array<IngredientResult>,
+    allIngredients: Array<IngredientResult>
   }
 };
 
 const getIngredientName = (i: IngredientResult): string => i.xid;
 
 const extractIngredients: QueryResult => Array<Ingredient> = R.pipe(
-  R.path(['allIngredients']),
-  R.map(getIngredientName),
+  R.path(["allIngredients"]),
+  R.map(getIngredientName)
 );
 
 const getAllIngredients = async (): Promise<Array<Ingredient>> => {

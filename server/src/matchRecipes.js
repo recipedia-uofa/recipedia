@@ -9,10 +9,13 @@ import type { Ingredient } from "models/ingredient";
 import type { Recipe } from "models/recipe";
 
 type MatchQueryOpts = {
-  limit: number,
+  limit: number
 };
 
-const matchQuery = (ingredients: Array<string>, opts: MatchQueryOpts = { limit: 50 }) => {
+const matchQuery = (
+  ingredients: Array<string>,
+  opts: MatchQueryOpts = { limit: 50 }
+) => {
   return `
   {
     tokens as var(func: eq(xid, ${varArray(ingredients)}))
@@ -23,7 +26,9 @@ const matchQuery = (ingredients: Array<string>, opts: MatchQueryOpts = { limit: 
       }
     }
 
-    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${opts.limit}) {
+    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
+      opts.limit
+    }) {
       xid
       name
       rating
