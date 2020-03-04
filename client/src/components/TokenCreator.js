@@ -3,6 +3,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Autosized from "react-input-autosize";
+import classNames from "classnames";
 import {
   tryAddSearchToken,
   deleteLastSearchToken,
@@ -10,6 +11,7 @@ import {
 } from "actions/searchbar";
 import { executeSearch } from "actions/search";
 import styles from "styles/searchbar.module.css";
+import autocompleteStyle from "styles/autocomplete.module.css";
 
 import type { State } from "types/states";
 
@@ -129,6 +131,14 @@ class TokenCreator extends PureComponent<Props> {
           onKeyDown={this.actions.handleKeyDown}
           onPaste={this.actions.handlePaste}
         />
+        <div className={autocompleteStyle.autocomplete}>
+          <div className={autocompleteStyle.autocompleteItems}>
+            <div>Potato</div>
+            <div>Leek</div>
+            <div>Carrot</div>
+            <div>Onion</div>
+          </div>
+        </div>
       </div>
     );
   }

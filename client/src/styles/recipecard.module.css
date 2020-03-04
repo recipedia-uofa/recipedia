@@ -152,7 +152,7 @@ For now, the colour will be hard coded*/
 .ScoreContainer {
   width: 75px;
   position: absolute;
-  z-index: 5;
+  z-index: 2;
   transition: transform 0.7s;
   transform: translate(450%, -110%);
 }
@@ -320,6 +320,7 @@ For now, the colour will be hard coded*/
 }
 
 .RecipeCards:hover .ScoreContainer {
+  z-index: 5;
   transform: translate(370%, -117%);
 }
 
