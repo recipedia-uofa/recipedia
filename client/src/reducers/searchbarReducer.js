@@ -1,4 +1,5 @@
 // @flow
+import * as R from 'ramda';
 import {
   ADD_SEARCH_TOKEN,
   DELETE_SEARCH_TOKEN,
@@ -13,7 +14,7 @@ const initialState: SearchbarState = {
   text: "",
   tokens: [],
   error: "",
-  validIngredients: [],
+  validIngredients: {},
 };
 
 export default (
@@ -48,7 +49,7 @@ export default (
     case RECIEVE_VALID_INGREDIENTS:
       return {
         ...state,
-        validIngredients: action.ingredients,
+        validIngredients: R.indexBy(R.identity, action.ingredients),
       };
     default:
       return state;

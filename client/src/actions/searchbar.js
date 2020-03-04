@@ -25,7 +25,7 @@ import type {
   RecieveValidIngredients
 } from "constants/actionTypes";
 
-import type { Ingredient } from "models/ingredient";
+import type { Ingredient, IngredientMap } from "models/ingredient";
 import type { GetState } from "types/states";
 
 type AddSearchTokenAction = {
@@ -81,33 +81,38 @@ export const deleteLastSearchToken = () => {
   };
 };
 
-const isValidIngredient = (input: string): boolean => {
-  return true;
-};
+const INVALID_INGREDIENT_MESSAGE = "Entered an invalid ingredient";
+const INVALID_DIET_MESSAGE = "Entered an invalid diet";
+const INVALID_KEYWORD_MESSAGE = "Entered an invalid keyword";
+const INVALID_KEY_OR_INGREDIENT_MESSAGE = "Entered an invalid keyword or ingredient";
 
-const isValidAny: string => boolean = R.anyPass([
-  isValidIngredient,
-  isValidDiet,
-  isValidKeyword
-]);
-
+// Returns if the ingredient is valid, and the appropriate error message IF
+// it is invalid
 const isValidInput = (
   input: string,
-  currentTokens: Array<SearchToken>
-): boolean => {
+  currentTokens: Array<SearchToken>,
+  validIngredients: IngredientMap
+): [boolean, string] => {
+  const isValidIngredient = (i: string) => i in validIngredients;
+
+  const isValidKeyOrIngredient: string => boolean = R.anyPass([
+    isValidIngredient,
+    isValidKeyword
+  ]);
+
   if (currentTokens.length === 0) {
-    return isValidAny(input);
+    return [isValidKeyOrIngredient(input), INVALID_KEY_OR_INGREDIENT_MESSAGE];
   }
 
   const lastToken = currentTokens[currentTokens.length - 1];
   if (lastToken.isPartial()) {
     if (lastToken.isDiet()) {
-      return isValidDiet(input);
+      return [isValidDiet(input), INVALID_DIET_MESSAGE];
     } else {
-      return isValidIngredient(input);
+      return [isValidIngredient(input), INVALID_INGREDIENT_MESSAGE];
     }
   } else {
-    return isValidAny(input);
+    return [isValidKeyOrIngredient(input), INVALID_KEY_OR_INGREDIENT_MESSAGE];
   }
 };
 
@@ -118,10 +123,12 @@ const addSearchToken = (token: SearchToken): AddSearchTokenAction => ({
 
 export const tryAddSearchToken = (input: string) => {
   return (dispatch: *, getState: GetState) => {
-    const tokens: Array<SearchToken> = getState().searchbar.tokens;
+    const state = getState();
+    const { tokens, validIngredients } = state.searchbar;
 
-    if (!isValidInput(input, tokens)) {
-      dispatch(invalidSearchToken("Your input is not valid"));
+    const [isValid, errorMessage] = isValidInput(input, tokens, validIngredients);
+    if (!isValid) {
+      dispatch(invalidSearchToken(errorMessage));
       return;
     }
 
@@ -170,7 +177,7 @@ type ValidIngredientReturn = {
 
 export const loadValidIngredients = () => {
   return (dispatch: *, getState: GetState) => {
-    if (getState().searchbar.validIngredients.length > 0) {
+    if (!R.isEmpty(getState().searchbar.validIngredients)) {
       // We already have valid ingredients
       return;
     }

@@ -56,7 +56,6 @@ export const executeSearch = () => {
     const requestUrl = buildRecipeRequest(tokens);
 
     dispatch(requestSearch());
-    // TODO: Use actual API call and get url based on state
     return axios
       .get(requestUrl)
       .then((res: RecipeReturn) => dispatch(receiveSearch(res.data)))
