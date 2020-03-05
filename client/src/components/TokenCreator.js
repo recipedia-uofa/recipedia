@@ -11,6 +11,7 @@ import {
 } from "actions/searchbar";
 import { executeSearch } from "actions/search";
 import styles from "styles/searchbar.module.css";
+import autocompleteStyle from "styles/autocomplete.module.css";
 
 import type { State } from "types/states";
 
@@ -120,6 +121,20 @@ class TokenCreator extends PureComponent<Props> {
 
     return (
       <div className={styles.autosizedWrapper}>
+        <div className={autocompleteStyle.autocomplete}>
+          <div className={autocompleteStyle.autocompleteItems}>
+            <div>
+              <div className={autocompleteStyle.autocompleteItemKeyword}>
+                DIET
+              </div>
+            </div>
+            <div>Potato</div>
+            <div>Leek</div>
+            <div>Carrot</div>
+            <div>Onion</div>
+            <div>Condensed Milk</div>
+          </div>
+        </div>
         <Autosized
           inputRef={inputRef}
           placeholder={placeholder}

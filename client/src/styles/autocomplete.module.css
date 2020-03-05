@@ -1,0 +1,59 @@
+/*
+    The following css style classes are influenced from the following site: https://www.w3schools.com/howto/howto_js_autocomplete.asp
+*/
+
+.autocomplete {
+  /*the container must be positioned relative:*/
+  position: absolute;
+  display: inline-block;
+  transform: translateY(45px);
+  box-sizing: border-box;
+  box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
+  z-index: 99;
+  min-width: 10%;
+  max-width: 50%;
+  width: max-content;
+  transition: width 0.5s;
+}
+.autocompleteItems {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocompleteItems div {
+  padding: 12px;
+  cursor: pointer;
+  background-color: #fff;
+}
+.autocompleteItems div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+/*The color is as an example. This will need to be dynamically set*/
+.autocompleteItemKeyword {
+  width: max-content;
+  border-radius: 15px;
+  background-color: #89609e !important;
+  color: white;
+  font-weight: 600;
+  justify-content: center;
+  text-align: center;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding: 8px !important;
+}
+/*NOTE: This style is used for the "keyboard selections"*/
+.autocompleteActive {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
