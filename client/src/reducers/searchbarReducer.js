@@ -14,7 +14,8 @@ const initialState: SearchbarState = {
   text: "",
   tokens: [],
   error: "",
-  validIngredients: {}
+  validIngredientArray: [],
+  validIngredientMap: {},
 };
 
 export default (
@@ -49,7 +50,8 @@ export default (
     case RECIEVE_VALID_INGREDIENTS:
       return {
         ...state,
-        validIngredients: R.indexBy(R.identity, action.ingredients)
+        validIngredientArray: action.ingredients,
+        validIngredientMap: R.indexBy(R.identity, action.ingredients)
       };
     default:
       return state;

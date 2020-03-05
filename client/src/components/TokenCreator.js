@@ -3,6 +3,7 @@ import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Autosized from "react-input-autosize";
+import Autocomplete from "components/Autocomplete";
 import {
   tryAddSearchToken,
   deleteLastSearchToken,
@@ -129,6 +130,7 @@ class TokenCreator extends PureComponent<Props> {
           onKeyDown={this.actions.handleKeyDown}
           onPaste={this.actions.handlePaste}
         />
+        <Autocomplete />
       </div>
     );
   }

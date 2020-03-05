@@ -129,12 +129,12 @@ const addSearchToken = (token: SearchToken): AddSearchTokenAction => ({
 export const tryAddSearchToken = (input: string) => {
   return (dispatch: *, getState: GetState) => {
     const state = getState();
-    const { tokens, validIngredients } = state.searchbar;
+    const { tokens, validIngredientMap } = state.searchbar;
 
     const [isValid, errorMessage] = isValidInput(
       input,
       tokens,
-      validIngredients
+      validIngredientMap
     );
     if (!isValid) {
       dispatch(invalidSearchToken(errorMessage));
@@ -191,7 +191,7 @@ type ValidIngredientReturn = {
 
 export const loadValidIngredients = () => {
   return (dispatch: *, getState: GetState) => {
-    if (!R.isEmpty(getState().searchbar.validIngredients)) {
+    if (!R.isEmpty(getState().searchbar.validIngredientArray)) {
       // We already have valid ingredients
       return;
     }
