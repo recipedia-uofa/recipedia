@@ -40,16 +40,16 @@
 }
 /*The color is as an example. This will need to be dynamically set*/
 .autocompleteItemKeyword {
-    width: max-content;
-    border-radius: 15px;
-    background-color: #89609e !important;
-    color: white;
-    font-weight: 600;
-    justify-content: center;
-    text-align: center;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    padding: 8px !important;
+  width: max-content;
+  border-radius: 15px;
+  background-color: #89609e !important;
+  color: white;
+  font-weight: 600;
+  justify-content: center;
+  text-align: center;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  padding: 8px !important;
 }
 /*NOTE: This style is used for the "keyboard selections"*/
 .autocompleteActive {
