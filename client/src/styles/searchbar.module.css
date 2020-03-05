@@ -68,14 +68,14 @@
 }
 
 .autosizedWrapper {
-  /* display: block; */
+  /* display: inline-block; */
   display: flex;
   float: left;
   overflow: hidden;
   margin-right: 4px;
   /* height: 24px; */
   vertical-align: middle;
-  justify-content: center;
+  /* justify-content: center; */
 }
 
 input {

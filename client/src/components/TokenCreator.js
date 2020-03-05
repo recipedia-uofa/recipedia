@@ -121,6 +121,20 @@ class TokenCreator extends PureComponent<Props> {
 
     return (
       <div className={styles.autosizedWrapper}>
+        <div className={autocompleteStyle.autocomplete}>
+          <div className={autocompleteStyle.autocompleteItems}>
+            <div>
+              <div className={autocompleteStyle.autocompleteItemKeyword}>
+                DIET
+              </div>
+            </div>
+            <div>Potato</div>
+            <div>Leek</div>
+            <div>Carrot</div>
+            <div>Onion</div>
+            <div>Condensed Milk</div>
+          </div>
+        </div>
         <Autosized
           inputRef={inputRef}
           placeholder={placeholder}
@@ -131,14 +145,6 @@ class TokenCreator extends PureComponent<Props> {
           onKeyDown={this.actions.handleKeyDown}
           onPaste={this.actions.handlePaste}
         />
-        <div className={autocompleteStyle.autocomplete}>
-          <div className={autocompleteStyle.autocompleteItems}>
-            <div>Potato</div>
-            <div>Leek</div>
-            <div>Carrot</div>
-            <div>Onion</div>
-          </div>
-        </div>
       </div>
     );
   }
