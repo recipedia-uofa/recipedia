@@ -15,7 +15,7 @@ const initialState: SearchbarState = {
   tokens: [],
   error: "",
   validIngredientArray: [],
-  validIngredientMap: {},
+  validIngredientMap: {}
 };
 
 export default (
