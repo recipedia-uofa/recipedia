@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import * as R from "ramda";
 import Fuse from "fuse.js";
 
+import styles from "styles/autocomplete.module.css";
+
 import type { Ingredient, IngredientMap } from "models/ingredient";
 import type { State } from "types/states";
 
@@ -53,12 +55,18 @@ class Autocomplete extends React.PureComponent<Props> {
     const { searchText, validIngredients, maxItems } = this.props;
 
     const items = computeItems(maxItems, searchText, validIngredients);
-    console.log(items);
     return (
-      <div>
-        {items.map(i => (
-          <div key={i}>{i}</div>
-        ))}
+      <div className={styles.autocomplete}>
+        <div className={styles.autocompleteItems}>
+          <div>
+            <div className={styles.autocompleteItemKeyword}>
+              DIET
+            </div>
+          </div>
+          {items.map(i => (
+            <div key={i}>{i}</div>
+          ))}
+        </div>
       </div>
     );
   }
