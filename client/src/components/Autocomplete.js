@@ -7,6 +7,7 @@ import diets from "models/diets";
 import { inputTypes, validInputTypes } from "models/input";
 import keywords from "models/keywords";
 import SearchToken from "models/SearchToken";
+import * as colours from "constants/colours";
 
 import styles from "styles/autocomplete.module.css";
 
@@ -19,6 +20,19 @@ import type { State } from "types/states";
 type Input = {
   type: InputType,
   value: Keyword | Ingredient | Diet
+};
+
+const getTokenColour = (token: string): string => {
+  switch (token.toUpperCase()) {
+    case keywords.NOT:
+      return colours.NOT_KEYWORD_COLOUR;
+    case keywords.KEY:
+      return colours.KEY_KEYWORD_COLOUR;
+    case keywords.DIET:
+      return colours.DIET_KEYWORD_COLOUR;
+    default:
+      return colours.INGREDIENT_COLOUR;
+  }
 };
 
 const ingredientToInput = (i: Ingredient): Input => ({
@@ -99,9 +113,12 @@ class Autocomplete extends React.PureComponent<Props> {
         <div className={styles.autocompleteItems}>
           {items.map(i => {
             if (i.type === inputTypes.KEYWORD) {
+              const itemKeywordColor = getTokenColour(i.value);
               return (
                 <div key={i.value}>
-                  <div className={styles.autocompleteItemKeyword}>
+                  <div
+                    className={styles.autocompleteItemKeyword}
+                    style={{backgroundColor: itemKeywordColor}}>
                     {i.value}
                   </div>
                 </div>
