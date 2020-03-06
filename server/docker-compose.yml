@@ -18,20 +18,16 @@ services:
     image: dgraph/dgraph:latest
     volumes:
       - /tmp/data:/dgraph
+      - type: bind
+        source: ./db/data
+        target: /dgraph/data
     ports:
       - 8080:8080
       - 9080:9080
     restart: on-failure
-    command: dgraph alpha --my=alpha:7080 --lru_mb=2048 --zero=zero:5080
+    command: bash /dgraph/data/launch-alpha.sh
   ratel:
     image: dgraph/dgraph:latest
     ports:
       - 8000:8000
     command: dgraph-ratel
-  loader:
-    image: dgraph/dgraph:latest
-    volumes:
-      - type: bind
-        source: ./db/data
-        target: /dgraph/data
-    command: dgraph bulk -s /dgraph/data/recipedia.schema -f /dgraph/data/recipedia.rdf --zero=zero:5080
