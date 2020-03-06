@@ -3,33 +3,62 @@ import React from "react";
 import { connect } from "react-redux";
 import * as R from "ramda";
 import Fuse from "fuse.js";
+import diets from "models/diets";
+import { inputTypes, validInputTypes } from "models/input";
+import keywords from "models/keywords";
+import SearchToken from "models/SearchToken";
 
 import styles from "styles/autocomplete.module.css";
 
-import type { Ingredient, IngredientMap } from "models/ingredient";
+import type { Diet } from "models/diets";
+import type { Ingredient } from "models/ingredient";
+import type { InputType } from "models/input";
+import type { Keyword } from "models/keywords";
 import type { State } from "types/states";
 
-const options = {
-  shouldSort: true,
-  threshold: 0.6,
-  location: 0,
-  distance: 20,
-  maxPatternLength: 32,
-  minMatchCharLength: 1
+type Input = {
+  type: InputType,
+  value: Keyword | Ingredient | Diet,
 };
 
-// ([0, 2], ['a', 'b', 'c']) => ['a', 'c']
-// See https://github.com/ramda/ramda/issues/1123
-const pickIndexes = R.useWith(R.ap, [R.map(R.nth), R.of]);
+const ingredientToInput = (i: Ingredient): Input => ({
+  type: inputTypes.INGREDIENT,
+  value: i,
+});
+const ingredientsToInputs = R.map(ingredientToInput);
+
+const dietToInput = (d: Diet): Input => ({
+  type: inputTypes.DIET,
+  value: d,
+});
+const dietInputs = R.map(dietToInput, Object.values(diets));
+
+const keywordToInput = (k: Keyword): Input => ({
+  type: inputTypes.KEYWORD,
+  value: k,
+});
+const keywordInputs = R.map(
+  keywordToInput,
+  Object.values(keywords).filter(k => k !== keywords.NONE)
+);
+
+const fuseOptions = {
+  shouldSort: true,
+  threshold: 0.5,
+  location: 0,
+  distance: 1,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: ["value"]
+};
 
 const computeItems = (
   maxItems: number,
   searchText: string,
-  validIngredients: Array<Ingredient>
-): Array<Ingredient> => {
-  const fuse = new Fuse(validIngredients, options);
-  const matchIdxs = fuse.search(searchText);
-  const items = pickIndexes(matchIdxs, validIngredients);
+  validInputs: Array<Input>
+): Array<Input> => {
+  const fuse = new Fuse(validInputs, fuseOptions);
+  const items = fuse.search(searchText);
   return R.take(maxItems, items);
 };
 
@@ -37,35 +66,47 @@ type Props = {
   maxItems: number,
   // redux
   searchText: string,
+  searchTokens: Array<SearchToken>,
   validIngredients: Array<Ingredient>
 };
 
 const mapStateToProps = (state: State, ownProps) => ({
   searchText: state.searchbar.text,
+  searchTokens: state.searchbar.tokens,
   validIngredients: state.searchbar.validIngredientArray
 });
 
-// This component
 class Autocomplete extends React.PureComponent<Props> {
   static defaultProps = {
     maxItems: 7
   };
 
   render() {
-    const { searchText, validIngredients, maxItems } = this.props;
+    const { searchText, searchTokens, validIngredients, maxItems } = this.props;
 
-    const items = computeItems(maxItems, searchText, validIngredients);
+    const validTypes = validInputTypes(searchTokens);
+    const validItems = [
+      ...validTypes.includes(inputTypes.KEYWORD) ? keywordInputs : [],
+      ...validTypes.includes(inputTypes.INGREDIENT) ? ingredientsToInputs(validIngredients) : [],
+      ...validTypes.includes(inputTypes.DIET) ? dietInputs : []
+    ];
+
+    const items = computeItems(maxItems, searchText, validItems);
     return (
       <div className={styles.autocomplete}>
         <div className={styles.autocompleteItems}>
-          <div>
-            <div className={styles.autocompleteItemKeyword}>
-              DIET
-            </div>
-          </div>
-          {items.map(i => (
-            <div key={i}>{i}</div>
-          ))}
+          {items.map(i => {
+              if (i.type === inputTypes.KEYWORD) {
+                return (
+                  <div key={i.value}>
+                    <div className={styles.autocompleteItemKeyword}>
+                      {i.value}
+                    </div>
+                  </div>
+                );
+              }
+              return (<div key={i.value}>{i.value}</div>);
+          })}
         </div>
       </div>
     );

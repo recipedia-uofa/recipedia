@@ -12,7 +12,7 @@ import {
 } from "constants/actionTypes";
 
 import keywords, { isValidKeyword, toKeyword } from "models/keywords";
-import { isValidDiet } from "models/diets";
+import { isValidInput } from "models/input";
 import SearchToken from "models/SearchToken";
 import { executeSearch } from "actions/search";
 
@@ -25,7 +25,7 @@ import type {
   RecieveValidIngredients
 } from "constants/actionTypes";
 
-import type { Ingredient, IngredientMap } from "models/ingredient";
+import type { Ingredient } from "models/ingredient";
 import type { GetState } from "types/states";
 
 type AddSearchTokenAction = {
@@ -84,41 +84,6 @@ export const deleteLastSearchToken = () => {
     dispatch(deleteSearchToken(numTokens - 1));
     dispatch(executeSearch());
   };
-};
-
-const INVALID_INGREDIENT_MESSAGE = "Entered an invalid ingredient";
-const INVALID_DIET_MESSAGE = "Entered an invalid diet";
-const INVALID_KEY_OR_INGREDIENT_MESSAGE =
-  "Entered an invalid keyword or ingredient";
-
-// Returns if the ingredient is valid, and the appropriate error message IF
-// it is invalid
-const isValidInput = (
-  input: string,
-  currentTokens: Array<SearchToken>,
-  validIngredients: IngredientMap
-): [boolean, string] => {
-  const isValidIngredient = (i: string) => i in validIngredients;
-
-  const isValidKeyOrIngredient: string => boolean = R.anyPass([
-    isValidIngredient,
-    isValidKeyword
-  ]);
-
-  if (currentTokens.length === 0) {
-    return [isValidKeyOrIngredient(input), INVALID_KEY_OR_INGREDIENT_MESSAGE];
-  }
-
-  const lastToken = currentTokens[currentTokens.length - 1];
-  if (lastToken.isPartial()) {
-    if (lastToken.isDiet()) {
-      return [isValidDiet(input), INVALID_DIET_MESSAGE];
-    } else {
-      return [isValidIngredient(input), INVALID_INGREDIENT_MESSAGE];
-    }
-  } else {
-    return [isValidKeyOrIngredient(input), INVALID_KEY_OR_INGREDIENT_MESSAGE];
-  }
 };
 
 const addSearchToken = (token: SearchToken): AddSearchTokenAction => ({
