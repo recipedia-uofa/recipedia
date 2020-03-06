@@ -147,3 +147,33 @@ input {
 .deleteButton:after {
   content: "x";
 }
+
+/*The following classes are for the tooltip error element*/
+/*Influenced from this site: https://www.w3schools.com/css/css_tooltip.asp*/
+.toolTipError {
+  width: 200px;
+  background-color: #B04632;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 20px;
+ 
+  /* Position the tooltip text*/
+  position: absolute;
+  z-index: 10;
+  transition: opacity 0.1s;
+  right: 15%;
+}
+
+.toolTipError::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-color: transparent #B04632 transparent transparent;
+}

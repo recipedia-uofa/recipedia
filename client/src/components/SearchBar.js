@@ -35,6 +35,16 @@ const style = {
     margin: "0 auto",
     marginTop: `${CORNER_RADIUS}px`,
     padding: `${CORNER_RADIUS}px`
+  },
+  noError: {
+    opacity: 0,
+    // width: 0,
+    // padding: 0,
+  },
+  displayError: {
+    opacity: 1,
+    // width: "200px",
+    // padding: "10px",
   }
 };
 
@@ -72,6 +82,7 @@ class SearchBar extends React.PureComponent<Props> {
         <div style={style.outerSearchBox}>
           <TokenInput autoFocus />
         </div>
+        <span className={styles.toolTipError} style={showError ? style.displayError : style.noError}>{errorMessage}</span>
         <div className={styles.buttonContainer}>
           <button
             type="button"
@@ -82,7 +93,6 @@ class SearchBar extends React.PureComponent<Props> {
             Search
           </button>
         </div>
-        {showError && <span style={{ color: "red" }}>{errorMessage}</span>}
       </div>
     );
   }

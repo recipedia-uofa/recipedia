@@ -6,9 +6,13 @@
     - Blue: #0079BF
     - Mustard yellow: #D29034
 */
+:root {
+  --pure-black: #000000;
+}
 
 .RecipeCards {
   position: relative;
+  transition: filter 0.1s, transform 0.1s;
 }
 
 .RecipeCardContainer {
@@ -18,7 +22,7 @@
   left: 0px;
   top: 0px;
   width: 400px;
-  color: #000000;
+  color: var(--pure-black);
   background-color: white;
   text-align: center;
   white-space: nowrap;
@@ -336,4 +340,13 @@ For now, the colour will be hard coded*/
 
 .RecipeCards:hover .RecipeCardContainer .RecipeCardImageContainer {
   transform: scale(1.1);
+}
+
+.RecipeCards:hover {
+  z-index: 9;
+}
+
+.RecipeCards:active {
+  transform: scale(0.9);
+  filter: brightness(0.9);
 }
