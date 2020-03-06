@@ -18,24 +18,24 @@ import type { State } from "types/states";
 
 type Input = {
   type: InputType,
-  value: Keyword | Ingredient | Diet,
+  value: Keyword | Ingredient | Diet
 };
 
 const ingredientToInput = (i: Ingredient): Input => ({
   type: inputTypes.INGREDIENT,
-  value: i,
+  value: i
 });
 const ingredientsToInputs = R.map(ingredientToInput);
 
 const dietToInput = (d: Diet): Input => ({
   type: inputTypes.DIET,
-  value: d,
+  value: d
 });
 const dietInputs = R.map(dietToInput, Object.values(diets));
 
 const keywordToInput = (k: Keyword): Input => ({
   type: inputTypes.KEYWORD,
-  value: k,
+  value: k
 });
 const keywordInputs = R.map(
   keywordToInput,
@@ -86,9 +86,11 @@ class Autocomplete extends React.PureComponent<Props> {
 
     const validTypes = validInputTypes(searchTokens);
     const validItems = [
-      ...validTypes.includes(inputTypes.KEYWORD) ? keywordInputs : [],
-      ...validTypes.includes(inputTypes.INGREDIENT) ? ingredientsToInputs(validIngredients) : [],
-      ...validTypes.includes(inputTypes.DIET) ? dietInputs : []
+      ...(validTypes.includes(inputTypes.KEYWORD) ? keywordInputs : []),
+      ...(validTypes.includes(inputTypes.INGREDIENT)
+        ? ingredientsToInputs(validIngredients)
+        : []),
+      ...(validTypes.includes(inputTypes.DIET) ? dietInputs : [])
     ];
 
     const items = computeItems(maxItems, searchText, validItems);
@@ -96,16 +98,16 @@ class Autocomplete extends React.PureComponent<Props> {
       <div className={styles.autocomplete}>
         <div className={styles.autocompleteItems}>
           {items.map(i => {
-              if (i.type === inputTypes.KEYWORD) {
-                return (
-                  <div key={i.value}>
-                    <div className={styles.autocompleteItemKeyword}>
-                      {i.value}
-                    </div>
+            if (i.type === inputTypes.KEYWORD) {
+              return (
+                <div key={i.value}>
+                  <div className={styles.autocompleteItemKeyword}>
+                    {i.value}
                   </div>
-                );
-              }
-              return (<div key={i.value}>{i.value}</div>);
+                </div>
+              );
+            }
+            return <div key={i.value}>{i.value}</div>;
           })}
         </div>
       </div>

@@ -14,7 +14,9 @@ export const inputTypes = {
 
 export type InputType = $Keys<typeof inputTypes>;
 
-export const validInputTypes = (currentTokens: Array<SearchToken>): Array<InputType> => {
+export const validInputTypes = (
+  currentTokens: Array<SearchToken>
+): Array<InputType> => {
   if (R.isEmpty(currentTokens)) {
     return [inputTypes.KEYWORD, inputTypes.INGREDIENT];
   }
