@@ -42,7 +42,6 @@
 .autocompleteItemKeyword {
   width: max-content;
   border-radius: 15px;
-  background-color: #89609e !important;
   color: white;
   font-weight: 600;
   justify-content: center;

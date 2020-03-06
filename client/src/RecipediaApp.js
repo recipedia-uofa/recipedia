@@ -19,6 +19,7 @@ const noResultsStyle = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    minWidth: "35%",
     maxWidth: "90%"
   },
   title: {
