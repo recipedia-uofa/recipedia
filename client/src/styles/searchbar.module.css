@@ -152,14 +152,14 @@ input {
 /*Influenced from this site: https://www.w3schools.com/css/css_tooltip.asp*/
 .toolTipError {
   width: 200px;
-  background-color: #B04632;
+  background-color: #b04632;
   color: white;
   text-align: center;
   padding: 10px;
   border-radius: 6px;
   font-weight: 600;
   font-size: 20px;
- 
+
   /* Position the tooltip text*/
   position: absolute;
   z-index: 10;
@@ -175,5 +175,5 @@ input {
   margin-top: -15px;
   border-width: 15px;
   border-style: solid;
-  border-color: transparent #B04632 transparent transparent;
+  border-color: transparent #b04632 transparent transparent;
 }
