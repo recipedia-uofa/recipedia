@@ -118,7 +118,8 @@ class Autocomplete extends React.PureComponent<Props> {
                 <div key={i.value}>
                   <div
                     className={styles.autocompleteItemKeyword}
-                    style={{backgroundColor: itemKeywordColor}}>
+                    style={{ backgroundColor: itemKeywordColor }}
+                  >
                     {i.value}
                   </div>
                 </div>

@@ -14,12 +14,26 @@ import styles from "styles/searchbar.module.css";
 
 import type { State } from "types/states";
 
+const style = {
+  noError: {
+    opacity: 0
+    // width: 0,
+    // padding: 0,
+  },
+  displayError: {
+    opacity: 1
+    // width: "200px",
+    // padding: "10px",
+  }
+};
+
 type Props = {
   autoFocus: boolean,
   placeholder: string,
   inputRef: (el: any) => void,
   //redux
   value: string,
+  errorMessage: string,
   updateValue: string => any,
   tryAddToken: string => any,
   deleteLastToken: () => any,
@@ -27,7 +41,8 @@ type Props = {
 };
 
 const mapStateToProps = (state: State, ownProps) => ({
-  value: state.searchbar.text
+  value: state.searchbar.text,
+  errorMessage: state.searchbar.error
 });
 
 const mapDispatchToProps = dispatch =>
@@ -116,7 +131,14 @@ class TokenCreator extends PureComponent<Props> {
   };
 
   render() {
-    const { placeholder, autoFocus, value, inputRef } = this.props;
+    const {
+      placeholder,
+      autoFocus,
+      value,
+      errorMessage,
+      inputRef
+    } = this.props;
+    const showError = errorMessage !== "";
 
     return (
       <div className={styles.autosizedWrapper}>
@@ -131,6 +153,12 @@ class TokenCreator extends PureComponent<Props> {
           onKeyDown={this.actions.handleKeyDown}
           onPaste={this.actions.handlePaste}
         />
+        <span
+          className={styles.toolTipError}
+          style={showError ? style.displayError : style.noError}
+        >
+          {errorMessage}
+        </span>
       </div>
     );
   }
