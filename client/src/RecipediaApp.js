@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
+import UserGuide from "components/UserGuide";
 
 type Props = {|
   +showResults: boolean
@@ -53,6 +54,7 @@ class RecipediaApp extends React.Component<Props> {
       const style = withResultsStyle;
       return (
         <div>
+          <UserGuide />
           <div style={style.upperContainer}>
             <span style={style.title}>Recipedia</span>
             <SearchBar />
@@ -66,6 +68,7 @@ class RecipediaApp extends React.Component<Props> {
     const style = noResultsStyle;
     return (
       <div style={style.upperContainer}>
+        <UserGuide />
         <div style={style.verticalContainer}>
           <span style={style.title}>Recipedia</span>
           <SearchBar />
