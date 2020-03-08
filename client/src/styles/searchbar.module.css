@@ -159,21 +159,34 @@ input {
   border-radius: 6px;
   font-weight: 600;
   font-size: 20px;
+  margin-left: -18%;
+  margin-top: -12px;
+  white-space: normal;
 
   /* Position the tooltip text*/
   position: absolute;
   z-index: 10;
-  transition: opacity 0.1s;
-  right: 15%;
+  /* transform: translate(-245px, -25px); */
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s;
 }
 
 .toolTipError::after {
   content: " ";
   position: absolute;
   top: 50%;
-  right: 100%; /* To the left of the tooltip */
+  left: 100%; /* To the right of the tooltip */
   margin-top: -15px;
   border-width: 15px;
   border-style: solid;
-  border-color: transparent #b04632 transparent transparent;
+  border-color: transparent transparent transparent #b04632;
 }
+
+  /* content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* To the left of the tooltip
+  margin-top: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-color: transparent #b04632 transparent transparent; */
