@@ -7,10 +7,11 @@ type MatchedIndices = Array<[number, number]>;
 // The score is normalized to [0, 1] where 1 is a good match and 0 is a bad one
 const score = (query: string, matchedIndices: MatchedIndices): number => {
   const maxScore = query.length;
-  const queryScore = matchedIndices.reduce((s, [startIdx, endIdx]) => {
-    const mult = 1 / (startIdx + 1);
-    s += mult * (endIdx - startIdx);
-  }, 0) || 0;
+  const queryScore =
+    matchedIndices.reduce((s, [startIdx, endIdx]) => {
+      const mult = 1 / (startIdx + 1);
+      s += mult * (endIdx - startIdx);
+    }, 0) || 0;
   return queryScore / maxScore;
 };
 
@@ -26,7 +27,7 @@ const match = (query: string, record: string): false | MatchedIndices => {
   }
 
   return false;
-}
+};
 
 type Match = {
   value: any,
@@ -35,7 +36,7 @@ type Match = {
 };
 
 type SearchOptions = {
-  key: string,
+  key: string
 };
 
 const getSortedMatches = R.pipe(
@@ -43,7 +44,11 @@ const getSortedMatches = R.pipe(
   R.map(R.prop("value"))
 );
 
-const search = (query: string, records: Array<any>, opts: SearchOptions): Array<Match> => {
+const search = (
+  query: string,
+  records: Array<any>,
+  opts: SearchOptions
+): Array<Match> => {
   const queryLowerCase = query.toLowerCase();
   const matches: Array<Match> = [];
   for (const record of records) {

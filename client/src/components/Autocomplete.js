@@ -43,7 +43,7 @@ const ingredientsToInputs = R.map(ingredientToInput);
 
 const dietToInput = (d: Diet): Input => ({
   type: inputTypes.DIET,
-  value: d.toLowerCase(),
+  value: d.toLowerCase()
 });
 const dietInputs = R.map(dietToInput, Object.values(diets));
 
@@ -57,7 +57,7 @@ const keywordInputs = R.map(
 );
 
 const searchOptions = {
-  key: "value",
+  key: "value"
 };
 
 const computeItems = (
