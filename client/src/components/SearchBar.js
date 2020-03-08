@@ -35,16 +35,6 @@ const style = {
     margin: "0 auto",
     marginTop: `${CORNER_RADIUS}px`,
     padding: `${CORNER_RADIUS}px`
-  },
-  noError: {
-    opacity: 0,
-    // width: 0,
-    // padding: 0,
-  },
-  displayError: {
-    opacity: 1,
-    // width: "200px",
-    // padding: "10px",
   }
 };
 
@@ -54,10 +44,6 @@ type Props = {
   executeSearch: () => void,
   loadValidIngredients: () => void
 };
-
-const mapStateToProps = (state: State, ownProps) => ({
-  errorMessage: state.searchbar.error
-});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -74,15 +60,11 @@ class SearchBar extends React.PureComponent<Props> {
   }
 
   render() {
-    const { errorMessage } = this.props;
-    const showError = errorMessage !== "";
-
     return (
       <div className={styles.searchContainer}>
         <div style={style.outerSearchBox}>
           <TokenInput autoFocus />
         </div>
-        <span className={styles.toolTipError} style={showError ? style.displayError : style.noError}>{errorMessage}</span>
         <div className={styles.buttonContainer}>
           <button
             type="button"
@@ -98,4 +80,4 @@ class SearchBar extends React.PureComponent<Props> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(null, mapDispatchToProps)(SearchBar);
