@@ -2,11 +2,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as R from "ramda";
-import Fuse from "fuse.js";
 import diets from "models/diets";
 import { inputTypes, validInputTypes } from "models/input";
 import keywords from "models/keywords";
 import SearchToken from "models/SearchToken";
+import autocompleteSearch from "models/autocomplete";
 import * as colours from "constants/colours";
 
 import styles from "styles/autocomplete.module.css";
@@ -43,27 +43,21 @@ const ingredientsToInputs = R.map(ingredientToInput);
 
 const dietToInput = (d: Diet): Input => ({
   type: inputTypes.DIET,
-  value: d
+  value: d.toLowerCase(),
 });
 const dietInputs = R.map(dietToInput, Object.values(diets));
 
 const keywordToInput = (k: Keyword): Input => ({
   type: inputTypes.KEYWORD,
-  value: k
+  value: k.toLowerCase()
 });
 const keywordInputs = R.map(
   keywordToInput,
   Object.values(keywords).filter(k => k !== keywords.NONE)
 );
 
-const fuseOptions = {
-  shouldSort: true,
-  threshold: 0.5,
-  location: 0,
-  distance: 1,
-  maxPatternLength: 32,
-  minMatchCharLength: 1,
-  keys: ["value"]
+const searchOptions = {
+  key: "value",
 };
 
 const computeItems = (
@@ -71,8 +65,11 @@ const computeItems = (
   searchText: string,
   validInputs: Array<Input>
 ): Array<Input> => {
-  const fuse = new Fuse(validInputs, fuseOptions);
-  const items = fuse.search(searchText);
+  if (searchText === "") {
+    return [];
+  }
+
+  const items = autocompleteSearch(searchText, validInputs, searchOptions);
   return R.take(maxItems, items);
 };
 
@@ -120,7 +117,7 @@ class Autocomplete extends React.PureComponent<Props> {
                     className={styles.autocompleteItemKeyword}
                     style={{ backgroundColor: itemKeywordColor }}
                   >
-                    {i.value}
+                    {i.value.toUpperCase()}
                   </div>
                 </div>
               );
