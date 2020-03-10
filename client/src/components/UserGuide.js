@@ -76,8 +76,8 @@ class UserGuide extends React.PureComponent<Props> {
             </div>
         </div>
         <div className={styles.infoIconContainer} style={isOpen ? localStyle.moveIcon : {left: "2%"}} onClick={this.changeState.bind(this)}>
-            <div className={styles.infoIcon}>
-                <div className={styles.infoIconContent}>{isOpen ? "X" : "i"}</div>
+            <div className={isOpen ? styles.closeIcon : styles.infoIcon}>
+                <div className={isOpen ? styles.closeIconContent : styles.infoIconContent}>{isOpen ? "X" : "i"}</div>
             </div>
         </div>
         </div>
