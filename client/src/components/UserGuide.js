@@ -20,7 +20,13 @@ const localStyle = {
     },
     moveIcon: {
         left: "30%",
-    }
+    },
+    show: {
+        opacity: "1",
+    },
+    hide: {
+        opacity: "0",
+    },
 };
 
 class UserGuide extends React.PureComponent<Props> {
@@ -48,24 +54,24 @@ class UserGuide extends React.PureComponent<Props> {
         return (
         <div>
             <div className={styles.guideContainer} style={isOpen ? localStyle.open : localStyle.closed}>
-            <div className={styles.guideScrollContainer}>
-                <h1>User Guide</h1>
-                <p>Welcome to Recipedia! The following guide will help you utilize the site.</p> 
-                <h2>Entering Ingredients</h2>
-                <p>Enter information for ingredients</p>
-                <h2>Entering Keywords</h2>
-                <p>Enter information for keywords</p>
-                <img className={styles.guideImage} src={gif} />
-                <h2>Searching for recipes</h2>
-                <p>Now you can search for recipes! Click any of the resulting recipes to go to the recipe site.</p>
-                <h1>Happy Cooking!</h1>
+                <div className={styles.guideScrollContainer} style={isOpen ? localStyle.show : localStyle.hide}>
+                    <h1>User Guide</h1>
+                    <p>Welcome to Recipedia! The following guide will help you utilize the site.</p> 
+                    <h2>Entering Ingredients</h2>
+                    <p>Enter information for ingredients</p>
+                    <h2>Entering Keywords</h2>
+                    <p>Enter information for keywords</p>
+                    <img className={styles.guideImage} src={gif} />
+                    <h2>Searching for recipes</h2>
+                    <p>Now you can search for recipes! Click any of the resulting recipes to go to the recipe site.</p>
+                    <h1>Happy Cooking!</h1>
+                </div>
             </div>
-        </div>
-        <div className={styles.infoIconContainer} style={isOpen ? localStyle.moveIcon : {left: "2%"}} onClick={this.changeState.bind(this)}>
-            <div className={isOpen ? styles.closeIcon : styles.infoIcon}>
-                <div className={isOpen ? styles.closeIconContent : styles.infoIconContent}>{isOpen ? "X" : "i"}</div>
+            <div className={styles.infoIconContainer} style={isOpen ? localStyle.moveIcon : {left: "2%"}} onClick={this.changeState.bind(this)}>
+                <div className={isOpen ? styles.closeIcon : styles.infoIcon}>
+                    <div className={isOpen ? styles.closeIconContent : styles.infoIconContent}>{isOpen ? "X" : "i"}</div>
+                </div>
             </div>
-        </div>
         </div>
         );
     };

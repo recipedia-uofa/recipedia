@@ -55,6 +55,8 @@
     top: 2%;
     padding: 0 15px;
     box-sizing: border-box;
+    transform-origin: top left;
+    overflow-x: hidden;
     transition: width 1s, height 1s;
 }
 
@@ -64,6 +66,7 @@
     padding: 0 10px;
     overflow: auto;
     box-sizing: border-box;
+    transition: opacity 0.5s;
     /* text-align: center; */
 }
 
@@ -97,5 +100,3 @@
 ::-webkit-scrollbar-track {
     background-color: transparent;
 }
-
-::-webkit-scrollbar
