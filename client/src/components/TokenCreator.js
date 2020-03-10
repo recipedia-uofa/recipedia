@@ -57,12 +57,12 @@ const mapDispatchToProps = dispatch =>
   );
 
 class TokenCreator extends PureComponent<Props> {
-  showError : boolean;
-  localErrorMessage : string;
+  showError: boolean;
+  localErrorMessage: string;
 
   constructor(props) {
     super(props);
-    this.state = {showError: false, localErrorMessage: ''};
+    this.state = { showError: false, localErrorMessage: "" };
   }
 
   static defaultProps = {
@@ -151,11 +151,10 @@ class TokenCreator extends PureComponent<Props> {
 
     // const showError = errorMessage !== "";
     if (errorMessage != "") {
-      this.setState({showError: true, localErrorMessage: errorMessage});
+      this.setState({ showError: true, localErrorMessage: errorMessage });
+    } else {
+      this.setState({ showError: false });
     }
-    else {
-      this.setState({showError: false});
-    }    
 
     return (
       <div className={styles.autosizedWrapper}>
