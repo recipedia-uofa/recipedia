@@ -64,7 +64,7 @@
     padding: 0 10px;
     overflow: auto;
     box-sizing: border-box;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .guideContainer h1 {

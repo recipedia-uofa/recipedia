@@ -151,17 +151,18 @@ input {
 /*The following classes are for the tooltip error element*/
 /*Influenced from this site: https://www.w3schools.com/css/css_tooltip.asp*/
 .toolTipError {
-  width: 200px;
+  width: 175px;
   background-color: #b04632;
   color: white;
   text-align: center;
   padding: 10px;
   border-radius: 6px;
   font-weight: 600;
-  font-size: 20px;
-  margin-left: -245px;
-  margin-top: -12px;
+  font-size: 15px;
+  margin-left: -212px;
+  margin-top: -2px;
   white-space: normal;
+  cursor: default;
 
   /* Position the tooltip text*/
   position: absolute;
@@ -171,13 +172,26 @@ input {
   transition: opacity 0.5s;
 }
 
+/*This is if we want the arrow to show on the left*/
+/* .toolTipError::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-color: transparent #b04632 transparent transparent;
+} */
+
+/* This is if we want the arrow to show on the right */
 .toolTipError::after {
   content: " ";
   position: absolute;
   top: 50%;
-  left: 100%; /* To the right of the tooltip */
-  margin-top: -15px;
-  border-width: 15px;
+  left: 100%;
+  margin-top: -10px;
+  border-width: 10px;
   border-style: solid;
   border-color: transparent transparent transparent #b04632;
 }

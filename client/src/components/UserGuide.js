@@ -31,20 +31,6 @@ class UserGuide extends React.PureComponent<Props> {
         this.state = {isOpen: false};
     }
 
-    // openGuide() {
-    //     // IsOpen states that if the user opens the site for the first time
-    //     // the user guide should be automatically open. Otherwise closed
-    //     if (this.props.isOpen) {
-    //         return(
-    //             <div>Closed</div>
-    //         );
-    //     }
-    //     else {
-    //         return(<div>Open</div>);
-    //     }
-        
-    // }
-
     changeState() {
         const { isOpen } = this.state;
         if (isOpen) {
@@ -85,5 +71,4 @@ class UserGuide extends React.PureComponent<Props> {
     };
 };
 
-// TODO: Need to understand how to use map state to props to check if the 
 export default UserGuide;
