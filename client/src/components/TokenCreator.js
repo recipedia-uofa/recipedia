@@ -57,6 +57,14 @@ const mapDispatchToProps = dispatch =>
   );
 
 class TokenCreator extends PureComponent<Props> {
+  showError : boolean;
+  localErrorMessage : string;
+
+  constructor(props) {
+    super(props);
+    this.state = {showError: false, localErrorMessage: ''};
+  }
+
   static defaultProps = {
     autoFocus: false,
     placeholder: "",
@@ -138,7 +146,16 @@ class TokenCreator extends PureComponent<Props> {
       errorMessage,
       inputRef
     } = this.props;
-    const showError = errorMessage !== "";
+
+    const { showError, localErrorMessage } = this.state;
+
+    // const showError = errorMessage !== "";
+    if (errorMessage != "") {
+      this.setState({showError: true, localErrorMessage: errorMessage});
+    }
+    else {
+      this.setState({showError: false});
+    }    
 
     return (
       <div className={styles.autosizedWrapper}>
@@ -157,7 +174,7 @@ class TokenCreator extends PureComponent<Props> {
           className={styles.toolTipError}
           style={showError ? style.displayError : style.noError}
         >
-          {errorMessage}
+          {localErrorMessage}
         </span>
       </div>
     );

@@ -28,6 +28,8 @@ import type {
 import type { Ingredient } from "models/ingredient";
 import type { GetState } from "types/states";
 
+const ERROR_TIMEOUT_FADE = 5000;
+
 type AddSearchTokenAction = {
   type: AddSearchToken,
   token: SearchToken
@@ -103,6 +105,7 @@ export const tryAddSearchToken = (input: string) => {
     );
     if (!isValid) {
       dispatch(invalidSearchToken(errorMessage));
+      setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
       return;
     }
 
