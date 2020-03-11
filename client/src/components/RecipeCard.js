@@ -249,7 +249,7 @@ class RecipeCard extends React.PureComponent<Props> {
   render() {
     const { recipe } = this.props;
     return (
-      <div className={styles.RecipeCards}>
+      <div className={styles.RecipeCards} onClick={() => window.open("https://google.com", "_blank")}>
         <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
         <PrimaryRecipeCard recipe={recipe} />
         <RecipeScore recipeScore={recipe.nutritionScore} />
