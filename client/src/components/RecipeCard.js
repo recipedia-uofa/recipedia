@@ -202,10 +202,6 @@ class RecipeLogo extends React.PureComponent<LogoProps> {
   }
 }
 
-// const RecipeIngredientBoxHoverExpand = () => {
-  
-// }
-
 type IngredientBoxProps = {
   matchedIngredients: Array<Ingredient>,
   notMatchedIngredients: Array<Ingredient>
@@ -229,8 +225,9 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
 
 const checkLargeIngredientAmount = (recipe: Recipe) => {
   // count the array
-  const totalIngredientAmount = recipe.ingredientsMatched.length + recipe.ingredientsNotMatched.length;
-  
+  const totalIngredientAmount =
+    recipe.ingredientsMatched.length + recipe.ingredientsNotMatched.length;
+
   if (totalIngredientAmount > MAX_INGREDIENT_SIZE) {
     return (
       <div className={styles.maxIngredientContainer}>
@@ -273,11 +270,14 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
 class RecipeCard extends React.PureComponent<Props> {
   render() {
     const { recipe } = this.props;
-    
+
     const recipe_url = recipe.url;
 
     return (
-      <div className={styles.RecipeCards} onClick={() => window.open(recipe_url, "_blank")}>
+      <div
+        className={styles.RecipeCards}
+        onClick={() => window.open(recipe_url, "_blank")}
+      >
         <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
         <PrimaryRecipeCard recipe={recipe} />
         <RecipeScore recipeScore={recipe.nutritionScore} />
