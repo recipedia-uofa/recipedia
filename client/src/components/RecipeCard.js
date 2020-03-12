@@ -274,7 +274,7 @@ class RecipeCard extends React.PureComponent<Props> {
   render() {
     const { recipe } = this.props;
     
-    const recipe_url = recipe.url;//"https://google.com";
+    const recipe_url = recipe.url;
 
     return (
       <div className={styles.RecipeCards} onClick={() => window.open(recipe_url, "_blank")}>
