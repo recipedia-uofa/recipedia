@@ -31,7 +31,7 @@
   -webkit-flex-direction: column;
   display: flex;
   flex-direction: column;
-  height: 500px;
+  min-height: 500px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 25px;
   z-index: 1;
@@ -41,7 +41,7 @@
 
 .RecipeCardImageContainer {
   width: 100%;
-  height: 50%;
+  height: 230px; /*NOTE: Needs to change if resizing cards (mobile)*/
   overflow-y: hidden;
   position: relative;
   transform: scale(1);
@@ -80,6 +80,7 @@
 
 .RecipeCardDescription {
   padding: 20px;
+  margin-bottom: 40px;
   font-size: 20px;
   /* font-weight: 600; */
   text-align: center;
@@ -92,8 +93,10 @@
   /*color: #838383; */
   background-color: white;
   color: rgb(140, 140, 140);
-  height: 40%;
+  max-height: 120px;
+  height: max-content;
   z-index: 3;
+  transition: max-height 0.7s ease-out, height 1s ease-out;
 }
 
 .RecipeCardDescriptionContainer {
@@ -116,7 +119,7 @@
   background-color: #4bbf84;
   margin: 5px;
   color: white;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .NotMatchedIngredient {
@@ -342,6 +345,15 @@ For now, the colour will be hard coded*/
   transform: scale(1.1);
 }
 
+.RecipeCards:hover .RecipeCardDescription {
+  max-height: 300px; /*Some very large number*/
+}
+
+.RecipeCards:hover .maxIngredientContainer {
+  opacity: 0;
+  visibility: 0;
+}
+
 .RecipeCards:hover {
   z-index: 9;
 }
@@ -349,4 +361,25 @@ For now, the colour will be hard coded*/
 .RecipeCards:active {
   transform: scale(0.9);
   filter: brightness(0.9);
+}
+
+.maxIngredientContainer {
+  display: flex;
+  flex-direction: row;
+  width: 27px;
+  margin-top: 5%;
+  margin-left: 7%;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1s;
+}
+
+.maxIngredientContainer div {
+  width: 25px;
+  height: 0;
+  padding: 50%;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0, 0.3);
+  margin: 0 10px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
 }

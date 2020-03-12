@@ -4,6 +4,7 @@
   top: 2%;
   position: absolute;
   cursor: pointer;
+  z-index: 15;
   transition: left 1s;
 }
 
@@ -58,6 +59,7 @@
   box-sizing: border-box;
   transform-origin: top left;
   overflow-x: hidden;
+  z-index: 15;
   transition: width 1s, height 1s;
 }
 

@@ -15,7 +15,11 @@ import servingsizeImg from "assets/icons/Fork_1.svg";
 
 import type { Node } from "react";
 import type { Recipe } from "models/recipe";
-import type { Ingredient } from "models/ingredient";
+import type { check } from "prettier";
+import { Ingredient } from "models/ingredient";
+
+//Constants
+const MAX_INGREDIENT_SIZE = 7;
 
 type Props = {
   recipe: Recipe
@@ -219,9 +223,26 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
   }
 }
 
+const checkLargeIngredientAmount = (recipe: Recipe) => {
+  // count the array
+  const totalIngredientAmount =
+    recipe.ingredientsMatched.length + recipe.ingredientsNotMatched.length;
+
+  if (totalIngredientAmount > MAX_INGREDIENT_SIZE) {
+    return (
+      <div className={styles.maxIngredientContainer}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    );
+  }
+};
+
 class PrimaryRecipeCard extends React.PureComponent<Props> {
   render() {
     const { recipe } = this.props;
+
     return (
       <div className={styles.RecipeCardContainer}>
         <div className={styles.RecipeCardImageContainer}>
@@ -233,12 +254,13 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
         </div>
         <div className={styles.RecipeCardTitle}>{recipe.title}</div>
         <div className={styles.RecipeCardDescription}>
-          <div className={styles.RecipeCardIngredientContainer}>
+          <div className={styles.RecipeCardDescriptionContainer}>
             <RecipeIngredientBox
               matchedIngredients={recipe.ingredientsMatched}
               notMatchedIngredients={recipe.ingredientsNotMatched}
             />
           </div>
+          {checkLargeIngredientAmount(recipe)}
         </div>
       </div>
     );
@@ -248,8 +270,14 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
 class RecipeCard extends React.PureComponent<Props> {
   render() {
     const { recipe } = this.props;
+
+    const recipe_url = recipe.url;
+
     return (
-      <div className={styles.RecipeCards}>
+      <div
+        className={styles.RecipeCards}
+        onClick={() => window.open(recipe_url, "_blank")}
+      >
         <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
         <PrimaryRecipeCard recipe={recipe} />
         <RecipeScore recipeScore={recipe.nutritionScore} />
