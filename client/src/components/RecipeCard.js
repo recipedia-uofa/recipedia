@@ -19,7 +19,7 @@ import type { check } from "prettier";
 import { Ingredient } from "models/ingredient";
 
 //Constants
-const MAX_INGREDIENT_SIZE = 7;
+const MAX_INGREDIENT_SIZE = 135;
 
 type Props = {
   recipe: Recipe
@@ -223,23 +223,33 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
   }
 }
 
-const checkLargeIngredientAmount = (recipe: Recipe) => {
-  // count the array
-  const totalIngredientAmount =
-    recipe.ingredientsMatched.length + recipe.ingredientsNotMatched.length;
-
-  if (totalIngredientAmount > MAX_INGREDIENT_SIZE) {
-    return (
-      <div className={styles.maxIngredientContainer}>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    );
-  }
-};
-
+// NOTE: May need to fix the typing to fit well with flow
 class PrimaryRecipeCard extends React.PureComponent<Props> {
+  state = {
+    ingredientBoxWidth: null
+  };
+
+  componentDidMount() {
+    this.setState({
+      ingredientBoxWidth: this.container.offsetHeight
+    });
+  }
+
+  checkLargeIngredientAmount() {
+    const { ingredientBoxWidth } = this.state;
+    console.log(ingredientBoxWidth);
+
+    if (ingredientBoxWidth > MAX_INGREDIENT_SIZE) {
+      return (
+        <div className={styles.maxIngredientContainer}>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      );
+    }
+  }
+
   render() {
     const { recipe } = this.props;
 
@@ -254,14 +264,17 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
         </div>
         <div className={styles.RecipeCardTitle}>{recipe.title}</div>
         <div className={styles.RecipeCardDescription}>
-          <div className={styles.RecipeCardDescriptionContainer}>
+          <div
+            className={styles.RecipeCardDescriptionContainer}
+            ref={el => (this.container = el)}
+          >
             <RecipeIngredientBox
               matchedIngredients={recipe.ingredientsMatched}
               notMatchedIngredients={recipe.ingredientsNotMatched}
             />
           </div>
-          {checkLargeIngredientAmount(recipe)}
         </div>
+        {this.checkLargeIngredientAmount()}
       </div>
     );
   }
