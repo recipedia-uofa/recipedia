@@ -1,12 +1,13 @@
 // @flow
 import React from "react";
 import { connect } from "react-redux";
+import noResultsImg from "assets/Sad_Plate.svg";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
 
 type Props = {|
-  +showResults: boolean
+  +showResults: boolean,
 |};
 
 const noResultsStyle = {
@@ -27,6 +28,28 @@ const noResultsStyle = {
     fontSize: "4em",
     fontStyle: "bold",
     alignText: "center"
+  },
+  noResultsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "20%",
+    margin: "0 auto",
+    marginTop: "10%",
+  },
+  noResultsImage: {
+    float: "left",
+    width: "75%",
+    height: "100%",
+    position: "relative",
+    bottom: 0,
+    left: 0,
+    marginBottom: "10%",
+    opacity: 0.5,
+  },
+  noResultsDescription: {
+    color: "grey",
+    fontSize: "30px",
   }
 };
 
@@ -67,11 +90,17 @@ class RecipediaApp extends React.Component<Props> {
 
     const style = noResultsStyle;
     return (
-      <div style={style.upperContainer}>
-        <UserGuide />
-        <div style={style.verticalContainer}>
-          <span style={style.title}>Recipedia</span>
-          <SearchBar />
+      <div>
+        <div style={style.upperContainer}>
+          <UserGuide />
+          <div style={style.verticalContainer}>
+            <span style={style.title}>Recipedia</span>
+            <SearchBar />
+          </div>
+        </div>
+        <div style={style.noResultsContainer}>
+          <img style={style.noResultsImage} src={noResultsImg}/>
+          <div style={style.noResultsDescription}>No results found.</div>
         </div>
       </div>
     );
@@ -79,7 +108,7 @@ class RecipediaApp extends React.Component<Props> {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  showResults: state.results.visible
+  showResults: state.results.visible,
 });
 
 export default connect(mapStateToProps)(RecipediaApp);

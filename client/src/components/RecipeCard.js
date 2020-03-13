@@ -237,7 +237,6 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
 
   checkLargeIngredientAmount() {
     const { ingredientBoxWidth } = this.state;
-    console.log(ingredientBoxWidth);
 
     if (ingredientBoxWidth > MAX_INGREDIENT_SIZE) {
       return (
