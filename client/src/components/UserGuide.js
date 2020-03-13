@@ -26,7 +26,7 @@ const localStyle = {
 type Props = {};
 
 type State = {
-  isOpen: boolean,
+  isOpen: boolean
 };
 
 class UserGuide extends React.PureComponent<Props, State> {
@@ -44,7 +44,7 @@ class UserGuide extends React.PureComponent<Props, State> {
     } else {
       this.setState({ isOpen: true });
     }
-  }
+  };
 
   render() {
     const { isOpen } = this.state;

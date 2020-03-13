@@ -64,7 +64,7 @@ const initialState: SearchbarState = {
   error: "",
   validIngredientInputs: [],
   validIngredientMap: {},
-  autocompleteItems: [],
+  autocompleteItems: []
 };
 
 export default (
@@ -77,7 +77,7 @@ export default (
         ...state,
         text: "",
         tokens: [...state.tokens, action.token],
-        autocompleteItems: [],
+        autocompleteItems: []
       };
     case DELETE_SEARCH_TOKEN:
       return {

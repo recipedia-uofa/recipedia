@@ -228,7 +228,6 @@ type PrimaryCardState = {
 
 // NOTE: May need to fix the typing to fit well with flow
 class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -243,7 +242,7 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
     }
 
     this.setState({ ingredientBoxWidth: w });
-  }
+  };
 
   checkLargeIngredientAmount() {
     const { ingredientBoxWidth } = this.state;

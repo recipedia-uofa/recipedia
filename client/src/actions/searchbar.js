@@ -61,7 +61,7 @@ type RecieveValidIngredientsAction = {
 };
 
 type CompleteSearchTokenAction = {
-  type: CompleteSearchToken,
+  type: CompleteSearchToken
 };
 
 const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
