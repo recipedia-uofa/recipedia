@@ -212,10 +212,10 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
     return (
       <div className={styles.RecipeCardIngredientBox}>
         {matchedIngredients.map(i => (
-          <RecipeIngredientToken ingredient={i} isMatched={true} />
+          <RecipeIngredientToken key={i} ingredient={i} isMatched={true} />
         ))}
         {notMatchedIngredients.map(i => (
-          <RecipeIngredientToken ingredient={i} isMatched={false} />
+          <RecipeIngredientToken key={i} ingredient={i} isMatched={false} />
         ))}
       </div>
     );

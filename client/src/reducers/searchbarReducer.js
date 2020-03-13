@@ -4,8 +4,10 @@ import {
   ADD_SEARCH_TOKEN,
   DELETE_SEARCH_TOKEN,
   INVALID_SEARCH_ENTRY,
+  CLEAR_SEARCH_ERROR,
   CHANGE_SEARCH_TEXT,
-  RECIEVE_VALID_INGREDIENTS
+  RECIEVE_VALID_INGREDIENTS,
+  CHANGE_AUTOCOMPLETE_SELECTION
 } from "constants/actionTypes";
 import diets from "models/diets";
 import { inputTypes, validInputTypes } from "models/input";
@@ -62,9 +64,11 @@ const initialState: SearchbarState = {
   text: "",
   tokens: [],
   error: "",
+  showError: false,
   validIngredientInputs: [],
   validIngredientMap: {},
-  autocompleteItems: []
+  autocompleteItems: [],
+  autocompleteSelection: 0
 };
 
 export default (
@@ -77,7 +81,8 @@ export default (
         ...state,
         text: "",
         tokens: [...state.tokens, action.token],
-        autocompleteItems: []
+        autocompleteItems: [],
+        autocompleteSelection: 0
       };
     case DELETE_SEARCH_TOKEN:
       return {
@@ -90,7 +95,13 @@ export default (
     case INVALID_SEARCH_ENTRY:
       return {
         ...state,
-        error: action.message
+        error: action.message,
+        showError: true,
+      };
+    case CLEAR_SEARCH_ERROR:
+      return {
+        ...state,
+        showError: false,
       };
     case CHANGE_SEARCH_TEXT:
       const validTypes = validInputTypes(state.tokens);
@@ -105,13 +116,19 @@ export default (
       return {
         ...state,
         text: action.text,
-        autocompleteItems: computeAutocompleteItems(action.text, validItems)
+        autocompleteItems: computeAutocompleteItems(action.text, validItems),
+        autocompleteSelection: 0
       };
     case RECIEVE_VALID_INGREDIENTS:
       return {
         ...state,
         validIngredientInputs: ingredientsToInputs(action.ingredients),
         validIngredientMap: R.indexBy(R.identity, action.ingredients)
+      };
+    case CHANGE_AUTOCOMPLETE_SELECTION:
+      return {
+        ...state,
+        autocompleteSelection: action.index
       };
     default:
       return state;

@@ -36,3 +36,9 @@ export type ChangeSearchText = "searchbar/CHANGE_TEXT";
 
 export const RECIEVE_VALID_INGREDIENTS = "searchbar/RECEIVE_INGREDIENTS";
 export type RecieveValidIngredients = "searchbar/RECEIVE_INGREDIENTS";
+
+export const CHANGE_AUTOCOMPLETE_SELECTION = "searchbar/CHANGE_SELECTION";
+export type ChangeAutocompleteSelection = "searchbar/CHANGE_SELECTION";
+
+export const CLEAR_SEARCH_ERROR = "searchbar/CLEAR_ERROR";
+export type ClearSearchError = "searchbar/CLEAR_ERROR";

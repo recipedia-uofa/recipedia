@@ -9,8 +9,7 @@ const score = (query: string, matchedIndices: MatchedIndices): number => {
   const queryScore =
     matchedIndices.reduce((s, [startIdx, endIdx]) => {
       const mult = 1 / (startIdx + 1);
-      s += mult * (endIdx - startIdx);
-      return s;
+      return s + mult * (endIdx - startIdx);
     }, 0) || 0;
   return queryScore / maxScore;
 };
@@ -65,6 +64,7 @@ const search = (
       score: score(query, matchedIndices)
     });
   }
+
   return getSortedMatches(matches);
 };
 
