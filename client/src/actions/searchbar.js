@@ -167,7 +167,6 @@ export const completeSearchToken = () => {
           newToken = new SearchToken(toKeyword(selectedItem.value));
           dispatch(addSearchToken(newToken));
           dispatch(clearSearchError());
-          dispatch(executeSearch());
           return;
         case inputTypes.DIET:
           throw new Error("Cannot add diet without preceeding DIET keywords");
@@ -175,6 +174,7 @@ export const completeSearchToken = () => {
           newToken = new SearchToken(keywords.NONE, selectedItem.value);
           dispatch(addSearchToken(newToken));
           dispatch(clearSearchError());
+          dispatch(executeSearch());
           return;
         default:
           throw new Error("Unhandled input type");
