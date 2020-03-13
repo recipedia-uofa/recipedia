@@ -7,6 +7,7 @@ import keywords, { toKeyword } from "models/keywords";
 
 import styles from "styles/autocomplete.module.css";
 
+import type { Node } from "react";
 import type { State } from "types/states";
 import type { Input } from "models/input";
 import type { Keyword } from "models/keywords";
@@ -24,38 +25,54 @@ const getTokenColour = (keyword: Keyword): string => {
   }
 };
 
+type ItemProps = {
+  item: Input
+};
+
+const AutocompleteItem = ({ item, ...props }: ItemProps): Node => {
+  if (item.type === inputTypes.KEYWORD) {
+    const itemKeywordColor = getTokenColour(toKeyword(item.value));
+    return (
+      <div {...props}>
+        <div
+          className={styles.autocompleteItemKeyword}
+          style={{ backgroundColor: itemKeywordColor }}
+        >
+          {item.value.toUpperCase()}
+        </div>
+      </div>
+    );
+  }
+  return <div {...props}>{item.value}</div>;
+};
+
 type Props = {
   // redux
-  autocompleteItems: Array<Input>
+  autocompleteItems: Array<Input>,
+  selectedIndex: number
 };
 
 const mapStateToProps = (state: State, ownProps) => ({
-  autocompleteItems: state.searchbar.autocompleteItems
+  autocompleteItems: state.searchbar.autocompleteItems,
+  selectedIndex: state.searchbar.autocompleteSelection
 });
 
 class Autocomplete extends React.PureComponent<Props> {
   render() {
-    const { autocompleteItems: items } = this.props;
+    const { autocompleteItems: items, selectedIndex } = this.props;
 
     return (
       <div className={styles.autocomplete}>
         <div className={styles.autocompleteItems}>
-          {items.map(i => {
-            if (i.type === inputTypes.KEYWORD) {
-              const itemKeywordColor = getTokenColour(toKeyword(i.value));
-              return (
-                <div key={i.value}>
-                  <div
-                    className={styles.autocompleteItemKeyword}
-                    style={{ backgroundColor: itemKeywordColor }}
-                  >
-                    {i.value.toUpperCase()}
-                  </div>
-                </div>
-              );
-            }
-            return <div key={i.value}>{i.value}</div>;
-          })}
+          {items.map((item, index) => (
+            <AutocompleteItem
+              item={item}
+              key={item.value}
+              className={
+                index === selectedIndex ? styles.autocompleteActive : ""
+              }
+            />
+          ))}
         </div>
       </div>
     );

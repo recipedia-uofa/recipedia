@@ -10,7 +10,8 @@ export type SearchbarState = {|
   +error: string,
   +validIngredientInputs: Array<Input>, // list of valid ingredients, formatted as inputs
   +validIngredientMap: IngredientMap, // map of valid ingredients
-  +autocompleteItems: Array<Input> // list of items in the autocomplete
+  +autocompleteItems: Array<Input>, // list of items in the autocomplete
+  +autocompleteSelection: number // the index of the selected autocomplete item
 |};
 
 export type ResultsState = {|

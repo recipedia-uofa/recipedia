@@ -64,7 +64,8 @@ const initialState: SearchbarState = {
   error: "",
   validIngredientInputs: [],
   validIngredientMap: {},
-  autocompleteItems: []
+  autocompleteItems: [],
+  autocompleteSelection: 0
 };
 
 export default (
@@ -77,7 +78,8 @@ export default (
         ...state,
         text: "",
         tokens: [...state.tokens, action.token],
-        autocompleteItems: []
+        autocompleteItems: [],
+        autocompleteSelection: 0
       };
     case DELETE_SEARCH_TOKEN:
       return {
@@ -105,7 +107,8 @@ export default (
       return {
         ...state,
         text: action.text,
-        autocompleteItems: computeAutocompleteItems(action.text, validItems)
+        autocompleteItems: computeAutocompleteItems(action.text, validItems),
+        autocompleteSelection: 0
       };
     case RECIEVE_VALID_INGREDIENTS:
       return {
