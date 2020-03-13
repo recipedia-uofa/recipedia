@@ -8,6 +8,7 @@ export type SearchbarState = {|
   +text: string, // the search string
   +tokens: Array<SearchToken>, // list of search tokens
   +error: string,
+  +showError: boolean,
   +validIngredientInputs: Array<Input>, // list of valid ingredients, formatted as inputs
   +validIngredientMap: IngredientMap, // map of valid ingredients
   +autocompleteItems: Array<Input>, // list of items in the autocomplete

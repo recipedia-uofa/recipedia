@@ -37,6 +37,7 @@ type Props = {
   //redux
   value: string,
   errorMessage: string,
+  showError: boolean,
   updateValue: string => any,
   tryAddToken: string => any,
   deleteLastToken: () => any,
@@ -48,7 +49,8 @@ type Props = {
 
 const mapStateToProps = (state: State, ownProps) => ({
   value: state.searchbar.text,
-  errorMessage: state.searchbar.error
+  errorMessage: state.searchbar.error,
+  showError: state.searchbar.showError
 });
 
 const mapDispatchToProps = dispatch =>
@@ -170,10 +172,9 @@ class TokenCreator extends PureComponent<Props> {
       autoFocus,
       value,
       errorMessage,
+      showError,
       inputRef
     } = this.props;
-
-    const showError = errorMessage !== "";
 
     return (
       <div className={styles.autosizedWrapper}>

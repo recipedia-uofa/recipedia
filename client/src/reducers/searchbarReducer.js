@@ -4,6 +4,7 @@ import {
   ADD_SEARCH_TOKEN,
   DELETE_SEARCH_TOKEN,
   INVALID_SEARCH_ENTRY,
+  CLEAR_SEARCH_ERROR,
   CHANGE_SEARCH_TEXT,
   RECIEVE_VALID_INGREDIENTS,
   CHANGE_AUTOCOMPLETE_SELECTION
@@ -63,6 +64,7 @@ const initialState: SearchbarState = {
   text: "",
   tokens: [],
   error: "",
+  showError: false,
   validIngredientInputs: [],
   validIngredientMap: {},
   autocompleteItems: [],
@@ -93,7 +95,13 @@ export default (
     case INVALID_SEARCH_ENTRY:
       return {
         ...state,
-        error: action.message
+        error: action.message,
+        showError: true,
+      };
+    case CLEAR_SEARCH_ERROR:
+      return {
+        ...state,
+        showError: false,
       };
     case CHANGE_SEARCH_TEXT:
       const validTypes = validInputTypes(state.tokens);

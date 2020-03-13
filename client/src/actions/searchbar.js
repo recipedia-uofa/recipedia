@@ -7,6 +7,7 @@ import {
   DELETE_SEARCH_TOKEN,
   CLEAR_SEARCH_TOKENS,
   INVALID_SEARCH_ENTRY,
+  CLEAR_SEARCH_ERROR,
   CHANGE_SEARCH_TEXT,
   RECIEVE_VALID_INGREDIENTS,
   CHANGE_AUTOCOMPLETE_SELECTION
@@ -22,6 +23,7 @@ import type {
   DeleteSearchToken,
   ClearSearchTokens,
   InvalidSearchEntry,
+  ClearSearchError,
   ChangeSearchText,
   RecieveValidIngredients,
   ChangeAutocompleteSelection
@@ -51,6 +53,10 @@ type InvalidSearchEntryAction = {
   message: string
 };
 
+type ClearSearchErrorAction = {
+  type: ClearSearchError
+};
+
 type ChangeSearchTextAction = {
   type: ChangeSearchText,
   text: string
@@ -71,9 +77,8 @@ const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
   message
 });
 
-const clearSearchError = (): InvalidSearchEntryAction => ({
-  type: INVALID_SEARCH_ENTRY,
-  message: ""
+const clearSearchError = (): ClearSearchErrorAction => ({
+  type: CLEAR_SEARCH_ERROR,
 });
 
 export const deleteSearchToken = (index: number): DeleteSearchTokenAction => ({
@@ -122,14 +127,12 @@ export const tryAddSearchToken = (input: string) => {
         // create a partial token
         const newToken = new SearchToken(toKeyword(input));
         dispatch(addSearchToken(newToken));
-        dispatch(clearSearchError());
         return;
       }
 
       // create an ingredient token
       const newToken = new SearchToken(keywords.NONE, input);
       dispatch(addSearchToken(newToken));
-      dispatch(clearSearchError());
       dispatch(executeSearch());
       return;
     }
@@ -139,7 +142,6 @@ export const tryAddSearchToken = (input: string) => {
     const mergedToken = new SearchToken(lastToken.keyword, input);
     dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
-    dispatch(clearSearchError());
     dispatch(executeSearch());
   };
 };
@@ -166,14 +168,12 @@ export const completeSearchToken = () => {
         case inputTypes.KEYWORD:
           newToken = new SearchToken(toKeyword(selectedItem.value));
           dispatch(addSearchToken(newToken));
-          dispatch(clearSearchError());
           return;
         case inputTypes.DIET:
           throw new Error("Cannot add diet without preceeding DIET keywords");
         case inputTypes.INGREDIENT:
           newToken = new SearchToken(keywords.NONE, selectedItem.value);
           dispatch(addSearchToken(newToken));
-          dispatch(clearSearchError());
           dispatch(executeSearch());
           return;
         default:
@@ -185,7 +185,6 @@ export const completeSearchToken = () => {
     const mergedToken = new SearchToken(lastToken.keyword, selectedItem.value);
     dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
-    dispatch(clearSearchError());
     dispatch(executeSearch());
   };
 };
@@ -258,6 +257,7 @@ export type SearchBarActions =
   | DeleteSearchTokenAction
   | ClearSearchTokensAction
   | InvalidSearchEntryAction
+  | ClearSearchErrorAction
   | ChangeSearchTextAction
   | RecieveValidIngredientsAction
   | ChangeAutocompleteSelectionAction;
