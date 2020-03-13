@@ -10,8 +10,6 @@ import { loadValidIngredients } from "actions/searchbar";
 // import TokenCreator from "components/TokenCreator";
 import TokenInput from "components/TokenInput";
 
-import type { State } from "types/states";
-
 const BORDER_WIDTH = 1;
 const CORNER_RADIUS = 15;
 

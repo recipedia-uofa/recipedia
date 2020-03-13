@@ -84,7 +84,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
 };
 
 const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
-  R.path(["matchedRecipes"]),
+  R.prop("matchedRecipes"),
   R.map(resultToRecipe)
 );
 

@@ -159,7 +159,7 @@ type ValidIngredientReturn = {
 
 export const loadValidIngredients = () => {
   return (dispatch: *, getState: GetState) => {
-    if (!R.isEmpty(getState().searchbar.validIngredientArray)) {
+    if (!R.isEmpty(getState().searchbar.validIngredientInputs)) {
       // We already have valid ingredients
       return;
     }
