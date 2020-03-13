@@ -7,12 +7,14 @@ import {
   DELETE_SEARCH_TOKEN,
   CLEAR_SEARCH_TOKENS,
   INVALID_SEARCH_ENTRY,
+  CLEAR_SEARCH_ERROR,
   CHANGE_SEARCH_TEXT,
-  RECIEVE_VALID_INGREDIENTS
+  RECIEVE_VALID_INGREDIENTS,
+  CHANGE_AUTOCOMPLETE_SELECTION
 } from "constants/actionTypes";
 
 import keywords, { isValidKeyword, toKeyword } from "models/keywords";
-import { isValidInput } from "models/input";
+import { inputTypes, isValidInput } from "models/input";
 import SearchToken from "models/SearchToken";
 import { executeSearch } from "actions/search";
 
@@ -21,8 +23,10 @@ import type {
   DeleteSearchToken,
   ClearSearchTokens,
   InvalidSearchEntry,
+  ClearSearchError,
   ChangeSearchText,
-  RecieveValidIngredients
+  RecieveValidIngredients,
+  ChangeAutocompleteSelection
 } from "constants/actionTypes";
 
 import type { Ingredient } from "models/ingredient";
@@ -49,6 +53,10 @@ type InvalidSearchEntryAction = {
   message: string
 };
 
+type ClearSearchErrorAction = {
+  type: ClearSearchError
+};
+
 type ChangeSearchTextAction = {
   type: ChangeSearchText,
   text: string
@@ -59,14 +67,18 @@ type RecieveValidIngredientsAction = {
   ingredients: Array<Ingredient>
 };
 
+type ChangeAutocompleteSelectionAction = {
+  type: ChangeAutocompleteSelection,
+  index: number
+};
+
 const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
   type: INVALID_SEARCH_ENTRY,
   message
 });
 
-const clearSearchError = (): InvalidSearchEntryAction => ({
-  type: INVALID_SEARCH_ENTRY,
-  message: ""
+const clearSearchError = (): ClearSearchErrorAction => ({
+  type: CLEAR_SEARCH_ERROR,
 });
 
 export const deleteSearchToken = (index: number): DeleteSearchTokenAction => ({
@@ -115,14 +127,12 @@ export const tryAddSearchToken = (input: string) => {
         // create a partial token
         const newToken = new SearchToken(toKeyword(input));
         dispatch(addSearchToken(newToken));
-        dispatch(clearSearchError());
         return;
       }
 
       // create an ingredient token
       const newToken = new SearchToken(keywords.NONE, input);
       dispatch(addSearchToken(newToken));
-      dispatch(clearSearchError());
       dispatch(executeSearch());
       return;
     }
@@ -132,7 +142,49 @@ export const tryAddSearchToken = (input: string) => {
     const mergedToken = new SearchToken(lastToken.keyword, input);
     dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
-    dispatch(clearSearchError());
+    dispatch(executeSearch());
+  };
+};
+
+export const completeSearchToken = () => {
+  return (dispatch: *, getState: GetState) => {
+    const {
+      autocompleteItems,
+      autocompleteSelection,
+      tokens
+    } = getState().searchbar;
+    if (R.isEmpty(autocompleteItems)) {
+      return;
+    }
+
+    const lastToken: ?SearchToken = R.isEmpty(tokens)
+      ? null
+      : tokens[tokens.length - 1];
+    const selectedItem = autocompleteItems[autocompleteSelection];
+
+    if (!lastToken || !lastToken.isPartial()) {
+      let newToken: SearchToken;
+      switch (selectedItem.type) {
+        case inputTypes.KEYWORD:
+          newToken = new SearchToken(toKeyword(selectedItem.value));
+          dispatch(addSearchToken(newToken));
+          return;
+        case inputTypes.DIET:
+          throw new Error("Cannot add diet without preceeding DIET keywords");
+        case inputTypes.INGREDIENT:
+          newToken = new SearchToken(keywords.NONE, selectedItem.value);
+          dispatch(addSearchToken(newToken));
+          dispatch(executeSearch());
+          return;
+        default:
+          throw new Error("Unhandled input type");
+      }
+    }
+
+    // merge the token
+    const mergedToken = new SearchToken(lastToken.keyword, selectedItem.value);
+    dispatch(deleteSearchToken(tokens.length - 1));
+    dispatch(addSearchToken(mergedToken));
     dispatch(executeSearch());
   };
 };
@@ -159,7 +211,7 @@ type ValidIngredientReturn = {
 
 export const loadValidIngredients = () => {
   return (dispatch: *, getState: GetState) => {
-    if (!R.isEmpty(getState().searchbar.validIngredientArray)) {
+    if (!R.isEmpty(getState().searchbar.validIngredientInputs)) {
       // We already have valid ingredients
       return;
     }
@@ -175,10 +227,37 @@ export const loadValidIngredients = () => {
   };
 };
 
+const changeAutocompleteSelection = (
+  index: number
+): ChangeAutocompleteSelectionAction => ({
+  type: CHANGE_AUTOCOMPLETE_SELECTION,
+  index
+});
+
+export const incrementAutocompleteSelection = () => {
+  return (dispatch: *, getState: GetState) => {
+    const { autocompleteItems, autocompleteSelection } = getState().searchbar;
+
+    const acItemsLength = autocompleteItems.length;
+    const newSelection = Math.min(autocompleteSelection + 1, acItemsLength - 1);
+    dispatch(changeAutocompleteSelection(newSelection));
+  };
+};
+
+export const decrementAutocompleteSelection = () => {
+  return (dispatch: *, getState: GetState) => {
+    const { autocompleteSelection } = getState().searchbar;
+    const newSelection = Math.max(autocompleteSelection - 1, 0);
+    dispatch(changeAutocompleteSelection(newSelection));
+  };
+};
+
 export type SearchBarActions =
   | AddSearchTokenAction
   | DeleteSearchTokenAction
   | ClearSearchTokensAction
   | InvalidSearchEntryAction
+  | ClearSearchErrorAction
   | ChangeSearchTextAction
-  | RecieveValidIngredientsAction;
+  | RecieveValidIngredientsAction
+  | ChangeAutocompleteSelectionAction;

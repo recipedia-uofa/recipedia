@@ -15,8 +15,7 @@ import servingsizeImg from "assets/icons/Fork_1.svg";
 
 import type { Node } from "react";
 import type { Recipe } from "models/recipe";
-import type { check } from "prettier";
-import { Ingredient } from "models/ingredient";
+import type { Ingredient } from "models/ingredient";
 
 //Constants
 const MAX_INGREDIENT_SIZE = 135;
@@ -213,32 +212,41 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
     return (
       <div className={styles.RecipeCardIngredientBox}>
         {matchedIngredients.map(i => (
-          <RecipeIngredientToken ingredient={i} isMatched={true} />
+          <RecipeIngredientToken key={i} ingredient={i} isMatched={true} />
         ))}
         {notMatchedIngredients.map(i => (
-          <RecipeIngredientToken ingredient={i} isMatched={false} />
+          <RecipeIngredientToken key={i} ingredient={i} isMatched={false} />
         ))}
       </div>
     );
   }
 }
 
-// NOTE: May need to fix the typing to fit well with flow
-class PrimaryRecipeCard extends React.PureComponent<Props> {
-  state = {
-    ingredientBoxWidth: null
-  };
+type PrimaryCardState = {
+  ingredientBoxWidth: ?number
+};
 
-  componentDidMount() {
-    this.setState({
-      ingredientBoxWidth: this.container.offsetHeight
-    });
+// NOTE: May need to fix the typing to fit well with flow
+class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      ingredientBoxWidth: null
+    };
+    this.setIngredientBoxWidth = this.setIngredientBoxWidth.bind(this);
   }
+
+  setIngredientBoxWidth = (w: number) => {
+    if (this.state.ingredientBoxWidth === w) {
+      return;
+    }
+
+    this.setState({ ingredientBoxWidth: w });
+  };
 
   checkLargeIngredientAmount() {
     const { ingredientBoxWidth } = this.state;
-
-    if (ingredientBoxWidth > MAX_INGREDIENT_SIZE) {
+    if (ingredientBoxWidth && ingredientBoxWidth > MAX_INGREDIENT_SIZE) {
       return (
         <div className={styles.maxIngredientContainer}>
           <div></div>
@@ -251,7 +259,6 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
 
   render() {
     const { recipe } = this.props;
-
     return (
       <div className={styles.RecipeCardContainer}>
         <div className={styles.RecipeCardImageContainer}>
@@ -265,7 +272,7 @@ class PrimaryRecipeCard extends React.PureComponent<Props> {
         <div className={styles.RecipeCardDescription}>
           <div
             className={styles.RecipeCardDescriptionContainer}
-            ref={el => (this.container = el)}
+            ref={el => el && this.setIngredientBoxWidth(el.offsetHeight)}
           >
             <RecipeIngredientBox
               matchedIngredients={recipe.ingredientsMatched}

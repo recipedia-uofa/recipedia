@@ -4,7 +4,9 @@ import { isValidKeyword } from "models/keywords";
 import { isValidDiet } from "models/diets";
 import SearchToken from "models/SearchToken";
 
-import type { IngredientMap } from "models/ingredient";
+import type { Ingredient, IngredientMap } from "models/ingredient";
+import type { Diet } from "models/diets";
+import type { Keyword } from "models/keywords";
 
 export const inputTypes = {
   KEYWORD: "KEYWORD",
@@ -13,6 +15,11 @@ export const inputTypes = {
 };
 
 export type InputType = $Keys<typeof inputTypes>;
+
+export type Input = {
+  type: InputType,
+  value: Keyword | Ingredient | Diet
+};
 
 export const validInputTypes = (
   currentTokens: Array<SearchToken>

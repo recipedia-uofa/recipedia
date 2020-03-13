@@ -1,13 +1,7 @@
 // @flow
 import React from "react";
-import { connect } from "react-redux";
-import * as colours from "constants/colours";
 import styles from "styles/userguide.module.css";
 import gif from "assets/test_gif.gif";
-
-type Props = {
-  isOpen: boolean
-};
 
 const localStyle = {
   closed: {
@@ -29,22 +23,28 @@ const localStyle = {
   }
 };
 
-class UserGuide extends React.PureComponent<Props> {
-  isOpen: boolean;
+type Props = {};
 
-  constructor(props) {
+type State = {
+  isOpen: boolean
+};
+
+class UserGuide extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = { isOpen: false };
+
+    this.changeState = this.changeState.bind(this);
   }
 
-  changeState() {
+  changeState = () => {
     const { isOpen } = this.state;
     if (isOpen) {
       this.setState({ isOpen: false });
     } else {
       this.setState({ isOpen: true });
     }
-  }
+  };
 
   render() {
     const { isOpen } = this.state;
@@ -68,7 +68,7 @@ class UserGuide extends React.PureComponent<Props> {
             <p>Enter information for ingredients</p>
             <h2>Entering Keywords</h2>
             <p>Enter information for keywords</p>
-            <img className={styles.guideImage} src={gif} />
+            <img className={styles.guideImage} src={gif} alt="Guide" />
             <h2>Searching for recipes</h2>
             <p>
               Now you can search for recipes! Click any of the resulting recipes
@@ -80,7 +80,7 @@ class UserGuide extends React.PureComponent<Props> {
         <div
           className={styles.infoIconContainer}
           style={isOpen ? localStyle.moveIcon : { left: "2%" }}
-          onClick={this.changeState.bind(this)}
+          onClick={this.changeState}
         >
           <div className={isOpen ? styles.closeIcon : styles.infoIcon}>
             <div

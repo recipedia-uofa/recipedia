@@ -7,7 +7,10 @@ import Autocomplete from "components/Autocomplete";
 import {
   tryAddSearchToken,
   deleteLastSearchToken,
-  changeSearchText
+  changeSearchText,
+  completeSearchToken,
+  incrementAutocompleteSelection,
+  decrementAutocompleteSelection
 } from "actions/searchbar";
 import { executeSearch } from "actions/search";
 import styles from "styles/searchbar.module.css";
@@ -34,15 +37,20 @@ type Props = {
   //redux
   value: string,
   errorMessage: string,
+  showError: boolean,
   updateValue: string => any,
   tryAddToken: string => any,
   deleteLastToken: () => any,
+  completeToken: () => any,
+  incrementSelection: () => any,
+  decrementSelection: () => any,
   executeSearch: () => any
 };
 
 const mapStateToProps = (state: State, ownProps) => ({
   value: state.searchbar.text,
-  errorMessage: state.searchbar.error
+  errorMessage: state.searchbar.error,
+  showError: state.searchbar.showError
 });
 
 const mapDispatchToProps = dispatch =>
@@ -51,20 +59,15 @@ const mapDispatchToProps = dispatch =>
       deleteLastToken: deleteLastSearchToken,
       updateValue: changeSearchText,
       tryAddToken: tryAddSearchToken,
+      completeToken: completeSearchToken,
+      incrementSelection: incrementAutocompleteSelection,
+      decrementSelection: decrementAutocompleteSelection,
       executeSearch
     },
     dispatch
   );
 
 class TokenCreator extends PureComponent<Props> {
-  showError: boolean;
-  localErrorMessage: string;
-
-  constructor(props) {
-    super(props);
-    this.state = { showError: false, localErrorMessage: "" };
-  }
-
   static defaultProps = {
     autoFocus: false,
     placeholder: "",
@@ -94,7 +97,13 @@ class TokenCreator extends PureComponent<Props> {
       let eventKey;
 
       // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
-      const eventKeys = ["Backspace", "Enter", "Escape"];
+      const eventKeys = [
+        "Backspace",
+        "Enter",
+        "Escape",
+        "ArrowUp",
+        "ArrowDown"
+      ];
       const keyIndex = eventKeys.indexOf(e.key);
       eventKey = eventKeys[keyIndex];
 
@@ -103,28 +112,47 @@ class TokenCreator extends PureComponent<Props> {
       if (eventKey === undefined) {
         eventKey = {
           "8": "Backspace",
+          "9": "Tab",
           "13": "Enter",
+          "24": "ArrowUp",
+          "25": "ArrowDown",
           "27": "Escape"
         }[e.keyCode.toString()];
       }
 
-      // TODO: Fix me. check functional
-      if (value.length === 0 && eventKey === "Backspace") {
-        this.props.deleteLastToken();
-      }
-
-      // if (eventKey === 'Escape') {
-      //     this.actions.updateValue(''); // clear value
-      //     return;
-      // }
-
-      if (eventKey === "Enter") {
-        if (trimmedValue.length === 0) {
-          // this.props.executeSearch();
-        } else {
-          this.actions.createToken();
-        }
-        return;
+      switch (eventKey) {
+        case "Backspace":
+          if (value.length === 0) {
+            this.props.deleteLastToken();
+          }
+          break;
+        case "Tab":
+          e.preventDefault();
+          this.props.completeToken();
+          break;
+        case "Enter":
+          if (trimmedValue.length === 0) {
+            // this.props.executeSearch();
+          } else {
+            this.actions.createToken();
+          }
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          this.props.decrementSelection();
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          this.props.incrementSelection();
+          break;
+        case "Escape":
+          // if (eventKey === 'Escape') {
+          //     this.actions.updateValue(''); // clear value
+          //     return;
+          // }
+          break;
+        default:
+          return;
       }
     },
     handleBlur: e => {
@@ -144,17 +172,9 @@ class TokenCreator extends PureComponent<Props> {
       autoFocus,
       value,
       errorMessage,
+      showError,
       inputRef
     } = this.props;
-
-    const { showError, localErrorMessage } = this.state;
-
-    // const showError = errorMessage !== "";
-    if (errorMessage != "") {
-      this.setState({ showError: true, localErrorMessage: errorMessage });
-    } else {
-      this.setState({ showError: false });
-    }
 
     return (
       <div className={styles.autosizedWrapper}>
@@ -173,7 +193,7 @@ class TokenCreator extends PureComponent<Props> {
           className={styles.toolTipError}
           style={showError ? style.displayError : style.noError}
         >
-          {localErrorMessage}
+          {errorMessage}
         </span>
       </div>
     );
