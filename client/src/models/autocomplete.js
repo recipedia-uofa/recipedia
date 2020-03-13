@@ -1,6 +1,5 @@
 // @flow
 import * as R from "ramda";
-import type { Ingredient } from "models/ingredient";
 
 type MatchedIndices = Array<[number, number]>;
 
@@ -11,6 +10,7 @@ const score = (query: string, matchedIndices: MatchedIndices): number => {
     matchedIndices.reduce((s, [startIdx, endIdx]) => {
       const mult = 1 / (startIdx + 1);
       s += mult * (endIdx - startIdx);
+      return s;
     }, 0) || 0;
   return queryScore / maxScore;
 };

@@ -2,13 +2,15 @@
 import type SearchToken from "models/SearchToken";
 import type { Ingredient, IngredientMap } from "models/ingredient";
 import type { Recipe } from "models/recipe";
+import type { Input } from "models/input";
 
 export type SearchbarState = {|
   +text: string, // the search string
   +tokens: Array<SearchToken>, // list of search tokens
   +error: string,
-  +validIngredientArray: Array<Ingredient>, // list of valid ingredients
-  +validIngredientMap: IngredientMap // map of valid ingredients
+  +validIngredientInputs: Array<Input>, // list of valid ingredients, formatted as inputs
+  +validIngredientMap: IngredientMap, // map of valid ingredients
+  +autocompleteItems: Array<Input> // list of items in the autocomplete
 |};
 
 export type ResultsState = {|
