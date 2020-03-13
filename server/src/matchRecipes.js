@@ -32,6 +32,14 @@ const matchQuery = (
       xid
       name
       rating
+      calories
+      total_fat
+      total_carbohydrates
+      protein
+      cholesterol
+      sodium
+      sugars
+      servings
       matchedIngredients: contains @filter(uid(tokens)) {
         xid
       }
@@ -50,6 +58,14 @@ type MatchedRecipeResult = {
   xid: string,
   name: string,
   rating: number,
+  calories: number,
+  totalFat: number,
+  totalCarbohydrates: number,
+  protein: number,
+  cholesterol: number,
+  sodium: number,
+  sugars: number,
+  servings: number,
   matchedIngredients: Array<IngredientResult>,
   contains: Array<IngredientResult>
 };
@@ -71,15 +87,15 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
     ingredientsMatched,
     ingredientsNotMatched: R.difference(recipeIngredients, ingredientsMatched),
     nutritionalInfo: {
-      calories: 300,
-      fat: 10,
-      carbs: 30,
-      protein: 11,
-      sugar: 7
+      calories: result.calories,
+      fat: result.totalFat,
+      carbs: result.totalCarbohydrates,
+      protein: result.protein,
+      sugar: result.sugars
     },
     imageUrl: "fake",
     nutritionScore: 15,
-    servingSize: 4
+    servingSize: result.servings
   };
 };
 

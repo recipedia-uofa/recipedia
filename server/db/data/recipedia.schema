@@ -9,10 +9,51 @@ type Recipe {
   name
   rating
   contains
+  servings
+  calories
+  total_fat
+  saturated_fat
+  cholesterol
+  sodium
+  potassium
+  total_carbohydrates
+  dietary_fiber
+  protein
+  sugars
+  vitamin_a
+  vitamin_c
+  calcium
+  iron
+  thiamin
+  niacin
+  vitamin_b6
+  magnesium
+  folate
 }
 
 # Define Directives and index
 xid: string @index(exact) .
 name: string .
 rating: float .
+servings: int .
+calories: float .
+total_fat: float .
+saturated_fat: float .
+cholesterol: float .
+sodium: float .
+potassium: float .
+total_carbohydrates: float .
+dietary_fiber: float .
+protein: float .
+sugars: float .
+vitamin_a: float .
+vitamin_c: float .
+calcium: float .
+iron: float .
+thiamin: float .
+niacin: float .
+vitamin_b6: float .
+magnesium: float .
+folate: float .
+
 contains: [uid] @reverse .
