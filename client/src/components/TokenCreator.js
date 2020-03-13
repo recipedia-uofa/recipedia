@@ -8,7 +8,9 @@ import {
   tryAddSearchToken,
   deleteLastSearchToken,
   changeSearchText,
-  completeSearchToken
+  completeSearchToken,
+  incrementAutocompleteSelection,
+  decrementAutocompleteSelection
 } from "actions/searchbar";
 import { executeSearch } from "actions/search";
 import styles from "styles/searchbar.module.css";
@@ -39,6 +41,8 @@ type Props = {
   tryAddToken: string => any,
   deleteLastToken: () => any,
   completeToken: () => any,
+  incrementSelection: () => any,
+  decrementSelection: () => any,
   executeSearch: () => any
 };
 
@@ -54,6 +58,8 @@ const mapDispatchToProps = dispatch =>
       updateValue: changeSearchText,
       tryAddToken: tryAddSearchToken,
       completeToken: completeSearchToken,
+      incrementSelection: incrementAutocompleteSelection,
+      decrementSelection: decrementAutocompleteSelection,
       executeSearch
     },
     dispatch
@@ -89,7 +95,13 @@ class TokenCreator extends PureComponent<Props> {
       let eventKey;
 
       // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key
-      const eventKeys = ["Backspace", "Enter", "Escape"];
+      const eventKeys = [
+        "Backspace",
+        "Enter",
+        "Escape",
+        "ArrowUp",
+        "ArrowDown"
+      ];
       const keyIndex = eventKeys.indexOf(e.key);
       eventKey = eventKeys[keyIndex];
 
@@ -100,32 +112,45 @@ class TokenCreator extends PureComponent<Props> {
           "8": "Backspace",
           "9": "Tab",
           "13": "Enter",
+          "24": "ArrowUp",
+          "25": "ArrowDown",
           "27": "Escape"
         }[e.keyCode.toString()];
       }
 
-      // TODO: Fix me. check functional
-      if (value.length === 0 && eventKey === "Backspace") {
-        this.props.deleteLastToken();
-      }
-
-      if (eventKey === "Tab") {
-        e.preventDefault();
-        this.props.completeToken();
-      }
-
-      // if (eventKey === 'Escape') {
-      //     this.actions.updateValue(''); // clear value
-      //     return;
-      // }
-
-      if (eventKey === "Enter") {
-        if (trimmedValue.length === 0) {
-          // this.props.executeSearch();
-        } else {
-          this.actions.createToken();
-        }
-        return;
+      switch (eventKey) {
+        case "Backspace":
+          if (value.length === 0) {
+            this.props.deleteLastToken();
+          }
+          break;
+        case "Tab":
+          e.preventDefault();
+          this.props.completeToken();
+          break;
+        case "Enter":
+          if (trimmedValue.length === 0) {
+            // this.props.executeSearch();
+          } else {
+            this.actions.createToken();
+          }
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          this.props.decrementSelection();
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          this.props.incrementSelection();
+          break;
+        case "Escape":
+          // if (eventKey === 'Escape') {
+          //     this.actions.updateValue(''); // clear value
+          //     return;
+          // }
+          break;
+        default:
+          return;
       }
     },
     handleBlur: e => {

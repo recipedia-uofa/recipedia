@@ -5,7 +5,8 @@ import {
   DELETE_SEARCH_TOKEN,
   INVALID_SEARCH_ENTRY,
   CHANGE_SEARCH_TEXT,
-  RECIEVE_VALID_INGREDIENTS
+  RECIEVE_VALID_INGREDIENTS,
+  CHANGE_AUTOCOMPLETE_SELECTION
 } from "constants/actionTypes";
 import diets from "models/diets";
 import { inputTypes, validInputTypes } from "models/input";
@@ -115,6 +116,11 @@ export default (
         ...state,
         validIngredientInputs: ingredientsToInputs(action.ingredients),
         validIngredientMap: R.indexBy(R.identity, action.ingredients)
+      };
+    case CHANGE_AUTOCOMPLETE_SELECTION:
+      return {
+        ...state,
+        autocompleteSelection: action.index
       };
     default:
       return state;
