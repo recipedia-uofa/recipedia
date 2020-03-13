@@ -13,6 +13,8 @@ export type ReceiveSearch = "search/RECEIVE";
 export const INVALID_SEARCH = "search/INVALID";
 export type InvalidSearch = "search/INVALID";
 
+// SEARCHBAR actions
+
 // Add search token
 export const ADD_SEARCH_TOKEN = "searchbar/ADD_TOKEN";
 export type AddSearchToken = "searchbar/ADD_TOKEN";

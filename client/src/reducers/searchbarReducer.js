@@ -76,7 +76,8 @@ export default (
       return {
         ...state,
         text: "",
-        tokens: [...state.tokens, action.token]
+        tokens: [...state.tokens, action.token],
+        autocompleteItems: [],
       };
     case DELETE_SEARCH_TOKEN:
       return {

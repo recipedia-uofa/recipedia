@@ -7,7 +7,8 @@ import Autocomplete from "components/Autocomplete";
 import {
   tryAddSearchToken,
   deleteLastSearchToken,
-  changeSearchText
+  changeSearchText,
+  completeSearchToken
 } from "actions/searchbar";
 import { executeSearch } from "actions/search";
 import styles from "styles/searchbar.module.css";
@@ -37,6 +38,7 @@ type Props = {
   updateValue: string => any,
   tryAddToken: string => any,
   deleteLastToken: () => any,
+  completeToken: () => any,
   executeSearch: () => any
 };
 
@@ -51,6 +53,7 @@ const mapDispatchToProps = dispatch =>
       deleteLastToken: deleteLastSearchToken,
       updateValue: changeSearchText,
       tryAddToken: tryAddSearchToken,
+      completeToken: completeSearchToken,
       executeSearch
     },
     dispatch
@@ -95,6 +98,7 @@ class TokenCreator extends PureComponent<Props> {
       if (eventKey === undefined) {
         eventKey = {
           "8": "Backspace",
+          "9": "Tab",
           "13": "Enter",
           "27": "Escape"
         }[e.keyCode.toString()];
@@ -103,6 +107,11 @@ class TokenCreator extends PureComponent<Props> {
       // TODO: Fix me. check functional
       if (value.length === 0 && eventKey === "Backspace") {
         this.props.deleteLastToken();
+      }
+
+      if (eventKey === "Tab") {
+        e.preventDefault();
+        this.props.completeToken();
       }
 
       // if (eventKey === 'Escape') {

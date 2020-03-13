@@ -12,7 +12,7 @@ import {
 } from "constants/actionTypes";
 
 import keywords, { isValidKeyword, toKeyword } from "models/keywords";
-import { isValidInput } from "models/input";
+import { inputTypes, isValidInput } from "models/input";
 import SearchToken from "models/SearchToken";
 import { executeSearch } from "actions/search";
 
@@ -26,6 +26,7 @@ import type {
 } from "constants/actionTypes";
 
 import type { Ingredient } from "models/ingredient";
+import type { Input } from "models/input";
 import type { GetState } from "types/states";
 
 const ERROR_TIMEOUT_FADE = 5000;
@@ -57,6 +58,10 @@ type ChangeSearchTextAction = {
 type RecieveValidIngredientsAction = {
   type: RecieveValidIngredients,
   ingredients: Array<Ingredient>
+};
+
+type CompleteSearchTokenAction = {
+  type: CompleteSearchToken,
 };
 
 const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
@@ -130,6 +135,50 @@ export const tryAddSearchToken = (input: string) => {
     // merge the token with the last keyword
     const lastToken = tokens[tokens.length - 1];
     const mergedToken = new SearchToken(lastToken.keyword, input);
+    dispatch(deleteSearchToken(tokens.length - 1));
+    dispatch(addSearchToken(mergedToken));
+    dispatch(clearSearchError());
+    dispatch(executeSearch());
+  };
+};
+
+export const completeSearchToken = () => {
+  return (dispatch: *, getState: GetState) => {
+    const searchbarState = getState().searchbar;
+    const autocompleteItems = searchbarState.autocompleteItems;
+    if (R.isEmpty(autocompleteItems)) {
+      return;
+    }
+
+    const tokens = searchbarState.tokens;
+    const lastToken: ?SearchToken = R.isEmpty(tokens)
+      ? null
+      : tokens[tokens.length - 1];
+    const selectedItem = autocompleteItems[0];
+
+    if (!lastToken || !lastToken.isPartial()) {
+      let newToken: SearchToken;
+      switch (selectedItem.type) {
+        case inputTypes.KEYWORD:
+          newToken = new SearchToken(toKeyword(selectedItem.value));
+          dispatch(addSearchToken(newToken));
+          dispatch(clearSearchError());
+          dispatch(executeSearch());
+          return;
+        case inputTypes.DIET:
+          throw "Cannot add diet without preceeding DIET keywords";
+        case inputTypes.INGREDIENT:
+          newToken = new SearchToken(keywords.NONE, selectedItem.value);
+          dispatch(addSearchToken(newToken));
+          dispatch(clearSearchError());
+          return;
+        default:
+          throw "Unhandled input type";
+      }
+    }
+
+    // merge the token
+    const mergedToken = new SearchToken(lastToken.keyword, selectedItem.value);
     dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
     dispatch(clearSearchError());
