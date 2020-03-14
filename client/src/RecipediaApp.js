@@ -5,9 +5,12 @@ import noResultsImg from "assets/Sad_Plate.svg";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
+import type { State } from "types/states";
+import type { SearchToken } from "models/SearchToken";
 
 type Props = {|
   +showResults: boolean,
+  +tokens: Array<SearchToken>,
 |};
 
 const noResultsStyle = {
@@ -28,6 +31,24 @@ const noResultsStyle = {
     fontSize: "4em",
     fontStyle: "bold",
     alignText: "center"
+  },
+};
+
+const withResultsStyle = {
+  upperContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "81%",
+    marginLeft: "7%",
+    maxWidth: "90%"
+  },
+  title: {
+    fontSize: "2em",
+    fontStyle: "bold",
+    verticalAlign: "middle",
+    marginLeft: "1em",
+    marginRight: "1em"
   },
   noResultsContainer: {
     display: "flex",
@@ -53,27 +74,12 @@ const noResultsStyle = {
   }
 };
 
-const withResultsStyle = {
-  upperContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "81%",
-    marginLeft: "7%",
-    maxWidth: "90%"
-  },
-  title: {
-    fontSize: "2em",
-    fontStyle: "bold",
-    verticalAlign: "middle",
-    marginLeft: "1em",
-    marginRight: "1em"
-  }
-};
-
 class RecipediaApp extends React.Component<Props> {
   render() {
-    if (this.props.showResults) {
+
+    const { showResults, tokens } = this.props;
+
+    if (showResults || tokens.length > 0) {
       const style = withResultsStyle;
       return (
         <div>
@@ -83,6 +89,12 @@ class RecipediaApp extends React.Component<Props> {
             <SearchBar />
           </div>
           <br />
+          {!showResults && 
+            <div style={style.noResultsContainer}>
+              <img style={style.noResultsImage} src={noResultsImg} alt="test image"/>
+              <div style={style.noResultsDescription}>No results found.</div>
+            </div>
+          }
           <RecipeView />
         </div>
       );
@@ -90,25 +102,20 @@ class RecipediaApp extends React.Component<Props> {
 
     const style = noResultsStyle;
     return (
-      <div>
-        <div style={style.upperContainer}>
-          <UserGuide />
-          <div style={style.verticalContainer}>
-            <span style={style.title}>Recipedia</span>
-            <SearchBar />
-          </div>
-        </div>
-        <div style={style.noResultsContainer}>
-          <img style={style.noResultsImage} src={noResultsImg}/>
-          <div style={style.noResultsDescription}>No results found.</div>
+      <div style={style.upperContainer}>
+        <UserGuide />
+        <div style={style.verticalContainer}>
+          <span style={style.title}>Recipedia</span>
+          <SearchBar />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: State, ownProps) => ({
   showResults: state.results.visible,
+  tokens: state.searchbar.tokens,
 });
 
 export default connect(mapStateToProps)(RecipediaApp);

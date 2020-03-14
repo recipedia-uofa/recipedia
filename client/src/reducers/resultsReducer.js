@@ -17,7 +17,7 @@ export default (
       return {
         ...state,
         recipes: action.recipes,
-        visible: action.recipes.length !== 0
+        visible: action.recipes.length !== 0,
       };
     default:
       return state;
