@@ -8,7 +8,7 @@ services:
   zero:
     image: dgraph/dgraph:latest
     volumes:
-      - /tmp/data:/dgraph
+      - /var/recipedia/data:/dgraph
     ports:
       - 5080:5080
       - 6080:6080
@@ -17,7 +17,7 @@ services:
   alpha:
     image: dgraph/dgraph:latest
     volumes:
-      - /tmp/data:/dgraph
+      - /var/recipedia/data:/dgraph
       - ./db/launch-alpha.sh:/dgraph/launch-alpha.sh
       - type: bind
         source: ./db/data
