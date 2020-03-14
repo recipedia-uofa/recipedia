@@ -1,12 +1,16 @@
 // @flow
 import React from "react";
 import { connect } from "react-redux";
+import noResultsImg from "assets/Sad_Plate.svg";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
+import type { State } from "types/states";
+import type { SearchToken } from "models/SearchToken";
 
 type Props = {|
-  +showResults: boolean
+  +showResults: boolean,
+  +tokens: Array<SearchToken>,
 |};
 
 const noResultsStyle = {
@@ -27,7 +31,7 @@ const noResultsStyle = {
     fontSize: "4em",
     fontStyle: "bold",
     alignText: "center"
-  }
+  },
 };
 
 const withResultsStyle = {
@@ -45,12 +49,37 @@ const withResultsStyle = {
     verticalAlign: "middle",
     marginLeft: "1em",
     marginRight: "1em"
+  },
+  noResultsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "20%",
+    margin: "0 auto",
+    marginTop: "10%",
+  },
+  noResultsImage: {
+    float: "left",
+    width: "75%",
+    height: "100%",
+    position: "relative",
+    bottom: 0,
+    left: 0,
+    marginBottom: "10%",
+    opacity: 0.5,
+  },
+  noResultsDescription: {
+    color: "grey",
+    fontSize: "30px",
   }
 };
 
 class RecipediaApp extends React.Component<Props> {
   render() {
-    if (this.props.showResults) {
+
+    const { showResults, tokens } = this.props;
+
+    if (showResults || tokens.length > 0) {
       const style = withResultsStyle;
       return (
         <div>
@@ -60,6 +89,12 @@ class RecipediaApp extends React.Component<Props> {
             <SearchBar />
           </div>
           <br />
+          {!showResults && 
+            <div style={style.noResultsContainer}>
+              <img style={style.noResultsImage} src={noResultsImg} alt="test image"/>
+              <div style={style.noResultsDescription}>No results found.</div>
+            </div>
+          }
           <RecipeView />
         </div>
       );
@@ -78,8 +113,9 @@ class RecipediaApp extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  showResults: state.results.visible
+const mapStateToProps = (state: State, ownProps) => ({
+  showResults: state.results.visible,
+  tokens: state.searchbar.tokens,
 });
 
 export default connect(mapStateToProps)(RecipediaApp);
