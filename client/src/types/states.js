@@ -15,9 +15,15 @@ export type SearchbarState = {|
   +autocompleteSelection: number // the index of the selected autocomplete item
 |};
 
+// This state controls the results view
+// searchbar only: isPending == false, visible == false
+// loading indicator: isPending == true
+// no results indicator: isPending == false, visible == true, recipes == empty
+// recipe results shown: isPending == false, visible == true, recipes != empty
 export type ResultsState = {|
   +recipes: Array<Recipe>,
-  +visible: boolean
+  +isPending: boolean,  // is a search query pending results?
+  +visible: boolean     // sticky visibility filter for results view
 |};
 
 export type State = {|

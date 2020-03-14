@@ -33,6 +33,14 @@ export default class SearchToken {
     return this.keyword === keywords.NOT;
   }
 
+  isSimpleIngredient(): boolean {
+    return this.keyword === keywords.NONE;
+  }
+
+  isIngredient(): boolean {
+    return this.isKeyIngredient() || this.isSimpleIngredient();
+  }
+
   hasKeyword(): boolean {
     return this.keyword !== keywords.NONE;
   }
