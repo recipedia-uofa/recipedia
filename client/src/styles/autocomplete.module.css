@@ -53,6 +53,6 @@
 /*NOTE: This style is used for the "keyboard selections"*/
 .autocompleteActive {
   /*when navigating through the items using the arrow keys:*/
-  background-color: DodgerBlue !important;
+  background-color: #4bbf84 !important;
   color: #ffffff;
 }

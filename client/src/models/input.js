@@ -47,11 +47,13 @@ const INVALID_KEY_OR_INGREDIENT_MESSAGE =
 
 // Returns if the ingredient is valid, and the appropriate error message IF
 // it is invalid
+// NOTE: Is it possible to store the tokens in a dictionary for faster speed up?
 export const isValidInput = (
   input: string,
   currentTokens: Array<SearchToken>,
   validIngredients: IngredientMap
 ): [boolean, string] => {
+
   const isValidIngredient = (i: string) => i in validIngredients;
 
   const isValidKeyOrIngredient: string => boolean = R.anyPass([
@@ -64,6 +66,7 @@ export const isValidInput = (
   }
 
   const lastToken = currentTokens[currentTokens.length - 1];
+
   if (lastToken.isPartial()) {
     if (lastToken.isDiet()) {
       return [isValidDiet(input), INVALID_DIET_MESSAGE];
@@ -73,4 +76,16 @@ export const isValidInput = (
   } else {
     return [isValidKeyOrIngredient(input), INVALID_KEY_OR_INGREDIENT_MESSAGE];
   }
+};
+
+export const isDuplicateInput = (
+  input: string,
+  currentTokens: Array<SearchToken>
+): [boolean, string] => {
+
+  const isNotDuplicateValue = (tokens: Array<SearchToken>, value: string) => R.isEmpty(
+    R.filter(t => (t.value != null) && (t.value.toUpperCase() == value.toUpperCase()), tokens)
+  );
+
+  return [!isNotDuplicateValue(currentTokens, input), `Ingredient '${input.toUpperCase()}' already entered`];
 };
