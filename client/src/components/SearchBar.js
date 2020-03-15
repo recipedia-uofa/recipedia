@@ -33,14 +33,29 @@ const style = {
     margin: "0 auto",
     marginTop: `${CORNER_RADIUS}px`,
     padding: `${CORNER_RADIUS}px`
-  }
+  },
+  searchButtonResults: {
+    flex: `0 1 ${CORNER_RADIUS + 50}`,
+    alignSelf: "stretch",
+    color: "grey",
+    borderRadius: `${CORNER_RADIUS}px`,
+    marginLeft: `${CORNER_RADIUS}px`,
+    padding: `${CORNER_RADIUS}px`
+  },
+  rowResults: {
+    flexDirection: "row",
+  },
+  columnResults: {
+    flexDirection: "column",
+  },
 };
 
 type Props = {
   // redux
   errorMessage: string,
   executeSearch: () => void,
-  loadValidIngredients: () => void
+  loadValidIngredients: () => void,
+  withResults: boolean,
 };
 
 const mapDispatchToProps = dispatch =>
@@ -58,8 +73,9 @@ class SearchBar extends React.PureComponent<Props> {
   }
 
   render() {
+    const { withResults } = this.props;
     return (
-      <div className={styles.searchContainer}>
+      <div className={styles.searchContainer} style={withResults ? style.rowResults : style.columnResults}>
         <div style={style.outerSearchBox}>
           <TokenInput autoFocus />
         </div>
@@ -67,7 +83,7 @@ class SearchBar extends React.PureComponent<Props> {
           <button
             type="button"
             className={styles.searchButtonAttitude}
-            style={style.searchButton}
+            style={withResults ? style.searchButtonResults : style.searchButton}
             onClick={this.props.executeSearch}
           >
             Search
