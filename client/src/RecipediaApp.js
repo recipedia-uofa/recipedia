@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as R from "ramda";
 import noResultsImg from "assets/Sad_Plate.svg";
+import { ReactComponent as RecipediaLogo } from "assets/RecipediaLogo.svg";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
@@ -14,7 +15,8 @@ const noResultsStyle = {
   upperContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginTop: "20vh"
   },
   verticalContainer: {
     display: "flex",
@@ -41,11 +43,8 @@ const withResultsStyle = {
     maxWidth: "90%"
   },
   title: {
-    fontSize: "2em",
-    fontStyle: "bold",
-    verticalAlign: "middle",
-    marginLeft: "1em",
-    marginRight: "1em"
+    marginTop: 100,
+    width: "20%",
   },
   noResultsContainer: {
     display: "flex",
@@ -127,7 +126,7 @@ class RecipediaApp extends React.Component<Props> {
         <div>
           <UserGuide />
           <div style={style.upperContainer}>
-            <span style={style.title}>Recipedia</span>
+            <RecipediaLogo data-testid="logo" />
             <SearchBar />
           </div>
           <br />
@@ -147,7 +146,7 @@ class RecipediaApp extends React.Component<Props> {
       <div style={style.upperContainer}>
         <UserGuide />
         <div style={style.verticalContainer}>
-          <span style={style.title}>Recipedia</span>
+          <RecipediaLogo data-testid="logo" />
           <SearchBar />
         </div>
       </div>
