@@ -14,7 +14,7 @@ import {
 } from "constants/actionTypes";
 
 import keywords, { isValidKeyword, toKeyword } from "models/keywords";
-import { inputTypes, isValidInput } from "models/input";
+import { inputTypes, isValidInput, isDuplicateInput } from "models/input";
 import SearchToken from "models/SearchToken";
 import { executeSearch } from "actions/search";
 
@@ -32,7 +32,7 @@ import type {
 import type { Ingredient } from "models/ingredient";
 import type { GetState } from "types/states";
 
-const ERROR_TIMEOUT_FADE = 5000;
+const ERROR_TIMEOUT_FADE = 3000;
 
 type AddSearchTokenAction = {
   type: AddSearchToken,
@@ -110,11 +110,21 @@ export const tryAddSearchToken = (input: string) => {
     const state = getState();
     const { tokens, validIngredientMap } = state.searchbar;
 
+    const [isDuplicate, duplicateErrorMessage] = isDuplicateInput(
+      input,
+      tokens
+    );
+
     const [isValid, errorMessage] = isValidInput(
       input,
       tokens,
       validIngredientMap
     );
+    if (isDuplicate) {
+      dispatch(invalidSearchToken(duplicateErrorMessage));
+      setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
+      return;
+    }
     if (!isValid) {
       dispatch(invalidSearchToken(errorMessage));
       setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
@@ -153,6 +163,7 @@ export const completeSearchToken = () => {
       autocompleteSelection,
       tokens
     } = getState().searchbar;
+
     if (R.isEmpty(autocompleteItems)) {
       return;
     }
@@ -161,6 +172,17 @@ export const completeSearchToken = () => {
       ? null
       : tokens[tokens.length - 1];
     const selectedItem = autocompleteItems[autocompleteSelection];
+
+    const [isDuplicate, errorMessage] = isDuplicateInput(
+      selectedItem.value,
+      tokens
+    );
+
+    if (isDuplicate) {
+      dispatch(invalidSearchToken(errorMessage));
+      setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
+      return;
+    }
 
     if (!lastToken || !lastToken.isPartial()) {
       let newToken: SearchToken;
