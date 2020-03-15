@@ -78,7 +78,7 @@ const invalidSearchToken = (message: string): InvalidSearchEntryAction => ({
 });
 
 const clearSearchError = (): ClearSearchErrorAction => ({
-  type: CLEAR_SEARCH_ERROR,
+  type: CLEAR_SEARCH_ERROR
 });
 
 export const deleteSearchToken = (index: number): DeleteSearchTokenAction => ({

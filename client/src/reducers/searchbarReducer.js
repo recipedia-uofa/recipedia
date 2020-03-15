@@ -96,12 +96,12 @@ export default (
       return {
         ...state,
         error: action.message,
-        showError: true,
+        showError: true
       };
     case CLEAR_SEARCH_ERROR:
       return {
         ...state,
-        showError: false,
+        showError: false
       };
     case CHANGE_SEARCH_TEXT:
       const validTypes = validInputTypes(state.tokens);
