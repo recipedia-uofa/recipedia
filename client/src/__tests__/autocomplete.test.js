@@ -15,15 +15,10 @@ test("basic scores", () => {
 });
 
 const opts = {
-  key: R.identity,
+  key: R.identity
 };
 
-const ingredients = [
-  "chipotle",
-  "potato",
-  "potato chips",
-  "sweet potato"
-];
+const ingredients = ["chipotle", "potato", "potato chips", "sweet potato"];
 
 test("empty search", () => {
   expect(search("", [], opts)).toStrictEqual([]);

@@ -30,7 +30,7 @@ const noResultsStyle = {
     fontSize: "4em",
     fontStyle: "bold",
     alignText: "center"
-  },
+  }
 };
 
 const withResultsStyle = {
@@ -44,7 +44,7 @@ const withResultsStyle = {
   },
   title: {
     marginTop: 100,
-    width: "20%",
+    width: "20%"
   },
   noResultsContainer: {
     display: "flex",
@@ -52,7 +52,7 @@ const withResultsStyle = {
     alignItems: "center",
     width: "20%",
     margin: "0 auto",
-    marginTop: "10%",
+    marginTop: "10%"
   },
   noResultsImage: {
     float: "left",
@@ -62,11 +62,11 @@ const withResultsStyle = {
     bottom: 0,
     left: 0,
     marginBottom: "10%",
-    opacity: 0.5,
+    opacity: 0.5
   },
   noResultsDescription: {
     color: "grey",
-    fontSize: "30px",
+    fontSize: "30px"
   }
 };
 
@@ -80,14 +80,14 @@ const resultModes = {
 type ResultMode = $Keys<typeof resultModes>;
 
 const isEmptySearchQuery = (tokens: Array<SearchToken>): boolean => {
-  return R.isEmpty(R.filter(t => (!t.isPartial() && t.isIngredient()), tokens));
+  return R.isEmpty(R.filter(t => !t.isPartial() && t.isIngredient(), tokens));
 };
 
 const getMode = (
   resultsArePending: boolean,
   hasResults: boolean,
   showResults: boolean,
-  tokens: Array<SearchToken>,
+  tokens: Array<SearchToken>
 ): ResultMode => {
   if (resultsArePending) {
     return resultModes.IS_LOADING;
@@ -110,12 +110,11 @@ type Props = {
   resultsArePending: boolean,
   hasResults: boolean,
   showResults: boolean,
-  tokens: Array<SearchToken>,
+  tokens: Array<SearchToken>
 };
 
 class RecipediaApp extends React.Component<Props> {
   render() {
-
     const { resultsArePending, hasResults, showResults, tokens } = this.props;
 
     const mode = getMode(resultsArePending, hasResults, showResults, tokens);
@@ -130,13 +129,17 @@ class RecipediaApp extends React.Component<Props> {
             <SearchBar />
           </div>
           <br />
-          {mode === resultModes.NO_RESULTS &&
+          {mode === resultModes.NO_RESULTS && (
             <div style={style.noResultsContainer}>
-              <img style={style.noResultsImage} src={noResultsImg} alt="test image"/>
+              <img
+                style={style.noResultsImage}
+                src={noResultsImg}
+                alt="test image"
+              />
               <div style={style.noResultsDescription}>No results found.</div>
             </div>
-          }
-          { mode === resultModes.SHOW_RESULTS && <RecipeView /> }
+          )}
+          {mode === resultModes.SHOW_RESULTS && <RecipeView />}
         </div>
       );
     }
@@ -158,7 +161,7 @@ const mapStateToProps = (state: State, ownProps) => ({
   resultsArePending: state.results.isPending,
   hasResults: !R.isEmpty(state.results.recipes),
   showResults: state.results.visible,
-  tokens: state.searchbar.tokens,
+  tokens: state.searchbar.tokens
 });
 
 export default connect(mapStateToProps)(RecipediaApp);

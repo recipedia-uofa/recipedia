@@ -17,14 +17,14 @@ export default (
     case EXECUTE_SEARCH:
       return {
         ...state,
-        isPending: true,
+        isPending: true
       };
     case RECEIVE_SEARCH:
       return {
         ...state,
         recipes: action.recipes,
         isPending: false,
-        visible: true,
+        visible: true
       };
     default:
       return state;

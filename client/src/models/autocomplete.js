@@ -4,20 +4,25 @@ import * as R from "ramda";
 type MatchedIndices = Array<[number, number]>;
 
 // The score is normalized to [0, 1] where 1 is a good match and 0 is a bad one
-export const score = (record: string, matchedIndices: MatchedIndices): number => {
+export const score = (
+  record: string,
+  matchedIndices: MatchedIndices
+): number => {
   const maxScore = record.length;
-  const queryScore =
-    matchedIndices.reduce((s, [startIdx, endIdx]) => {
-      // Earlier matched are scored higher
-      const mult = 1 / (startIdx + 1);
-      return s + mult * (endIdx - startIdx + 1);
-    }, 0);
+  const queryScore = matchedIndices.reduce((s, [startIdx, endIdx]) => {
+    // Earlier matches are scored higher
+    const mult = 1 / (startIdx + 1);
+    return s + mult * (endIdx - startIdx + 1);
+  }, 0);
   return queryScore / maxScore;
 };
 
 // Match the query string to the record.
 // @return -1 for no match or the index where the match starts
-export const match = (query: string, record: string): false | MatchedIndices => {
+export const match = (
+  query: string,
+  record: string
+): false | MatchedIndices => {
   // Case insensitive pattern match
   const pattern = new RegExp(`${query}`, "i");
   const match = pattern.exec(record);
@@ -37,7 +42,7 @@ type Match = {
 };
 
 type SearchOptions = {
-  key: string | any => string,
+  key: string | (any => string)
 };
 
 const getSortedMatches = R.pipe(
@@ -51,7 +56,7 @@ const search = (
   opts: SearchOptions
 ): Array<any> => {
   const fullOpts = {
-    ...opts,
+    ...opts
   };
 
   const queryLowerCase = query.toLowerCase();
