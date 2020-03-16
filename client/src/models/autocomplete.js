@@ -9,11 +9,12 @@ export const score = (
   matchedIndices: MatchedIndices
 ): number => {
   const maxScore = record.length;
-  const queryScore = matchedIndices.reduce((s, [startIdx, endIdx]) => {
-    // Earlier matches are scored higher
-    const mult = 1 / (startIdx + 1);
-    return s + mult * (endIdx - startIdx + 1);
-  }, 0);
+  const queryScore =
+    matchedIndices.reduce((s, [startIdx, endIdx]) => {
+      // Earlier matches are scored higher
+      const mult = 1 / (startIdx + 1);
+      return s + mult * (endIdx - startIdx + 1);
+    }, 0) || 0;
   return queryScore / maxScore;
 };
 

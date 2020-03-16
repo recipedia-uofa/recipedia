@@ -45,6 +45,24 @@ const INVALID_DIET_MESSAGE = "Entered an invalid diet";
 const INVALID_KEY_OR_INGREDIENT_MESSAGE =
   "Entered an invalid keyword or ingredient";
 
+export const isDuplicateInput = (
+  input: string,
+  currentTokens: Array<SearchToken>
+): [boolean, string] => {
+  const isDuplicateValue = (
+    tokens: Array<SearchToken>,
+    value: string
+  ): boolean => {
+    const valueUpper = value.toUpperCase();
+    return R.any(t => t.value && t.value.toUpperCase() === valueUpper, tokens);
+  };
+
+  return [
+    isDuplicateValue(currentTokens, input),
+    `Ingredient '${input}' already entered`
+  ];
+};
+
 // Returns if the ingredient is valid, and the appropriate error message IF
 // it is invalid
 // NOTE: Is it possible to store the tokens in a dictionary for faster speed up?
@@ -53,7 +71,6 @@ export const isValidInput = (
   currentTokens: Array<SearchToken>,
   validIngredients: IngredientMap
 ): [boolean, string] => {
-
   const isValidIngredient = (i: string) => i in validIngredients;
 
   const isValidKeyOrIngredient: string => boolean = R.anyPass([
@@ -63,6 +80,11 @@ export const isValidInput = (
 
   if (R.isEmpty(currentTokens)) {
     return [isValidKeyOrIngredient(input), INVALID_KEY_OR_INGREDIENT_MESSAGE];
+  }
+
+  const [isDuplicate, duplicateError] = isDuplicateInput(input, currentTokens);
+  if (isDuplicate) {
+    return [false, duplicateError];
   }
 
   const lastToken = currentTokens[currentTokens.length - 1];
@@ -76,16 +98,4 @@ export const isValidInput = (
   } else {
     return [isValidKeyOrIngredient(input), INVALID_KEY_OR_INGREDIENT_MESSAGE];
   }
-};
-
-export const isDuplicateInput = (
-  input: string,
-  currentTokens: Array<SearchToken>
-): [boolean, string] => {
-
-  const isNotDuplicateValue = (tokens: Array<SearchToken>, value: string) => R.isEmpty(
-    R.filter(t => (t.value != null) && (t.value.toUpperCase() == value.toUpperCase()), tokens)
-  );
-
-  return [!isNotDuplicateValue(currentTokens, input), `Ingredient '${input.toUpperCase()}' already entered`];
 };

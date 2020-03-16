@@ -110,21 +110,12 @@ export const tryAddSearchToken = (input: string) => {
     const state = getState();
     const { tokens, validIngredientMap } = state.searchbar;
 
-    const [isDuplicate, duplicateErrorMessage] = isDuplicateInput(
-      input,
-      tokens
-    );
-
     const [isValid, errorMessage] = isValidInput(
       input,
       tokens,
       validIngredientMap
     );
-    if (isDuplicate) {
-      dispatch(invalidSearchToken(duplicateErrorMessage));
-      setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
-      return;
-    }
+
     if (!isValid) {
       dispatch(invalidSearchToken(errorMessage));
       setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
