@@ -18,7 +18,7 @@ const matchQuery = (
 ) => {
   return `
   {
-    tokens as var(func: eq(xid, ${varArray(ingredients)}))
+    tokens as var(func: eq(iname, ${varArray(ingredients)}))
 
     var(func: uid(tokens)) {
       matchedRecipes as ~contains {
@@ -29,8 +29,7 @@ const matchQuery = (
     matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
       opts.limit
     }) {
-      xid
-      name
+      url
       rating
       calories
       total_fat
@@ -41,26 +40,26 @@ const matchQuery = (
       sugars
       servings
       matchedIngredients: contains @filter(uid(tokens)) {
-        xid
+        iname
       }
       contains {
-        xid
+        iname
       }
     }
   }`;
 };
 
 type IngredientResult = {
-  xid: string
+  iname: string
 };
 
 type MatchedRecipeResult = {
-  xid: string,
-  name: string,
+  url: string,
+  title: string,
   rating: number,
   calories: number,
-  totalFat: number,
-  totalCarbohydrates: number,
+  total_fat: number,
+  total_carbohydrates: number,
   protein: number,
   cholesterol: number,
   sodium: number,
@@ -74,22 +73,22 @@ type QueryResult = {
   matchedRecipes: Array<MatchedRecipeResult>
 };
 
-const resultToIngredient: IngredientResult => Ingredient = i => i.xid;
+const resultToIngredient: IngredientResult => Ingredient = i => i.iname;
 const resultToIngredientArray = R.map(resultToIngredient);
 
 const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
   const ingredientsMatched = resultToIngredientArray(result.matchedIngredients);
   const recipeIngredients = resultToIngredientArray(result.contains);
   return {
-    url: result.xid,
-    title: result.name,
+    url: result.url,
+    title: result.title,
     rating: result.rating,
     ingredientsMatched,
     ingredientsNotMatched: R.difference(recipeIngredients, ingredientsMatched),
     nutritionalInfo: {
       calories: result.calories,
-      fat: result.totalFat,
-      carbs: result.totalCarbohydrates,
+      fat: result.total_fat,
+      carbs: result.total_carbohydrates,
       protein: result.protein,
       sugar: result.sugars
     },

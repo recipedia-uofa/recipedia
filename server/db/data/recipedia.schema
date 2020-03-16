@@ -1,12 +1,21 @@
 # Define Types
 
 type Ingredient {
-  xid
+  iname
+  categorized_as
+}
+
+type Category {
+  cname
 }
 
 type Recipe {
-  xid
-  name
+  url
+  title
+  img_url
+  prep_time
+  reviews
+  made_it_count
   rating
   contains
   servings
@@ -32,8 +41,14 @@ type Recipe {
 }
 
 # Define Directives and index
-xid: string @index(exact) .
-name: string .
+url: string @index(exact) .
+iname: string @index(exact) .
+
+title: string .
+img_url: string .
+prep_time: int .
+reviews: int .
+made_it_count: int .
 rating: float .
 servings: int .
 calories: float .
@@ -56,4 +71,7 @@ vitamin_b6: float .
 magnesium: float .
 folate: float .
 
+cname: string .
+
 contains: [uid] @reverse .
+categorized_as: [uid] .
