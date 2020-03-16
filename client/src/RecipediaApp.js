@@ -35,12 +35,18 @@ const noResultsStyle = {
 
 const withResultsStyle = {
   upperContainer: {
+    position: "-webkit-sticky",
+    position: "sticky",
+    top: 0,
+    backdropFilter: "blur(5px)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    width: "81%",
-    marginLeft: "7%",
-    maxWidth: "90%"
+    width: "83%",
+    // marginLeft: "7%",
+    padding: "0 9%",
+    maxWidth: "90%",
+    zIndex: "10",
   },
   title: {
     marginTop: 100,

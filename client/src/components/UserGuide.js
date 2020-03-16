@@ -20,7 +20,12 @@ const localStyle = {
   },
   hide: {
     opacity: "0"
-  }
+  },
+  stick: {
+    position: "-webkit-sticky",
+    position: "sticky",
+    top: "0",
+  },
 };
 
 type Props = {};
