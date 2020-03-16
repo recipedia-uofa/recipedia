@@ -44,7 +44,6 @@ type Recipe {
 url: string @index(exact) .
 iname: string @index(exact) .
 
-url: string .
 title: string .
 img_url: string .
 prep_time: int .
@@ -75,4 +74,4 @@ folate: float .
 cname: string .
 
 contains: [uid] @reverse .
-categorized_as: uid .
+categorized_as: [uid] .
