@@ -16,6 +16,7 @@ const CORNER_RADIUS = 15;
 const style = {
   outerSearchBox: {
     border: `${BORDER_WIDTH}px solid ${colours.LIGHT_BACKGROUND_DEFAULT_COLOUR}`,
+    backgroundColor: "white",
     borderRadius: `${CORNER_RADIUS}px`,
     padding: CORNER_RADIUS - BORDER_WIDTH,
     boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
