@@ -73,7 +73,10 @@ const withResultsStyle = {
   noResultsDescription: {
     color: "grey",
     fontSize: "30px"
-  }
+  },
+  noOverflow: {
+    overflowX: "hidden",
+  },
 };
 
 const resultModes = {
@@ -128,7 +131,7 @@ class RecipediaApp extends React.Component<Props> {
     if (mode !== resultModes.SEARCH_BAR_ONLY) {
       const style = withResultsStyle;
       return (
-        <div>
+        <div style={style.noOverflow}>
           <UserGuide />
           <div style={style.upperContainer}>
             <RecipediaLogo data-testid="logo" />

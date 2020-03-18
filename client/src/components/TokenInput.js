@@ -74,8 +74,6 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
                 key={token.encode()}
                 index={index}
                 data={token}
-                // TODO: Bind onDelete to index
-                // onDelete={this.actions.onDeleteToken(index)}
               />
             );
           })}

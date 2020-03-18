@@ -195,11 +195,24 @@ input {
   border-color: transparent transparent transparent #b04632;
 }
 
-/* content: " ";
-  position: absolute;
-  top: 50%;
-  right: 100%; /* To the left of the tooltip
-  margin-top: -15px;
-  border-width: 15px;
-  border-style: solid;
-  border-color: transparent #b04632 transparent transparent; */
+/*The following styles are focused on the search tokens generated*/
+.tokenX {
+  cursor: pointer;
+  /* padding-right: 10px; */
+  padding: 11px;
+  color: white;
+  align-self: center;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.tokenX:hover {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.tokenX:active {
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  backdrop-filter: brightness(1.1);
+  font-weight: normal;
+}
