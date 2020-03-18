@@ -24,8 +24,8 @@ const localStyle = {
   stick: {
     position: "-webkit-sticky",
     position: "sticky",
-    top: "0",
-  },
+    top: "0"
+  }
 };
 
 type Props = {};

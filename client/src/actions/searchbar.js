@@ -101,11 +101,11 @@ export const deleteLastSearchToken = () => {
 };
 
 export const deleteSpecificToken = (token: SearchToken) => {
-  return(dispatch: *, getState: GetState) => {
+  return (dispatch: *, getState: GetState) => {
     const tokens = getState().searchbar.tokens;
 
     const foundIndex = R.findIndex(t => t.equals(token))(tokens);
-    
+
     if (foundIndex >= 0) {
       dispatch(deleteSearchToken(foundIndex));
       dispatch(executeSearch());

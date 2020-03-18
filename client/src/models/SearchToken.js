@@ -53,7 +53,7 @@ export default class SearchToken {
     if (other === this) {
       return true;
     }
-    
+
     if (other instanceof SearchToken) {
       return this.keyword === other.keyword && this.value === other.value;
     }

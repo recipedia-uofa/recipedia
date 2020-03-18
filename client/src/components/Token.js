@@ -59,7 +59,7 @@ const style = {
 
 type Props = {
   data: SearchToken,
-  delete: (token: SearchToken) => any,
+  delete: (token: SearchToken) => any
 };
 
 const getTokenColour = (token: SearchToken): string => {
@@ -104,14 +104,18 @@ const renderFullToken = (token: SearchToken, props: Props) => {
     >
       {token.hasKeyword() && <div style={style.fullTokenName}>{keyword}</div>}
       <div style={style.tokenContent}>{content}</div>
-      <div className={tokenStyle.tokenX} onClick={() => props.delete(token)}>X</div>
+      <div className={tokenStyle.tokenX} onClick={() => props.delete(token)}>
+        X
+      </div>
     </div>
   );
 };
 
 const Token = (props: Props) => {
   const token = props.data;
-  return token.isPartial() ? renderPartialToken(token) : renderFullToken(token, props);
+  return token.isPartial()
+    ? renderPartialToken(token)
+    : renderFullToken(token, props);
 };
 
 const mapDispatchToProps = dispatch =>
