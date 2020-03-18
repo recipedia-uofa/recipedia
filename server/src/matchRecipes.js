@@ -12,6 +12,28 @@ type MatchQueryOpts = {
   limit: number
 };
 
+// Assumes there exists a variable "tokens" with the ingredients to match
+const recipeElements = `
+  url
+  title
+  img_url
+  rating
+  calories
+  total_fat
+  total_carbohydrates
+  protein
+  cholesterol
+  sodium
+  sugars
+  servings
+  matched_ingredients: contains @filter(uid(tokens)) {
+    iname
+  }
+  contains {
+    iname
+  }
+`;
+
 const matchQueryWithKeyIngredients = (
   allIngredients: Array<string>,
   keyIngredients: Array<string>,
@@ -32,23 +54,7 @@ const matchQueryWithKeyIngredients = (
     matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
       opts.limit
     }) @filter(eq(val(keyMatched), ${keyIngredients.length})) {
-      xid
-      name
-      rating
-      calories
-      total_fat
-      total_carbohydrates
-      protein
-      cholesterol
-      sodium
-      sugars
-      servings
-      matched_ingredients: contains @filter(uid(tokens)) {
-        xid
-      }
-      contains {
-        xid
-      }
+      ${recipeElements}
     }
   }`;
 };
@@ -70,22 +76,7 @@ const basicMatchQuery = (
     matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
       opts.limit
     }) {
-      url
-      rating
-      calories
-      total_fat
-      total_carbohydrates
-      protein
-      cholesterol
-      sodium
-      sugars
-      servings
-      matched_ingredients: contains @filter(uid(tokens)) {
-        iname
-      }
-      contains {
-        iname
-      }
+      ${recipeElements}
     }
   }`;
 };
@@ -121,6 +112,7 @@ type IngredientResult = {
 type MatchedRecipeResult = {
   url: string,
   title: string,
+  img_url: string,
   rating: number,
   calories: number,
   total_fat: number,
@@ -159,7 +151,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
       protein: result.protein,
       sugar: result.sugars
     },
-    imageUrl: "fake",
+    imageUrl: result.img_url,
     nutritionScore: 15,
     servingSize: result.servings
   };
