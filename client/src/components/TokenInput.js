@@ -69,15 +69,7 @@ class TokenInput extends PureComponent<Props, TokenInputState> {
       >
         <div className={styles.tokenList}>
           {tokens.map((token, index) => {
-            return (
-              <Token
-                key={token.encode()}
-                index={index}
-                data={token}
-                // TODO: Bind onDelete to index
-                // onDelete={this.actions.onDeleteToken(index)}
-              />
-            );
+            return <Token key={token.encode()} index={index} data={token} />;
           })}
           <TokenCreator
             inputRef={node => {

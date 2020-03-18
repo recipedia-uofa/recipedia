@@ -49,6 +49,18 @@ export default class SearchToken {
     return `${this.keyword}_${this.value || ""}`;
   }
 
+  equals(other: ?any): boolean {
+    if (other === this) {
+      return true;
+    }
+
+    if (other instanceof SearchToken) {
+      return this.keyword === other.keyword && this.value === other.value;
+    }
+
+    return false;
+  }
+
   static decode(str: string): SearchToken | null {
     const [keywordStr, valueStr] = str.split("_");
 

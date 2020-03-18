@@ -1,12 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as colours from "constants/colours";
 import keywords from "models/keywords";
-
-import type {
-  PartialSearchToken,
-  FullSearchToken,
-  SearchToken
-} from "types/tokens";
+import tokenStyle from "styles/searchbar.module.css";
+import { deleteSpecificToken } from "actions/searchbar";
+import type { SearchToken } from "models/SearchToken";
 
 const CORNER_RADIUS = 15;
 const KEYWORD_MARGIN = 5;
@@ -48,7 +47,9 @@ const style = {
     padding: "11px"
   },
   tokenContent: {
-    margin: "9px",
+    display: "flex",
+    flexDirection: "row",
+    margin: "9px 0 9px 9px",
     padding: "2px",
     borderTopRightRadius: `${CORNER_RADIUS - 5}px`,
     borderBottomRightRadius: `${CORNER_RADIUS - 5}px`,
@@ -56,16 +57,13 @@ const style = {
   }
 };
 
-// const DeleteButton = (props) => {
-//   return (
-//       <i
-//           className={styles['delete-button']}
-//           aria-hidden="true"
-//       />
-//   );
-// };
+type Props = {
+  data: SearchToken,
+  delete: (token: SearchToken) => any
+};
 
 const getTokenColour = (token: SearchToken): string => {
+  // const token = props.data;
   switch (token.keyword) {
     case keywords.NOT:
       return colours.NOT_KEYWORD_COLOUR;
@@ -78,7 +76,7 @@ const getTokenColour = (token: SearchToken): string => {
   }
 };
 
-const renderPartialToken = (token: PartialSearchToken) => {
+const renderPartialToken = (token: SearchToken) => {
   const tokenColour = getTokenColour(token);
   const keyword = token.keyword.toUpperCase();
   return (
@@ -93,7 +91,7 @@ const renderPartialToken = (token: PartialSearchToken) => {
   );
 };
 
-const renderFullToken = (token: FullSearchToken) => {
+const renderFullToken = (token: SearchToken, props: Props) => {
   const tokenColour = getTokenColour(token);
   const keyword = token.keyword.toUpperCase();
   const content = (token.value || "").toUpperCase();
@@ -106,17 +104,26 @@ const renderFullToken = (token: FullSearchToken) => {
     >
       {token.hasKeyword() && <div style={style.fullTokenName}>{keyword}</div>}
       <div style={style.tokenContent}>{content}</div>
+      <div className={tokenStyle.tokenX} onClick={() => props.delete(token)}>
+        X
+      </div>
     </div>
   );
 };
 
-type Props = {
-  data: SearchToken
-};
-
 const Token = (props: Props) => {
   const token = props.data;
-  return token.isPartial() ? renderPartialToken(token) : renderFullToken(token);
+  return token.isPartial()
+    ? renderPartialToken(token)
+    : renderFullToken(token, props);
 };
 
-export default Token;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      delete: deleteSpecificToken
+    },
+    dispatch
+  );
+
+export default connect(null, mapDispatchToProps)(Token);

@@ -161,7 +161,8 @@ For now, the colour will be hard coded*/
   position: absolute;
   z-index: 2;
   transition: transform 0.7s;
-  transform: translate(450%, -110%);
+  transform: translate(340px, -110px);
+  /* transform: translate(450%, -110%); */
 }
 
 .ScoreCircle {
@@ -322,22 +323,22 @@ For now, the colour will be hard coded*/
 }
 
 .RecipeCards:hover .LogoContainer {
-  transform: translate(-30px, 20px);
+  transform: translate(-125px, 20px);
   z-index: 5;
 }
 
 .RecipeCards:hover .ScoreContainer {
   z-index: 5;
-  transform: translate(370%, -117%);
+  transform: translate(182px, -110px);
 }
 
 .RecipeCards:hover .RecipeCardContainer {
-  transform: scale(1.1) translateX(-50px);
+  transform: scale(1.1) translateX(-137px);
   z-index: 4;
 }
 
 .RecipeCards:hover .SecondaryRecipeCardContainer {
-  transform: scale(1.1) translateX(225px);
+  transform: scale(1.1) translateX(137px);
   z-index: 3;
 }
 
@@ -346,7 +347,7 @@ For now, the colour will be hard coded*/
 }
 
 .RecipeCards:hover .RecipeCardDescription {
-  max-height: 300px; /*Some very large number*/
+  max-height: 300px; /*Some large number*/
 }
 
 .RecipeCards:hover .maxIngredientContainer {
