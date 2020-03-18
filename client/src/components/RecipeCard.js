@@ -264,7 +264,7 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
         <div className={styles.RecipeCardImageContainer}>
           <img
             className={styles.RecipeCardImage}
-            src={eggPhoto}
+            src={recipe.imageUrl}
             alt={recipe.title}
           />
         </div>
