@@ -44,11 +44,11 @@ const style = {
     padding: `${CORNER_RADIUS}px`
   },
   rowResults: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
   columnResults: {
-    flexDirection: "column",
-  },
+    flexDirection: "column"
+  }
 };
 
 type Props = {
@@ -56,7 +56,7 @@ type Props = {
   errorMessage: string,
   executeSearch: () => void,
   loadValidIngredients: () => void,
-  withResults: boolean,
+  withResults: boolean
 };
 
 const mapDispatchToProps = dispatch =>
@@ -76,7 +76,10 @@ class SearchBar extends React.PureComponent<Props> {
   render() {
     const { withResults } = this.props;
     return (
-      <div className={styles.searchContainer} style={withResults ? style.rowResults : style.columnResults}>
+      <div
+        className={styles.searchContainer}
+        style={withResults ? style.rowResults : style.columnResults}
+      >
         <div style={style.outerSearchBox}>
           <TokenInput autoFocus />
         </div>

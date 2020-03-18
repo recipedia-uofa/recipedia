@@ -132,7 +132,7 @@ class RecipediaApp extends React.Component<Props> {
           <UserGuide />
           <div style={style.upperContainer}>
             <RecipediaLogo data-testid="logo" />
-            <SearchBar withResults={true}/>
+            <SearchBar withResults={true} />
           </div>
           <br />
           {mode === resultModes.NO_RESULTS && (
@@ -156,7 +156,7 @@ class RecipediaApp extends React.Component<Props> {
         <UserGuide />
         <div style={style.verticalContainer}>
           <RecipediaLogo data-testid="logo" />
-          <SearchBar withResults={false}/>
+          <SearchBar withResults={false} />
         </div>
       </div>
     );
