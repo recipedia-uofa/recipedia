@@ -5,14 +5,14 @@ import query from "./query";
 import type { Ingredient } from "models/ingredient";
 
 type IngredientResult = {
-  xid: string
+  iname: string
 };
 
 type QueryResult = {
   allIngredients: Array<IngredientResult>
 };
 
-const getIngredientName = (i: IngredientResult): string => i.xid;
+const getIngredientName = (i: IngredientResult): string => i.iname;
 
 const extractIngredients: QueryResult => Array<Ingredient> = R.pipe(
   R.prop("allIngredients"),
@@ -22,7 +22,7 @@ const extractIngredients: QueryResult => Array<Ingredient> = R.pipe(
 const getAllIngredients = async (): Promise<Array<Ingredient>> => {
   const result = await query(`{
     allIngredients(func: type(Ingredient)) {
-       xid
+       iname
     }
   }`);
   return extractIngredients(result).sort();
