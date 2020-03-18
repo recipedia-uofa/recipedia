@@ -25,7 +25,8 @@
     "prod": "NODE_ENV=production npm-run-all build server",
     "transpile": "babel src --out-dir .dist",
     "clean": "rimraf .dist",
-    "lint": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
+    "lint": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",

@@ -34,7 +34,7 @@ const recipeElements = `
   }
 `;
 
-const matchQueryWithKeyIngredients = (
+export const matchQueryWithKeyIngredients = (
   allIngredients: Array<string>,
   keyIngredients: Array<string>,
   opts: MatchQueryOpts
@@ -59,9 +59,9 @@ const matchQueryWithKeyIngredients = (
   }`;
 };
 
-const basicMatchQuery = (
+export const matchQueryBasic = (
   allIngredients: Array<string>,
-  opts: MatchQueryOpts = { limit: 50 }
+  opts: MatchQueryOpts
 ): string => {
   return `
   {
@@ -99,7 +99,7 @@ const matchQuery = (
   const keyIngredients = getKeyIngredients(tokens);
 
   if (R.isEmpty(keyIngredients)) {
-    return basicMatchQuery(allIngredients, opts);
+    return matchQueryBasic(allIngredients, opts);
   }
 
   return matchQueryWithKeyIngredients(allIngredients, keyIngredients, opts);
