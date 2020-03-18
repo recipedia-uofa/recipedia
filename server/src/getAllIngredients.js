@@ -9,26 +9,22 @@ type IngredientResult = {
 };
 
 type QueryResult = {
-  data: {
-    allIngredients: Array<IngredientResult>
-  }
+  allIngredients: Array<IngredientResult>
 };
 
 const getIngredientName = (i: IngredientResult): string => i.xid;
 
 const extractIngredients: QueryResult => Array<Ingredient> = R.pipe(
-  R.path(["allIngredients"]),
+  R.prop("allIngredients"),
   R.map(getIngredientName)
 );
 
 const getAllIngredients = async (): Promise<Array<Ingredient>> => {
   const result = await query(`{
-    allIngredients(func: eq(<dgraph.type>, "Ingredient")) {
+    allIngredients(func: type(Ingredient)) {
        xid
     }
   }`);
-  console.log(result);
-
   return extractIngredients(result).sort();
 };
 

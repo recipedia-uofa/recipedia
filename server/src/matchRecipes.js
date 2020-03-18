@@ -12,13 +12,54 @@ type MatchQueryOpts = {
   limit: number
 };
 
-const matchQuery = (
-  ingredients: Array<string>,
-  opts: MatchQueryOpts = { limit: 50 }
-) => {
+const matchQueryWithKeyIngredients = (
+  allIngredients: Array<string>,
+  keyIngredients: Array<string>,
+  opts: MatchQueryOpts
+): string => {
   return `
   {
-    tokens as var(func: eq(xid, ${varArray(ingredients)}))
+    key_tokens as var(func: eq(xid, ${varArray(keyIngredients)}))
+    tokens as var(func: eq(xid, ${varArray(allIngredients)}))
+
+    var(func: uid(key_tokens)) {
+      matchedRecipes as ~contains {
+        keyMatched as count(contains @filter(uid(key_tokens)))
+        numMatched as count(all_matched : contains @filter(uid(tokens)))
+      }
+    }
+
+    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
+      opts.limit
+    }) @filter(eq(val(keyMatched), ${keyIngredients.length})) {
+      xid
+      name
+      rating
+      calories
+      total_fat
+      total_carbohydrates
+      protein
+      cholesterol
+      sodium
+      sugars
+      servings
+      matched_ingredients: contains @filter(uid(tokens)) {
+        xid
+      }
+      contains {
+        xid
+      }
+    }
+  }`;
+};
+
+const basicMatchQuery = (
+  allIngredients: Array<string>,
+  opts: MatchQueryOpts = { limit: 50 }
+): string => {
+  return `
+  {
+    tokens as var(func: eq(xid, ${varArray(allIngredients)}))
 
     var(func: uid(tokens)) {
       matchedRecipes as ~contains {
@@ -40,7 +81,7 @@ const matchQuery = (
       sodium
       sugars
       servings
-      matchedIngredients: contains @filter(uid(tokens)) {
+      matched_ingredients: contains @filter(uid(tokens)) {
         xid
       }
       contains {
@@ -48,6 +89,30 @@ const matchQuery = (
       }
     }
   }`;
+};
+
+const getTokenValue = (token: SearchToken): string => token.value || "";
+const getAllIngredients: (Array<SearchToken>) => Array<string> = R.pipe(
+  R.filter(token => token.isIngredient()),
+  R.map(getTokenValue)
+);
+const getKeyIngredients: (Array<SearchToken>) => Array<string> = R.pipe(
+  R.filter(token => token.isKeyIngredient()),
+  R.map(getTokenValue)
+);
+
+const matchQuery = (
+  tokens: Array<SearchToken>,
+  opts: MatchQueryOpts = { limit: 50 }
+): string => {
+  const allIngredients = getAllIngredients(tokens);
+  const keyIngredients = getKeyIngredients(tokens);
+
+  if (R.isEmpty(keyIngredients)) {
+    return basicMatchQuery(allIngredients, opts);
+  }
+
+  return matchQueryWithKeyIngredients(allIngredients, keyIngredients, opts);
 };
 
 type IngredientResult = {
@@ -59,14 +124,14 @@ type MatchedRecipeResult = {
   name: string,
   rating: number,
   calories: number,
-  totalFat: number,
-  totalCarbohydrates: number,
+  total_fat: number,
+  total_carbohydrates: number,
   protein: number,
   cholesterol: number,
   sodium: number,
   sugars: number,
   servings: number,
-  matchedIngredients: Array<IngredientResult>,
+  matched_ingredients: Array<IngredientResult>,
   contains: Array<IngredientResult>
 };
 
@@ -78,7 +143,9 @@ const resultToIngredient: IngredientResult => Ingredient = i => i.xid;
 const resultToIngredientArray = R.map(resultToIngredient);
 
 const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
-  const ingredientsMatched = resultToIngredientArray(result.matchedIngredients);
+  const ingredientsMatched = resultToIngredientArray(
+    result.matched_ingredients
+  );
   const recipeIngredients = resultToIngredientArray(result.contains);
   return {
     url: result.xid,
@@ -88,8 +155,8 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
     ingredientsNotMatched: R.difference(recipeIngredients, ingredientsMatched),
     nutritionalInfo: {
       calories: result.calories,
-      fat: result.totalFat,
-      carbs: result.totalCarbohydrates,
+      fat: result.total_fat,
+      carbs: result.total_carbohydrates,
       protein: result.protein,
       sugar: result.sugars
     },
@@ -107,9 +174,7 @@ const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
 const matchRecipes = async (
   tokens: Array<SearchToken>
 ): Promise<Array<Recipe>> => {
-  const ingredientTokens = tokens.filter(token => !token.hasKeyword());
-  const ingredients = ingredientTokens.map(token => token.value || "");
-  const res = await query(matchQuery(ingredients));
+  const res = await query(matchQuery(tokens));
   return extractFullRecipes(res);
 };
 
