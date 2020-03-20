@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 // import TokenInput from 'react-customize-token-input';
 import styles from "styles/searchbar.module.css";
+import SearchIcon from "assets/search-egg.png";
 import * as colours from "constants/colours";
 import { executeSearch } from "actions";
 import { loadValidIngredients } from "actions/searchbar";
@@ -82,8 +83,13 @@ class SearchBar extends React.PureComponent<Props> {
       >
         <div style={style.outerSearchBox}>
           <TokenInput autoFocus />
+          {withResults && <div className={styles.searchIconContainer} onClick={this.props.executeSearch}>
+            <span>
+              <img src={SearchIcon} className={styles.searchIconImg}/>
+            </span>
+          </div>}
         </div>
-        <div className={styles.buttonContainer}>
+        {!withResults && <div className={styles.buttonContainer}>
           <button
             type="button"
             className={styles.searchButtonAttitude}
@@ -92,7 +98,7 @@ class SearchBar extends React.PureComponent<Props> {
           >
             Search
           </button>
-        </div>
+        </div>}
       </div>
     );
   }
