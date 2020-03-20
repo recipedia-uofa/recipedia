@@ -40,6 +40,23 @@
   color: white !important;
 }
 
+.searchIconContainer {
+  height: 100%;
+  width: 50px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.searchIconImg {
+  width: 67%;
+  height: 100%;
+  position: relative;
+  object-fit: contain;
+  transform: rotate(-50deg);
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .inputContainer {
   cursor: text;
   /* overflow-y: auto; */
@@ -199,20 +216,21 @@ input {
 .tokenX {
   cursor: pointer;
   /* padding-right: 10px; */
-  padding: 11px;
+  padding: 3px 7px 4px 7px;
+  margin: 5px 8px 5px 5px;
   color: white;
   align-self: center;
-  font-size: 16px;
+  font-size: 14px;
+  transform: scaleX(1.2);
+  border-radius: 50%;
   transition: all 0.2s;
 }
 
 .tokenX:hover {
-  font-weight: 600;
-  font-size: 18px;
+  backdrop-filter: brightness(1.1);
 }
 
 .tokenX:active {
-  /* background-color: rgba(0, 0, 0, 0.5); */
-  backdrop-filter: brightness(1.1);
+  backdrop-filter: brightness(1.2);
   font-weight: normal;
 }
