@@ -8,6 +8,7 @@ import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
 import SearchToken from "models/SearchToken";
+import LoadingOverlay from "components/LoadingOverlay";
 
 import type { State } from "types/states";
 
@@ -132,6 +133,7 @@ class RecipediaApp extends React.Component<Props> {
       const style = withResultsStyle;
       return (
         <div style={style.noOverflow}>
+          {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           <UserGuide />
           <div style={style.upperContainer}>
             <RecipediaLogo data-testid="logo" />

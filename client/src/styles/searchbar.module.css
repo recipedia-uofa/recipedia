@@ -227,10 +227,10 @@ input {
 }
 
 .tokenX:hover {
-  backdrop-filter: brightness(1.2);
+  backdrop-filter: brightness(1.1);
 }
 
 .tokenX:active {
-  backdrop-filter: brightness(1.25);
+  backdrop-filter: brightness(1.2);
   font-weight: normal;
 }
