@@ -91,7 +91,8 @@ const renderPartialToken = (token: SearchToken) => {
   );
 };
 
-const renderFullToken = (token: SearchToken, props: Props) => {
+const renderFullToken = (props: Props) => {
+  const token = props.data;
   const tokenColour = getTokenColour(token);
   const keyword = token.keyword.toUpperCase();
   const content = (token.value || "").toUpperCase();
@@ -113,9 +114,7 @@ const renderFullToken = (token: SearchToken, props: Props) => {
 
 const Token = (props: Props) => {
   const token = props.data;
-  return token.isPartial()
-    ? renderPartialToken(token)
-    : renderFullToken(token, props);
+  return token.isPartial() ? renderPartialToken(token) : renderFullToken(props);
 };
 
 const mapDispatchToProps = dispatch =>
