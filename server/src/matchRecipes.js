@@ -3,7 +3,7 @@ import * as R from "ramda";
 import query from "./query";
 import SearchToken from "models/SearchToken";
 import keywords from "models/keywords";
-import { varArray } from "./dgraph-utils";
+import { varArray, clauseArray, camelToSnake } from "./dgraph-utils";
 
 import type { Ingredient } from "models/ingredient";
 import type { Recipe } from "models/recipe";
@@ -34,51 +34,56 @@ const recipeElements = `
   }
 `;
 
-export const matchQueryWithKeyIngredients = (
-  allIngredients: Array<string>,
-  keyIngredients: Array<string>,
-  opts: MatchQueryOpts
-): string => {
-  return `
-  {
-    key_tokens as var(func: eq(iname, ${varArray(keyIngredients)}))
-    tokens as var(func: eq(iname, ${varArray(allIngredients)}))
+const allTokenClause = (allIngredients: Array<string>): string =>
+  `tokens as var(func: eq(iname, ${varArray(allIngredients)}))`;
 
-    var(func: uid(key_tokens)) {
-      matchedRecipes as ~contains {
-        keyMatched as count(contains @filter(uid(key_tokens)))
-        numMatched as count(all_matched : contains @filter(uid(tokens)))
-      }
-    }
+const keyTokenClause = (keyIngredients: Array<string>): string =>
+  `key_tokens as var(func: eq(iname, ${varArray(keyIngredients)}))`;
 
-    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
-      opts.limit
-    }) @filter(eq(val(keyMatched), ${keyIngredients.length})) {
-      ${recipeElements}
-    }
-  }`;
+const blackTokenClause = (blacklists: Array<string>): string =>
+  `black_tokens as var(func: eq(iname, ${varArray(blacklists)}))`;
+
+type QueryParams = {
+  hasKeyIngredients: boolean,
+  hasBlacklists: boolean,
+  numKeyIngredients: number
 };
 
-export const matchQueryBasic = (
-  allIngredients: Array<string>,
-  opts: MatchQueryOpts
-): string => {
-  return `
-  {
-    tokens as var(func: eq(iname, ${varArray(allIngredients)}))
+// countVar as count(count_var : contains @filter(uid(tokens)))
+const countClause = (countVar: string, tokensVar: string): string =>
+  `${countVar} as count(${camelToSnake(
+    countVar
+  )} : contains @filter(uid(${tokensVar})))`;
 
-    var(func: uid(tokens)) {
+const matchedRecipesClause = (params: QueryParams): string => {
+  const seedTokens = params.hasKeyIngredients ? "key_tokens" : "tokens";
+  return `
+    var(func: uid(${seedTokens})) {
       matchedRecipes as ~contains {
-        numMatched as count(contains @filter(uid(tokens)))
+        ${clauseArray([
+          params.hasKeyIngredients && countClause("keyMatched", "key_tokens"),
+          params.hasBlacklists && countClause("blackMatched", "black_tokens"),
+          countClause("numMatched", "tokens")
+        ])}
       }
     }
+  `;
+};
 
-    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
-      opts.limit
-    }) {
-      ${recipeElements}
-    }
-  }`;
+const filterResultClause = (params: QueryParams) => {
+  if (!params.hasKeyIngredients && !params.hasBlacklists) {
+    return "";
+  }
+
+  const keyFilter = params.hasKeyIngredients
+    ? `eq(val(keyMatched), ${params.numKeyIngredients})`
+    : null;
+
+  const blackFilter = params.hasBlacklists ? "eq(val(blackMatched), 0)" : null;
+
+  return `@filter(${[keyFilter, blackFilter]
+    .filter(c => !R.isNil(c))
+    .join(" AND ")})`;
 };
 
 const getTokenValue = (token: SearchToken): string => token.value || "";
@@ -90,19 +95,41 @@ const getKeyIngredients: (Array<SearchToken>) => Array<string> = R.pipe(
   R.filter(token => token.isKeyIngredient()),
   R.map(getTokenValue)
 );
+const getBlacklists: (Array<SearchToken>) => Array<string> = R.pipe(
+  R.filter(token => token.isBlacklist()),
+  R.map(getTokenValue)
+);
 
-const matchQuery = (
+export const matchQuery = (
   tokens: Array<SearchToken>,
   opts: MatchQueryOpts = { limit: 50 }
 ): string => {
   const allIngredients = getAllIngredients(tokens);
   const keyIngredients = getKeyIngredients(tokens);
+  const blacklists = getBlacklists(tokens);
 
-  if (R.isEmpty(keyIngredients)) {
-    return matchQueryBasic(allIngredients, opts);
-  }
+  const params = {
+    hasKeyIngredients: !R.isEmpty(keyIngredients),
+    hasBlacklists: !R.isEmpty(blacklists),
+    numKeyIngredients: keyIngredients.length
+  };
 
-  return matchQueryWithKeyIngredients(allIngredients, keyIngredients, opts);
+  return `
+  {
+    ${clauseArray([
+      allTokenClause(allIngredients),
+      params.hasKeyIngredients && keyTokenClause(keyIngredients),
+      params.hasBlacklists && blackTokenClause(blacklists)
+    ])}
+
+    ${matchedRecipesClause(params)}
+
+    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
+      opts.limit
+    }) ${filterResultClause(params)} {
+      ${recipeElements}
+    }
+  }`;
 };
 
 type IngredientResult = {

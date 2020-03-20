@@ -1,7 +1,9 @@
 // @flow
 import * as R from "ramda";
 
-import { matchQueryBasic, matchQueryWithKeyIngredients } from "../matchRecipes";
+import keywords from "models/keywords";
+import SearchToken from "models/SearchToken";
+import { matchQuery } from "../matchRecipes";
 
 const isBracketMatch = (b1: string, b2: string): boolean => {
   const bsorted = [b1, b2].sort().join("");
@@ -34,20 +36,42 @@ const checkBrackets = (query: string): boolean => {
   expect(bracketsMatch && R.isEmpty(bracketStack)).toBeTruthy();
 };
 
-const defaultOpts = { limit: 50 };
-const keyIngredients = ["carrot", "onion"];
-const ingredients = [...keyIngredients, "potato", "leek", "olive oil"];
+const toToken = (i: string) => {
+  return new SearchToken(keywords.NONE, i);
+};
 
-test("basic query brackets ok", () => {
-  const basicQuery = matchQueryBasic(ingredients, defaultOpts);
+const toBlackToken = (i: string) => {
+  return new SearchToken(keywords.NOT, i);
+};
+
+const toKeyToken = (i: string) => {
+  return new SearchToken(keywords.KEY, i);
+};
+
+const defaultOpts = { limit: 50 };
+const keyIngredients = R.map(toKeyToken, ["carrot", "onion"]);
+const blacklists = R.map(toBlackToken, ["flour"]);
+const basicIngredients = R.map(toToken, ["potato", "leek", "olive oil"]);
+
+test("basic match query brackets ok", () => {
+  const basicQuery = matchQuery(basicIngredients, defaultOpts);
   checkBrackets(basicQuery);
 });
 
-test("key query brackets ok", () => {
-  const keyIngredientQuery = matchQueryWithKeyIngredients(
-    ingredients,
-    keyIngredients,
+test("key match query brackets ok", () => {
+  const keyIngredientQuery = matchQuery(
+    [...keyIngredients, ...basicIngredients],
     defaultOpts
   );
+  expect(keyIngredientQuery.includes("keyMatched")).toBeTruthy();
   checkBrackets(keyIngredientQuery);
+});
+
+test("blacklist match query brackets ok", () => {
+  const blacklistQuery = matchQuery(
+    [...basicIngredients, ...blacklists],
+    defaultOpts
+  );
+  expect(blacklistQuery.includes("blackMatched")).toBeTruthy();
+  checkBrackets(blacklistQuery);
 });
