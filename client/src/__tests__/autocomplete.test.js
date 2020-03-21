@@ -7,6 +7,10 @@ test("basic matches", () => {
   expect(match("pot", "potato chips")).toStrictEqual([[0, 2]]);
 });
 
+test("match handles bad regex", () => {
+  expect(() => match("pot\\", "potato")).not.toThrow();
+})
+
 test("basic scores", () => {
   // Matched indices for "pot"
   expect(score("potato", [[0, 2]])).toBe(1 / 2);
