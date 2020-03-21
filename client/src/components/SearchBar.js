@@ -83,22 +83,31 @@ class SearchBar extends React.PureComponent<Props> {
       >
         <div style={style.outerSearchBox}>
           <TokenInput autoFocus />
-          {withResults && <div className={styles.searchIconContainer} onClick={this.props.executeSearch}>
-            <span>
-              <img src={SearchIcon} className={styles.searchIconImg}/>
-            </span>
-          </div>}
+          {withResults && (
+            <div
+              className={styles.searchIconContainer}
+              onClick={this.props.executeSearch}
+            >
+              <span>
+                <img src={SearchIcon} className={styles.searchIconImg} />
+              </span>
+            </div>
+          )}
         </div>
-        {!withResults && <div className={styles.buttonContainer}>
-          <button
-            type="button"
-            className={styles.searchButtonAttitude}
-            style={withResults ? style.searchButtonResults : style.searchButton}
-            onClick={this.props.executeSearch}
-          >
-            Search
-          </button>
-        </div>}
+        {!withResults && (
+          <div className={styles.buttonContainer}>
+            <button
+              type="button"
+              className={styles.searchButtonAttitude}
+              style={
+                withResults ? style.searchButtonResults : style.searchButton
+              }
+              onClick={this.props.executeSearch}
+            >
+              Search
+            </button>
+          </div>
+        )}
       </div>
     );
   }
