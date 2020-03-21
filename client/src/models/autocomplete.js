@@ -18,14 +18,22 @@ export const score = (
   return queryScore / maxScore;
 };
 
+// Cap this to avoid performance issues
+const MAX_QUERY_LEN = 60;
+
+const sanitizeRegExp = (s: string): string => {
+  // $& means the whole matched string
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").slice(0, MAX_QUERY_LEN);
+};
+
 // Match the query string to the record.
 // @return -1 for no match or the index where the match starts
 export const match = (
-  query: string,
+  query: string, // Note: Should be sanitized
   record: string
 ): false | MatchedIndices => {
   // Case insensitive pattern match
-  const pattern = new RegExp(`${query}`, "i");
+  const pattern = new RegExp(query, "i");
   const match = pattern.exec(record);
 
   if (match) {
@@ -60,7 +68,7 @@ const search = (
     ...opts
   };
 
-  const queryLowerCase = query.toLowerCase();
+  const queryLowerCase = sanitizeRegExp(query).toLowerCase();
   const matches: Array<Match> = [];
 
   // Extract the searchable string from a record

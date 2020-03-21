@@ -38,3 +38,7 @@ test("orders matches", () => {
     "sweet potato"
   ]);
 });
+
+test("handles bad regex", () => {
+  expect(() => search("pot\\", ingredients, opts)).not.toThrow();
+});
