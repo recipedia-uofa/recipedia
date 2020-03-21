@@ -7,10 +7,6 @@ test("basic matches", () => {
   expect(match("pot", "potato chips")).toStrictEqual([[0, 2]]);
 });
 
-test("match handles bad regex", () => {
-  expect(() => match("pot\\", "potato")).not.toThrow();
-});
-
 test("basic scores", () => {
   // Matched indices for "pot"
   expect(score("potato", [[0, 2]])).toBe(1 / 2);
@@ -41,4 +37,8 @@ test("orders matches", () => {
     "chipotle",
     "sweet potato"
   ]);
+});
+
+test("handles bad regex", () => {
+  expect(() => search("pot\\", ingredients, opts)).not.toThrow();
 });

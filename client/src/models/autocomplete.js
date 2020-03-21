@@ -29,11 +29,11 @@ const sanitizeRegExp = (s: string): string => {
 // Match the query string to the record.
 // @return -1 for no match or the index where the match starts
 export const match = (
-  query: string,
+  query: string, // Note: Should be sanitized
   record: string
 ): false | MatchedIndices => {
   // Case insensitive pattern match
-  const pattern = new RegExp(sanitizeRegExp(query), "i");
+  const pattern = new RegExp(query, "i");
   const match = pattern.exec(record);
 
   if (match) {
@@ -68,7 +68,7 @@ const search = (
     ...opts
   };
 
-  const queryLowerCase = query.toLowerCase();
+  const queryLowerCase = sanitizeRegExp(query).toLowerCase();
   const matches: Array<Match> = [];
 
   // Extract the searchable string from a record
