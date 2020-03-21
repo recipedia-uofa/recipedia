@@ -9,7 +9,7 @@ test("basic matches", () => {
 
 test("match handles bad regex", () => {
   expect(() => match("pot\\", "potato")).not.toThrow();
-})
+});
 
 test("basic scores", () => {
   // Matched indices for "pot"
