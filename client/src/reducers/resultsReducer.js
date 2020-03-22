@@ -1,10 +1,13 @@
 // @flow
 import { EXECUTE_SEARCH, RECEIVE_SEARCH } from "constants/actionTypes";
+import getSuggestions from "models/suggestions";
+
 import type { Action } from "actions";
 import type { ResultsState } from "types/states";
 
 const initialState: ResultsState = {
   recipes: [],
+  suggestions: [],
   isPending: false,
   visible: false
 };
@@ -23,6 +26,7 @@ export default (
       return {
         ...state,
         recipes: action.recipes,
+        suggestions: getSuggestions(action.recipes),
         isPending: false,
         visible: true
       };

@@ -22,6 +22,7 @@ export type SearchbarState = {|
 // recipe results shown: isPending == false, visible == true, recipes != empty
 export type ResultsState = {|
   +recipes: Array<Recipe>,
+  +suggestions: Array<Ingredient>,
   +isPending: boolean, // is a search query pending results?
   +visible: boolean // sticky visibility filter for results view
 |};
