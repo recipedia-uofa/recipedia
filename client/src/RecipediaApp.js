@@ -145,7 +145,7 @@ class RecipediaApp extends React.Component<Props> {
               <img
                 style={style.noResultsImage}
                 src={noResultsImg}
-                alt="test image"
+                alt="No Results"
               />
               <div style={style.noResultsDescription}>No results found.</div>
             </div>

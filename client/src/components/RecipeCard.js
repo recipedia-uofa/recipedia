@@ -3,7 +3,6 @@ import React from "react";
 import styles from "styles/recipecard.module.css";
 import classNames from "classnames";
 import allRecipesLogo from "assets/AllRecipes_logo.jpg";
-import eggPhoto from "assets/Egg_Soup.jpg";
 //-------------ICONS--------------
 // TODO: Determine whether this is a good implementation
 import calorieImg from "assets/icons/flame.svg";

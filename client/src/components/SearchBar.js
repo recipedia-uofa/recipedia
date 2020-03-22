@@ -89,7 +89,11 @@ class SearchBar extends React.PureComponent<Props> {
               onClick={this.props.executeSearch}
             >
               <span>
-                <img src={SearchIcon} className={styles.searchIconImg} />
+                <img
+                  src={SearchIcon}
+                  alt="Search"
+                  className={styles.searchIconImg}
+                />
               </span>
             </div>
           )}
