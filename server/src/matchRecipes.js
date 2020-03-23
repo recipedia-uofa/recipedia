@@ -46,7 +46,8 @@ const blackTokenClause = (blacklists: Array<string>): string =>
 type QueryParams = {
   hasKeyIngredients: boolean,
   hasBlacklists: boolean,
-  numKeyIngredients: number
+  numKeyIngredients: number,
+  numTyped: number
 };
 
 // countVar as count(count_var : contains @filter(uid(tokens)))
@@ -63,7 +64,9 @@ const matchedRecipesClause = (params: QueryParams): string => {
         ${clauseArray([
           params.hasKeyIngredients && countClause("keyMatched", "key_tokens"),
           params.hasBlacklists && countClause("blackMatched", "black_tokens"),
-          countClause("numMatched", "tokens")
+          countClause("numMatched", "tokens"),
+          `numTotal as count(contains2 : contains)`,
+          `distance as math(((numTotal - numMatched) * 100 / numTotal) + ((${params.numTyped} - numMatched) * 100 / ${params.numTyped}))`
         ])}
       }
     }
@@ -111,7 +114,8 @@ export const matchQuery = (
   const params = {
     hasKeyIngredients: !R.isEmpty(keyIngredients),
     hasBlacklists: !R.isEmpty(blacklists),
-    numKeyIngredients: keyIngredients.length
+    numKeyIngredients: keyIngredients.length,
+    numTyped: allIngredients.length
   };
 
   return `
@@ -124,7 +128,7 @@ export const matchQuery = (
 
     ${matchedRecipesClause(params)}
 
-    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
+    matchedRecipes(func: uid(matchedRecipes), orderasc: val(distance), first: ${
       opts.limit
     }) ${filterResultClause(params)} {
       ${recipeElements}
