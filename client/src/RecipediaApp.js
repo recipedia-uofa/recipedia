@@ -10,6 +10,7 @@ import UserGuide from "components/UserGuide";
 import SuggestionToken from "components/SuggestionToken";
 import SearchToken from "models/SearchToken";
 import LoadingOverlay from "components/LoadingOverlay";
+import searchbarStyle from "styles/searchbar.module.css";
 
 import type { Ingredient } from "models/ingredient";
 import type { State } from "types/states";
@@ -37,20 +38,6 @@ const noResultsStyle = {
 };
 
 const withResultsStyle = {
-  upperContainer: {
-    position: "-webkit-sticky",
-    position: "sticky",
-    top: 0,
-    backdropFilter: "blur(5px)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "83%",
-    // marginLeft: "7%",
-    padding: "0 9%",
-    maxWidth: "90%",
-    zIndex: "10"
-  },
   title: {
     marginTop: 100,
     width: "20%"
@@ -77,9 +64,6 @@ const withResultsStyle = {
     color: "grey",
     fontSize: "30px"
   },
-  noOverflow: {
-    overflowX: "hidden"
-  }
 };
 
 const resultModes = {
@@ -141,10 +125,10 @@ class RecipediaApp extends React.Component<Props> {
     if (mode !== resultModes.SEARCH_BAR_ONLY) {
       const style = withResultsStyle;
       return (
-        <div style={style.noOverflow}>
+        <div>
           {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           <UserGuide />
-          <div style={style.upperContainer}>
+          <div className={searchbarStyle.resultsUpperContainer}>
             <RecipediaLogo data-testid="logo" />
             <SearchBar withResults={true} />
           </div>
