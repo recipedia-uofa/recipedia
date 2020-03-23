@@ -7,9 +7,11 @@ import { ReactComponent as RecipediaLogo } from "assets/RecipediaLogo.svg";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
+import SuggestionToken from "components/SuggestionToken";
 import SearchToken from "models/SearchToken";
 import LoadingOverlay from "components/LoadingOverlay";
 
+import type { Ingredient } from "models/ingredient";
 import type { State } from "types/states";
 
 const noResultsStyle = {
@@ -120,12 +122,19 @@ type Props = {
   resultsArePending: boolean,
   hasResults: boolean,
   showResults: boolean,
-  tokens: Array<SearchToken>
+  tokens: Array<SearchToken>,
+  suggestions: Array<Ingredient>
 };
 
 class RecipediaApp extends React.Component<Props> {
   render() {
-    const { resultsArePending, hasResults, showResults, tokens } = this.props;
+    const {
+      resultsArePending,
+      hasResults,
+      showResults,
+      tokens,
+      suggestions
+    } = this.props;
 
     const mode = getMode(resultsArePending, hasResults, showResults, tokens);
 
@@ -138,6 +147,11 @@ class RecipediaApp extends React.Component<Props> {
           <div style={style.upperContainer}>
             <RecipediaLogo data-testid="logo" />
             <SearchBar withResults={true} />
+          </div>
+          <div>
+            {suggestions.map(s => (
+              <SuggestionToken key={s} suggestion={s} />
+            ))}
           </div>
           <br />
           {mode === resultModes.NO_RESULTS && (
@@ -172,7 +186,8 @@ const mapStateToProps = (state: State, ownProps) => ({
   resultsArePending: state.results.isPending,
   hasResults: !R.isEmpty(state.results.recipes),
   showResults: state.results.visible,
-  tokens: state.searchbar.tokens
+  tokens: state.searchbar.tokens,
+  suggestions: state.results.suggestions
 });
 
 export default connect(mapStateToProps)(RecipediaApp);

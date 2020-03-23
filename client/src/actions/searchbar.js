@@ -215,6 +215,14 @@ export const completeSearchToken = () => {
   };
 };
 
+export const addSuggestion = (suggestion: Ingredient) => {
+  const token = new SearchToken(keywords.NONE, suggestion);
+  return (dispatch: *, getState: GetState) => {
+    dispatch(addSearchToken(token));
+    dispatch(executeSearch());
+  };
+};
+
 export const clearSearchTokens = (): ClearSearchTokensAction => ({
   type: CLEAR_SEARCH_TOKENS
 });
