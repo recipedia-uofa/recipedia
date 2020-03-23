@@ -14,7 +14,7 @@ const style = {
     borderRadius: 20,
     padding: 10,
     margin: 5,
-    color: "white"
+    color: colours.LIGHT_FONT_COLOUR
   }
 };
 
