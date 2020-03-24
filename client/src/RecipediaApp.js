@@ -64,6 +64,13 @@ const withResultsStyle = {
     color: "grey",
     fontSize: "30px"
   },
+  flexColumn: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  suggestionTokenContainer: {
+    marginTop: "10px",
+  }
 };
 
 const resultModes = {
@@ -129,13 +136,15 @@ class RecipediaApp extends React.Component<Props> {
           {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           <UserGuide />
           <div className={searchbarStyle.resultsUpperContainer}>
-            <RecipediaLogo data-testid="logo" />
-            <SearchBar withResults={true} />
-          </div>
-          <div>
-            {suggestions.map(s => (
-              <SuggestionToken key={s} suggestion={s} />
-            ))}
+            <div className={searchbarStyle.recipediaLogoContainer}><RecipediaLogo data-testid="logo" /></div>
+            <div>
+              <SearchBar withResults={true} />
+              <div style={style.suggestionTokenContainer}>
+                {suggestions.map(s => (
+                  <SuggestionToken key={s} suggestion={s} />
+                ))}
+              </div>
+            </div>
           </div>
           <br />
           {mode === resultModes.NO_RESULTS && (
