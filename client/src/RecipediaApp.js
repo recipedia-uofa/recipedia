@@ -66,10 +66,10 @@ const withResultsStyle = {
   },
   flexColumn: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   suggestionTokenContainer: {
-    marginTop: "10px",
+    marginTop: "10px"
   }
 };
 
@@ -136,7 +136,9 @@ class RecipediaApp extends React.Component<Props> {
           {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           <UserGuide />
           <div className={searchbarStyle.resultsUpperContainer}>
-            <div className={searchbarStyle.recipediaLogoContainer}><RecipediaLogo data-testid="logo" /></div>
+            <div className={searchbarStyle.recipediaLogoContainer}>
+              <RecipediaLogo data-testid="logo" />
+            </div>
             <div>
               <SearchBar withResults={true} />
               <div style={style.suggestionTokenContainer}>

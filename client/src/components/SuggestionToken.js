@@ -14,13 +14,13 @@ const style = {
     fontWeight: "600",
     paddingRight: "5px",
     transformOrigin: "50% 60%",
-    transform: "scale(1.3)",
+    transform: "scale(1.3)"
   },
   contentContainer: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "center"
   }
-}
+};
 
 type Props = {
   suggestion: Ingredient,
@@ -40,7 +40,10 @@ class SuggestionToken extends React.PureComponent<Props> {
   render() {
     const { suggestion, addSuggestion } = this.props;
     return (
-      <div className={suggestionStyle.suggestionBox} onClick={() => addSuggestion(suggestion)}>
+      <div
+        className={suggestionStyle.suggestionBox}
+        onClick={() => addSuggestion(suggestion)}
+      >
         <div style={style.contentContainer}>
           <div style={style.symbol}>+</div>
           {suggestion}
