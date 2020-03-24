@@ -262,8 +262,10 @@ input {
 .suggestionBox {
   display: inline-block;
   cursor: pointer;
+  background-color: #E5B181; /*May need to change brightness*/
+  color: white;
   border-radius: 20px;
-  padding: 10px;
+  padding: 7px 10px 10px 10px;
   margin: 5px;
   box-shadow: 0px 8px 15px rgba(119, 119, 119, 0.1);
   filter: brightness(1.0);
