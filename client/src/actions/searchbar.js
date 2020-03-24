@@ -286,6 +286,21 @@ export const decrementAutocompleteSelection = () => {
   };
 };
 
+export const onClickAutocompleteSelection = (autoCompleteItemValue: any) => {
+  return (dispatch: *, getState: GetState) => {
+    const { autocompleteItems } = getState().searchbar;
+
+    const foundIndex = R.findIndex(t => t.value == autoCompleteItemValue)(
+      autocompleteItems
+    );
+
+    if (foundIndex >= 0) {
+      dispatch(changeAutocompleteSelection(foundIndex));
+      dispatch(completeSearchToken());
+    }
+  };
+};
+
 export type SearchBarActions =
   | AddSearchTokenAction
   | DeleteSearchTokenAction
