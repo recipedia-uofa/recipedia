@@ -155,9 +155,6 @@ class TokenCreator extends PureComponent<Props> {
           return;
       }
     },
-    handleBlur: e => {
-      this.actions.createToken();
-    },
     handlePaste: e => {
       e.preventDefault();
       const pastedText = e.clipboardData.getData("text");
@@ -184,7 +181,6 @@ class TokenCreator extends PureComponent<Props> {
           placeholder={placeholder}
           value={value}
           autoFocus={autoFocus}
-          onBlur={this.actions.handleBlur}
           onChange={this.actions.handleChangeValue}
           onKeyDown={this.actions.handleKeyDown}
           onPaste={this.actions.handlePaste}
