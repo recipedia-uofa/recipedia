@@ -74,7 +74,7 @@ const withResultsStyle = {
   },
   searchBarMinWidth: {
     minWidth: "85%"
-  },
+  }
 };
 
 const resultModes = {
