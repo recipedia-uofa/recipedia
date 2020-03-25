@@ -186,11 +186,7 @@ class TokenCreator extends PureComponent<Props> {
           onPaste={this.actions.handlePaste}
         />
         {showError && (
-          <span
-            className={styles.toolTipError}
-          >
-            {errorMessage}
-          </span>
+          <span className={styles.toolTipError}>{errorMessage}</span>
         )}
       </div>
     );
