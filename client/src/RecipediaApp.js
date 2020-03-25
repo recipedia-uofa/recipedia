@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as R from "ramda";
 import noResultsImg from "assets/Sad_Plate.svg";
 import { ReactComponent as RecipediaLogo } from "assets/RecipediaLogo.svg";
+import { ReactComponent as RecipediaLogoTab } from "assets/RecipediaR.svg";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
@@ -69,8 +70,11 @@ const withResultsStyle = {
     flexDirection: "column"
   },
   suggestionTokenContainer: {
-    marginTop: "10px"
-  }
+    margin: "10px 0"
+  },
+  searchBarMinWidth: {
+    minWidth: "85%"
+  },
 };
 
 const resultModes = {
@@ -137,9 +141,9 @@ class RecipediaApp extends React.Component<Props> {
           <UserGuide />
           <div className={searchbarStyle.resultsUpperContainer}>
             <div className={searchbarStyle.recipediaLogoContainer}>
-              <RecipediaLogo data-testid="logo" />
+              <RecipediaLogoTab data-testid="logo" />
             </div>
-            <div>
+            <div style={style.searchBarMinWidth}>
               <SearchBar withResults={true} />
               <div style={style.suggestionTokenContainer}>
                 {suggestions.map(s => (
