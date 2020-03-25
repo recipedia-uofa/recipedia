@@ -209,7 +209,44 @@ input {
   z-index: 10;
   /* transform: translate(-245px, -25px); */
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: opacity 0.5s;
+  -webkit-animation: fadeInAndOut 3s ease-out;
+  animation: fadeInAndOut 3s ease-out;
+}
+
+@-webkit-keyframes fadeInAndOut {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInAndOut {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 /*This is if we want the arrow to show on the left*/
