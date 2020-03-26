@@ -2,7 +2,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import * as colours from "constants/colours";
 import { addSuggestion } from "actions/searchbar";
 
 import type { Ingredient } from "models/ingredient";

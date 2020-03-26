@@ -290,7 +290,7 @@ export const onClickAutocompleteSelection = (autoCompleteItemValue: any) => {
   return (dispatch: *, getState: GetState) => {
     const { autocompleteItems } = getState().searchbar;
 
-    const foundIndex = R.findIndex(t => t.value == autoCompleteItemValue)(
+    const foundIndex = R.findIndex(t => t.value === autoCompleteItemValue)(
       autocompleteItems
     );
 
