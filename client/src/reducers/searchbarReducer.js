@@ -7,7 +7,8 @@ import {
   CLEAR_SEARCH_ERROR,
   CHANGE_SEARCH_TEXT,
   RECIEVE_VALID_INGREDIENTS,
-  CHANGE_AUTOCOMPLETE_SELECTION
+  CHANGE_AUTOCOMPLETE_SELECTION,
+  LOAD_FROM_URL
 } from "constants/actionTypes";
 import diets from "models/diets";
 import { inputTypes, validInputTypes } from "models/input";
@@ -129,6 +130,11 @@ export default (
       return {
         ...state,
         autocompleteSelection: action.index
+      };
+    case LOAD_FROM_URL:
+      return {
+        ...state,
+        tokens: action.tokens
       };
     default:
       return state;

@@ -42,3 +42,6 @@ export type ChangeAutocompleteSelection = "searchbar/CHANGE_SELECTION";
 
 export const CLEAR_SEARCH_ERROR = "searchbar/CLEAR_ERROR";
 export type ClearSearchError = "searchbar/CLEAR_ERROR";
+
+export const LOAD_FROM_URL = "url/LOAD";
+export type LoadFromUrl = "url/LOAD";
