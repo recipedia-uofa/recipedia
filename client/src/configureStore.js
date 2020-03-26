@@ -18,7 +18,11 @@ const logger = createLogger({
 });
 
 export default function configureStore(initialState: Object = {}) {
-  const store = createStore(rootReducer, initialState, applyMiddleware(thunk, logger));
+  const store = createStore(
+    rootReducer,
+    initialState,
+    applyMiddleware(thunk, logger)
+  );
   syncUrl(store);
   return store;
 }

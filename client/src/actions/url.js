@@ -11,12 +11,12 @@ export type SyncState = Array<SearchToken>;
 
 type LoadFromUrlAction = {
   type: LoadFromUrl,
-  tokens: Array<SearchToken>,
+  tokens: Array<SearchToken>
 };
 
 const loadFromUrl = (syncState: SyncState) => ({
   type: LOAD_FROM_URL,
-  tokens: syncState,
+  tokens: syncState
 });
 
 export const loadSyncState = (syncState: SyncState) => {
@@ -26,6 +26,6 @@ export const loadSyncState = (syncState: SyncState) => {
       dispatch(executeSearch());
     }
   };
-}
+};
 
 export type UrlActions = LoadFromUrlAction;

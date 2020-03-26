@@ -134,7 +134,7 @@ export default (
     case LOAD_FROM_URL:
       return {
         ...state,
-        tokens: action.tokens,
+        tokens: action.tokens
       };
     default:
       return state;
