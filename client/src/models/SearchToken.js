@@ -22,7 +22,7 @@ export default class SearchToken {
   }
 
   isKeyIngredient(): boolean {
-    return this.keyword === keywords.KEY;
+    return !this.isPartial() && this.keyword === keywords.KEY;
   }
 
   isDiet(): boolean {
@@ -34,7 +34,7 @@ export default class SearchToken {
   }
 
   isSimpleIngredient(): boolean {
-    return this.keyword === keywords.NONE;
+    return !this.isPartial() && this.keyword === keywords.NONE;
   }
 
   isIngredient(): boolean {
