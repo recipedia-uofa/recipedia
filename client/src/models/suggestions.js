@@ -12,7 +12,7 @@ type IngredientScores = {
 
 const extractSortedSuggestions: IngredientScores => Array<Ingredient> = R.pipe(
   R.toPairs, // returns list of [ingredient, score] pairs
-  R.sortBy(R.nth(1)),
+  R.sort(R.descend(R.nth(1))),
   R.map(R.nth(0)),
   R.take(MAX_SUGGESTIONS)
 );
@@ -25,15 +25,15 @@ const getSuggestions = (recipes: Array<Recipe>): Array<Ingredient> => {
   for (const r of recipes) {
     const numMissing = r.ingredientsNotMatched.length;
     for (const i of r.ingredientsNotMatched) {
+      const iScore = 1.0 / numMissing;
       if (i in ingredientScores) {
-        ingredientScores[i] += 1 / numMissing;
+        ingredientScores[i] += iScore;
       } else {
-        ingredientScores[i] = numMissing;
+        ingredientScores[i] = iScore;
       }
     }
   }
 
-  console.log(ingredientScores);
   return extractSortedSuggestions(ingredientScores);
 };
 

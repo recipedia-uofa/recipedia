@@ -1,3 +1,4 @@
+// @flow
 import SearchToken from "models/SearchToken";
 import keywords from "models/keywords";
 
