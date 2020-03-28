@@ -3,13 +3,11 @@ import * as R from "ramda";
 import getSuggestions from "models/suggestions";
 
 import type { Ingredient } from "models/ingredient";
-import type { Recipe } from "models/Recipe";
+import type { Recipe } from "models/recipe";
 
-const dummyRecipe = (
-  missingIngredients: Array<Ingredient>,
-) => ({
-  url: 'fake',
-  title: 'fake recipe',
+const dummyRecipe = (missingIngredients: Array<Ingredient>): Recipe => ({
+  url: "fake",
+  title: "fake recipe",
   ingredientsMatched: [],
   ingredientsNotMatched: missingIngredients,
   nutritionalInfo: {
@@ -19,20 +17,25 @@ const dummyRecipe = (
     protein: 0,
     sugar: 0
   },
-  imageUrl: 'fake image',
+  imageUrl: "fake image",
   nutritionScore: 15,
   servingSize: 4
 });
 
-const ingredients = [
-  "hot sauce", "potato", "leek",
-  "onion", "pasta", "tomato sauce", "pepper"
+const ingredients: Array<Ingredient> = [
+  "hot sauce",
+  "potato",
+  "leek",
+  "onion",
+  "pasta",
+  "tomato sauce",
+  "pepper"
 ];
 
-const recipes = [
+const recipes: Array<Recipe> = [
   dummyRecipe(["hot sauce"]),
   dummyRecipe(["potato", "leek"]),
-  dummyRecipe(["onion", "pasta", "potato", "tomato sauce", "pepper"]),
+  dummyRecipe(["onion", "pasta", "potato", "tomato sauce", "pepper"])
 ];
 
 test("all missing ingredients ranked", () => {
