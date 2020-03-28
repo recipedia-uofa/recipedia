@@ -3,8 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import * as R from "ramda";
 import noResultsImg from "assets/Sad_Plate.svg";
-import { ReactComponent as RecipediaLogo } from "assets/RecipediaLogo.svg";
-import { ReactComponent as RecipediaLogoTab } from "assets/RecipediaR.svg";
+import RecipediaLogo from "assets/RecipediaLogo";
+import RecipediaR from "assets/RecipediaR";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
@@ -141,7 +141,7 @@ class RecipediaApp extends React.Component<Props> {
           <UserGuide />
           <div className={searchbarStyle.resultsUpperContainer}>
             <div className={searchbarStyle.recipediaLogoContainer}>
-              <RecipediaLogoTab data-testid="logo" />
+              <RecipediaR data-testid="logo" />
             </div>
             <div style={style.searchBarMinWidth}>
               <SearchBar withResults={true} />
