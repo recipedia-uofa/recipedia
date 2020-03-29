@@ -137,7 +137,6 @@ class RecipediaApp extends React.Component<Props> {
       const style = withResultsStyle;
       return (
         <div>
-          {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           <UserGuide />
           <div className={searchbarStyle.resultsUpperContainer}>
             <div className={searchbarStyle.recipediaLogoContainer}>
@@ -163,6 +162,7 @@ class RecipediaApp extends React.Component<Props> {
               <div style={style.noResultsDescription}>No results found.</div>
             </div>
           )}
+          {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           {mode === resultModes.SHOW_RESULTS && <RecipeView />}
         </div>
       );
