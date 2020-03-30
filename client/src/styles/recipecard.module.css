@@ -70,7 +70,7 @@
   float: left;
   width: 100%;
   color: #eaeaea;
-  background-color: #4bbf84;
+  /* background-color: #4bbf84; */
   padding: 11px;
   white-space: normal;
   height: auto;
@@ -89,9 +89,6 @@
   white-space: normal;
   overflow-y: hidden;
   position: relative;
-  /* background-color: white;*/
-  /*color: #838383; */
-  background-color: white;
   color: rgb(140, 140, 140);
   max-height: 120px;
   height: max-content;
@@ -116,14 +113,14 @@
   font-size: 18px;
   padding: 5px;
   border-radius: 10px;
-  background-color: #4bbf84;
+  /* background-color: #4bbf84; */
   margin: 5px;
   color: white;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .NotMatchedIngredient {
-  background-color: grey;
+  /* background-color: grey; */
 }
 
 /*Would like to match the colour of the site logo. Use the following site for inspiration:

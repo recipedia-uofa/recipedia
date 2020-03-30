@@ -3,6 +3,12 @@ import React from "react";
 import styles from "styles/recipecard.module.css";
 import classNames from "classnames";
 import allRecipesLogo from "assets/AllRecipes_logo.jpg";
+import {
+  KEY_KEYWORD_COLOUR,
+  INGREDIENT_COLOUR,
+  DARK_BACKGROUND_DEFAULT_COLOUR,
+  DARK_FONT_COLOUR
+} from "constants/colours";
 //-------------ICONS--------------
 // TODO: Determine whether this is a good implementation
 import calorieImg from "assets/icons/flame.svg";
@@ -15,6 +21,7 @@ import servingsizeImg from "assets/icons/Fork_1.svg";
 import type { Node } from "react";
 import type { Recipe } from "models/recipe";
 import type { Ingredient } from "models/ingredient";
+import { none } from "ramda";
 
 //Constants
 const MAX_INGREDIENT_SIZE = 135;
@@ -135,22 +142,23 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
 
 type IngredientTokenProps = {
   ingredient: Ingredient,
-  isMatched: boolean
+  isMatched: boolean,
+  isGold: boolean
 };
 
 class RecipeIngredientToken extends React.PureComponent<IngredientTokenProps> {
   render() {
-    const { ingredient, isMatched } = this.props;
+    const { ingredient, isMatched, isGold } = this.props;
     return (
       <div
         key={ingredient}
-        className={
-          isMatched
-            ? styles.RecipeCardIngredientItem
-            : classNames(
-                styles.RecipeCardIngredientItem,
-                styles.NotMatchedIngredient
-              )
+        className={styles.RecipeCardIngredientItem}
+        style={
+          isGold
+            ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
+            : isMatched
+            ? { backgroundColor: `${INGREDIENT_COLOUR}` }
+            : { backgroundColor: `${DARK_FONT_COLOUR}` }
         }
       >
         {ingredient}
@@ -211,10 +219,20 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
     return (
       <div className={styles.RecipeCardIngredientBox}>
         {matchedIngredients.map(i => (
-          <RecipeIngredientToken key={i} ingredient={i} isMatched={true} />
+          <RecipeIngredientToken
+            key={i}
+            ingredient={i}
+            isMatched={true}
+            isGold={notMatchedIngredients.length == 0}
+          />
         ))}
         {notMatchedIngredients.map(i => (
-          <RecipeIngredientToken key={i} ingredient={i} isMatched={false} />
+          <RecipeIngredientToken
+            key={i}
+            ingredient={i}
+            isMatched={false}
+            isGold={false}
+          />
         ))}
       </div>
     );
@@ -258,8 +276,20 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
 
   render() {
     const { recipe } = this.props;
+    const recipeCardColourStyle = {
+      isGold: {
+        backgroundColor: `${DARK_BACKGROUND_DEFAULT_COLOUR}`
+      }
+    };
     return (
-      <div className={styles.RecipeCardContainer}>
+      <div
+        className={styles.RecipeCardContainer}
+        style={
+          recipe.ingredientsNotMatched == 0
+            ? { backgroundColor: `${DARK_BACKGROUND_DEFAULT_COLOUR}` }
+            : { backgroundColor: "white" }
+        }
+      >
         <div className={styles.RecipeCardImageContainer}>
           <img
             className={styles.RecipeCardImage}
@@ -267,7 +297,16 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
             alt={recipe.title}
           />
         </div>
-        <div className={styles.RecipeCardTitle}>{recipe.title}</div>
+        <div
+          className={styles.RecipeCardTitle}
+          style={
+            recipe.ingredientsNotMatched == 0
+              ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
+              : { backgroundColor: `${INGREDIENT_COLOUR}` }
+          }
+        >
+          {recipe.title}
+        </div>
         <div className={styles.RecipeCardDescription}>
           <div
             className={styles.RecipeCardDescriptionContainer}
