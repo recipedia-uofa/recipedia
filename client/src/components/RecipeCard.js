@@ -330,10 +330,28 @@ class RecipeCard extends React.PureComponent<Props> {
 
     const recipe_url = recipe.url;
 
+    const handleMouseEvent = (e, recipe_url) => {
+      switch (e.button) {
+        case 0:
+          // Left Click
+          window.open(recipe_url, "_blank");
+          break;
+        case 1:
+          // Middle Click
+          e.preventDefault();
+          window.open(recipe_url, "_blank");
+          break;
+        case 2:
+          // Right Click
+          break;
+      }
+    };
+
     return (
       <div
         className={styles.RecipeCards}
-        onClick={() => window.open(recipe_url, "_blank")}
+        onMouseUp={e => handleMouseEvent(e, recipe_url)}
+        onMouseDown={e => e.preventDefault()}
       >
         <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
         <PrimaryRecipeCard recipe={recipe} />
