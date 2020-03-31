@@ -70,6 +70,7 @@ niacin: float .
 vitamin_b6: float .
 magnesium: float .
 folate: float .
+nutrition_score: float .
 
 cname: string .
 

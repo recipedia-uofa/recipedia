@@ -26,6 +26,7 @@ const recipeElements = `
   sodium
   sugars
   servings
+  nutrition_score
   matched_ingredients: contains @filter(uid(tokens)) {
     iname
   }
@@ -149,6 +150,7 @@ type MatchedRecipeResult = {
   sodium: number,
   sugars: number,
   servings: number,
+  nutrition_score: number,
   matched_ingredients: Array<IngredientResult>,
   contains: Array<IngredientResult>
 };
@@ -179,7 +181,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
       sugar: result.sugars
     },
     imageUrl: result.img_url,
-    nutritionScore: 15,
+    nutritionScore: Math.round(result.nutrition_score),
     servingSize: result.servings
   };
 };
