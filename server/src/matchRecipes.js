@@ -18,6 +18,7 @@ const recipeElements = `
   title
   img_url
   rating
+  rating_score
   calories
   total_fat
   total_carbohydrates
@@ -142,6 +143,7 @@ type MatchedRecipeResult = {
   title: string,
   img_url: string,
   rating: number,
+  rating_score: number,
   calories: number,
   total_fat: number,
   total_carbohydrates: number,
@@ -171,6 +173,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
     url: result.url,
     title: result.title,
     rating: result.rating,
+    rating_score: result.rating_score,
     ingredientsMatched,
     ingredientsNotMatched: R.difference(recipeIngredients, ingredientsMatched),
     nutritionalInfo: {
