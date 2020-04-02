@@ -72,7 +72,7 @@ magnesium: float .
 folate: float .
 nutrition_score: float .
 
-cname: string .
+cname: string @index(exact) .
 
-contains: [uid] @reverse .
-categorized_as: [uid] .
+contains: [uid] @reverse @count .
+categorized_as: [uid] @reverse .
