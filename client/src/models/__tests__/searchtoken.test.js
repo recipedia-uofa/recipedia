@@ -54,6 +54,21 @@ test("decode is reverse of encode", () => {
   const token = new SearchToken(keywords.KEY, "test");
   const decoded = SearchToken.decode(token.encode());
 
+  expect(decoded).not.toBeNull();
   expect(Object.is(token, decoded)).toBeFalsy(); // We created a new object
   expect(token.equals(decoded)).toBeTruthy();
+});
+
+test("decodes partial tokens", () => {
+  const partial = new SearchToken(keywords.NOT);
+  const decoded = SearchToken.decode(partial.encode());
+
+  expect(decoded).not.toBeNull();
+  expect(decoded.isPartial()).toBeTruthy();
+  expect(decoded.equals(partial)).toBeTruthy();
+});
+
+test("decoding invalid token returns null", () => {
+  const badEncodedToken = "DIE_";
+  expect(SearchToken.decode(badEncodedToken)).toBeNull();
 });
