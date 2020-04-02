@@ -14,12 +14,13 @@ import diets from "models/diets";
 import { inputTypes, validInputTypes } from "models/input";
 import keywords from "models/keywords";
 import autocompleteSearch from "models/autocomplete";
+import SearchToken from "models/SearchToken";
 
 import type { Action } from "actions";
 import type { SearchbarState } from "types/states";
 import type { Diet } from "models/diets";
 import type { Ingredient } from "models/ingredient";
-import type { Input } from "models/input";
+import type { Input, InputType } from "models/input";
 import type { Keyword } from "models/keywords";
 
 const MAX_AUTOCOMPLETE_ITEMS = 7;
@@ -51,13 +52,27 @@ const searchOptions = {
 
 const computeAutocompleteItems = (
   searchText: string,
-  validInputs: Array<Input>
+  tokens: Array<SearchToken>,
+  validIngredientInputs: Array<Input>
 ): Array<Input> => {
+  const validTypes = validInputTypes(tokens);
+
   if (searchText === "") {
-    return [];
+    console.log(validTypes.includes(inputTypes.DIET));
+    return validTypes.includes(inputTypes.DIET)
+      ? R.take(MAX_AUTOCOMPLETE_ITEMS, dietInputs)
+      : [];
   }
 
-  const items = autocompleteSearch(searchText, validInputs, searchOptions);
+  const validItems = [
+    ...(validTypes.includes(inputTypes.KEYWORD) ? keywordInputs : []),
+    ...(validTypes.includes(inputTypes.INGREDIENT)
+      ? validIngredientInputs
+      : []),
+    ...(validTypes.includes(inputTypes.DIET) ? dietInputs : [])
+  ];
+
+  const items = autocompleteSearch(searchText, validItems, searchOptions);
   return R.take(MAX_AUTOCOMPLETE_ITEMS, items);
 };
 
@@ -78,11 +93,16 @@ export default (
 ): SearchbarState => {
   switch (action.type) {
     case ADD_SEARCH_TOKEN:
+      const newTokens = [...state.tokens, action.token];
       return {
         ...state,
         text: "",
-        tokens: [...state.tokens, action.token],
-        autocompleteItems: [],
+        tokens: newTokens,
+        autocompleteItems: computeAutocompleteItems(
+          "",
+          newTokens,
+          state.validIngredientInputs
+        ),
         autocompleteSelection: 0
       };
     case DELETE_SEARCH_TOKEN:
@@ -105,19 +125,14 @@ export default (
         showError: false
       };
     case CHANGE_SEARCH_TEXT:
-      const validTypes = validInputTypes(state.tokens);
-      const validItems = [
-        ...(validTypes.includes(inputTypes.KEYWORD) ? keywordInputs : []),
-        ...(validTypes.includes(inputTypes.INGREDIENT)
-          ? state.validIngredientInputs
-          : []),
-        ...(validTypes.includes(inputTypes.DIET) ? dietInputs : [])
-      ];
-
       return {
         ...state,
         text: action.text,
-        autocompleteItems: computeAutocompleteItems(action.text, validItems),
+        autocompleteItems: computeAutocompleteItems(
+          action.text,
+          state.tokens,
+          state.validIngredientInputs
+        ),
         autocompleteSelection: 0
       };
     case RECIEVE_VALID_INGREDIENTS:

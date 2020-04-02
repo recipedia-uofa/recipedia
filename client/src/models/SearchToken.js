@@ -68,6 +68,7 @@ export default class SearchToken {
       return null;
     }
 
-    return new SearchToken(toKeyword(keywordStr), valueStr);
+    const value = valueStr != "" ? valueStr : null;
+    return new SearchToken(toKeyword(keywordStr), value);
   }
 }
