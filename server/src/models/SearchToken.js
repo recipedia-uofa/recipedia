@@ -22,7 +22,7 @@ export default class SearchToken {
   }
 
   isKeyIngredient(): boolean {
-    return this.keyword === keywords.KEY;
+    return !this.isPartial() && this.keyword === keywords.KEY;
   }
 
   isDiet(): boolean {
@@ -34,7 +34,7 @@ export default class SearchToken {
   }
 
   isSimpleIngredient(): boolean {
-    return this.keyword === keywords.NONE;
+    return !this.isPartial() && this.keyword === keywords.NONE;
   }
 
   isIngredient(): boolean {
@@ -49,6 +49,18 @@ export default class SearchToken {
     return `${this.keyword}_${this.value || ""}`;
   }
 
+  equals(other: ?any): boolean {
+    if (other === this) {
+      return true;
+    }
+
+    if (other instanceof SearchToken) {
+      return this.keyword === other.keyword && this.value === other.value;
+    }
+
+    return false;
+  }
+
   static decode(str: string): SearchToken | null {
     const [keywordStr, valueStr] = str.split("_");
 
@@ -56,6 +68,7 @@ export default class SearchToken {
       return null;
     }
 
-    return new SearchToken(toKeyword(keywordStr), valueStr);
+    const value = valueStr !== "" ? valueStr : null;
+    return new SearchToken(toKeyword(keywordStr), value);
   }
 }
