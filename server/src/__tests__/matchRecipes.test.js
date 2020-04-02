@@ -21,12 +21,15 @@ const toKeyToken = (i: string) => {
 
 const toDietToken = (i: string) => {
   return new SearchToken(keywords.DIET, i);
-}
+};
 
 const defaultOpts = { limit: 50 };
 const keyIngredients = R.map(toKeyToken, ["carrot", "onion"]);
 const blacklists = R.map(toBlackToken, ["flour"]);
-const dietRestrictions = R.map(toDietToken, [diets.VEGETARIAN, diets.GLUTEN_FREE]);
+const dietRestrictions = R.map(toDietToken, [
+  diets.VEGETARIAN,
+  diets.GLUTEN_FREE
+]);
 const basicIngredients = R.map(toToken, ["potato", "leek", "olive oil"]);
 
 test("basic match query feasible", () => {
@@ -67,7 +70,12 @@ test("diet match query feasible", () => {
 
 test("full match query feasible", () => {
   const fullQuery = matchQuery(
-    [...basicIngredients, ...keyIngredients, ...blacklists, ...dietRestrictions],
+    [
+      ...basicIngredients,
+      ...keyIngredients,
+      ...blacklists,
+      ...dietRestrictions
+    ],
     defaultOpts
   );
   checkBrackets(fullQuery);

@@ -37,10 +37,8 @@ const getDietBlacklists = (diet: Diet): Array<Category> => {
   }
 };
 
-export const getBlacklistedCategories: Array<Diet> => Array<Category> = R.pipe(
-  R.map(getDietBlacklists),
-  R.flatten,
-  R.uniq
-);
+export const getBlacklistedCategories: (
+  Array<Diet>
+) => Array<Category> = R.pipe(R.map(getDietBlacklists), R.flatten, R.uniq);
 
 export default diets;

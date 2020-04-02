@@ -49,4 +49,4 @@ export const checkVars = (query: string) => {
   }, vars);
 
   expect(usedVars).toStrictEqual(vars);
-}
+};

@@ -70,7 +70,9 @@ const matchedRecipesClause = (params: QueryParams): string => {
   const blackVars = [
     params.hasBlacklists && "blackTokens",
     params.hasDietRestrictions && "dietRestrictions"
-  ].filter(R.identity).join(',');
+  ]
+    .filter(R.identity)
+    .join(",");
 
   return `
     var(func: uid(${seedTokens})) {
@@ -218,7 +220,7 @@ const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
 const noRecipesToMatch = (tokens: Array<SearchToken>): boolean => {
   const allIngredientTokens = R.filter(token => token.isIngredient());
   return R.isEmpty(allIngredientTokens);
-}
+};
 
 const matchRecipes = async (
   tokens: Array<SearchToken>
