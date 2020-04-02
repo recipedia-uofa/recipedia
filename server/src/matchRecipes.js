@@ -86,7 +86,8 @@ const matchedRecipesClause = (params: QueryParams): string => {
 };
 
 const filterResultClause = (params: QueryParams) => {
-  if (!params.hasKeyIngredients && !params.hasBlacklists) {
+  const hasBlacklists = params.hasBlacklists || params.hasDietRestrictions;
+  if (!params.hasKeyIngredients && !hasBlacklists) {
     return "";
   }
 
@@ -94,7 +95,7 @@ const filterResultClause = (params: QueryParams) => {
     ? `eq(val(keyMatched), ${params.numKeyIngredients})`
     : null;
 
-  const blackFilter = params.hasBlacklists ? "eq(val(blackMatched), 0)" : null;
+  const blackFilter = hasBlacklists ? "eq(val(blackMatched), 0)" : null;
 
   return `@filter(${[keyFilter, blackFilter]
     .filter(c => !R.isNil(c))

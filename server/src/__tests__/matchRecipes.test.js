@@ -5,37 +5,7 @@ import keywords from "models/keywords";
 import diets from "models/diets";
 import SearchToken from "models/SearchToken";
 import { matchQuery } from "../matchRecipes";
-
-const isBracketMatch = (b1: string, b2: string): boolean => {
-  const bsorted = [b1, b2].sort().join("");
-  return bsorted === "{}" || bsorted === "()";
-};
-
-const checkBrackets = (query: string): boolean => {
-  // Get only the brackets
-  const queryBrackets = query.replace(/[^\{\}\(\)]/g, "");
-
-  // Check that the first and last brackets are curly braces
-  expect(queryBrackets.length).toBeGreaterThanOrEqual(2);
-  const firstAndLastBrackets =
-    queryBrackets[0] + queryBrackets[queryBrackets.length - 1];
-  expect(firstAndLastBrackets).toBe("{}");
-
-  let bracketsMatch = true;
-  const bracketStack = [];
-  for (const b of queryBrackets) {
-    if ("{(".includes(b)) {
-      bracketStack.push(b);
-    } else if ("})".includes(b)) {
-      if (!isBracketMatch(b, bracketStack.pop())) {
-        bracketsMatch = false;
-        break;
-      }
-    }
-  }
-
-  expect(bracketsMatch && R.isEmpty(bracketStack)).toBeTruthy();
-};
+import { checkBrackets, checkVars } from "./helpers";
 
 const toToken = (i: string) => {
   return new SearchToken(keywords.NONE, i);
@@ -62,6 +32,7 @@ const basicIngredients = R.map(toToken, ["potato", "leek", "olive oil"]);
 test("basic match query feasible", () => {
   const basicQuery = matchQuery(basicIngredients, defaultOpts);
   checkBrackets(basicQuery);
+  checkVars(basicQuery);
 });
 
 test("key match query feasible", () => {
@@ -71,6 +42,7 @@ test("key match query feasible", () => {
   );
   expect(keyIngredientQuery.includes("keyMatched")).toBeTruthy();
   checkBrackets(keyIngredientQuery);
+  checkVars(keyIngredientQuery);
 });
 
 test("blacklist match query feasible", () => {
@@ -80,6 +52,7 @@ test("blacklist match query feasible", () => {
   );
   expect(blacklistQuery.includes("blackMatched")).toBeTruthy();
   checkBrackets(blacklistQuery);
+  checkVars(blacklistQuery);
 });
 
 test("diet match query feasible", () => {
@@ -89,6 +62,7 @@ test("diet match query feasible", () => {
   );
   expect(dietQuery.includes("dietRestrictions")).toBeTruthy();
   checkBrackets(dietQuery);
+  checkVars(dietQuery);
 });
 
 test("full match query feasible", () => {
@@ -96,6 +70,6 @@ test("full match query feasible", () => {
     [...basicIngredients, ...keyIngredients, ...blacklists, ...dietRestrictions],
     defaultOpts
   );
-  console.log(fullQuery);
   checkBrackets(fullQuery);
+  checkVars(fullQuery);
 });
