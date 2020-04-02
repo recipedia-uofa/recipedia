@@ -20,7 +20,7 @@ import type { Action } from "actions";
 import type { SearchbarState } from "types/states";
 import type { Diet } from "models/diets";
 import type { Ingredient } from "models/ingredient";
-import type { Input, InputType } from "models/input";
+import type { Input } from "models/input";
 import type { Keyword } from "models/keywords";
 
 const MAX_AUTOCOMPLETE_ITEMS = 7;
