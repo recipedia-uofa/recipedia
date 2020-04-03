@@ -1,6 +1,13 @@
 // @flow
 import SearchToken from "models/SearchToken";
 import keywords from "models/keywords";
+import diets from "models/diets";
+
+import type { IngredientMap } from "models/ingredient";
+
+const validIngredients: IngredientMap = {
+  test: "test"
+};
 
 test("ingredient token", () => {
   const token = new SearchToken(keywords.NONE, "test");
@@ -8,6 +15,7 @@ test("ingredient token", () => {
   expect(token.isSimpleIngredient()).toBeTruthy();
   expect(token.isPartial()).toBeFalsy();
   expect(token.hasKeyword()).toBeFalsy();
+  expect(token.isValid(validIngredients)).toBeTruthy();
 });
 
 test("full token", () => {
@@ -16,6 +24,7 @@ test("full token", () => {
   expect(token.isSimpleIngredient()).toBeFalsy();
   expect(token.isPartial()).toBeFalsy();
   expect(token.hasKeyword()).toBeTruthy();
+  expect(token.isValid(validIngredients)).toBeTruthy();
 });
 
 test("partial token", () => {
@@ -23,6 +32,38 @@ test("partial token", () => {
   expect(token.isPartial()).toBeTruthy();
   expect(token.hasKeyword()).toBeTruthy();
   expect(token.isIngredient()).toBeFalsy();
+  expect(token.isValid(validIngredients)).toBeTruthy();
+});
+
+test("valid tokens", () => {
+  expect(
+    new SearchToken(keywords.NONE, "test").isValid(validIngredients)
+  ).toBeTruthy();
+  expect(
+    new SearchToken(keywords.KEY, "test").isValid(validIngredients)
+  ).toBeTruthy();
+  expect(
+    new SearchToken(keywords.NOT, "test").isValid(validIngredients)
+  ).toBeTruthy();
+  expect(
+    new SearchToken(keywords.DIET, diets.GLUTEN_FREE).isValid(validIngredients)
+  ).toBeTruthy();
+});
+
+test("invalid tokens", () => {
+  expect(new SearchToken(null, null).isValid(validIngredients)).toBeFalsy();
+  expect(
+    new SearchToken(keywords.NONE, "bad").isValid(validIngredients)
+  ).toBeFalsy();
+  expect(
+    new SearchToken(keywords.KEY, "bad").isValid(validIngredients)
+  ).toBeFalsy();
+  expect(
+    new SearchToken(keywords.NOT, "bad").isValid(validIngredients)
+  ).toBeFalsy();
+  expect(
+    new SearchToken(keywords.DIET, "bad").isValid(validIngredients)
+  ).toBeFalsy();
 });
 
 test("equality", () => {
