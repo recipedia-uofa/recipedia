@@ -31,6 +31,7 @@ export default (
         visible: true
       };
     case INVALID_SEARCH:
+      // TODO: Add error message in the results section?
       return initialState;
     default:
       return state;

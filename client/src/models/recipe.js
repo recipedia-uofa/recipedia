@@ -17,5 +17,6 @@ export type Recipe = {
   nutritionalInfo: NutritionalInfo,
   imageUrl: string,
   nutritionScore: number,
+  ratingScore: number,
   servingSize: number // in people
 };

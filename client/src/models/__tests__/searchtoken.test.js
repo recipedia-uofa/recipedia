@@ -64,6 +64,7 @@ test("decodes partial tokens", () => {
   const decoded = SearchToken.decode(partial.encode());
 
   expect(decoded).not.toBeNull();
+  //$FlowFixMe
   expect(decoded.isPartial()).toBeTruthy();
   expect(decoded.equals(partial)).toBeTruthy();
 });
