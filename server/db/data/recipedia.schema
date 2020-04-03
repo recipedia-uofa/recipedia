@@ -17,6 +17,7 @@ type Recipe {
   reviews
   made_it_count
   rating
+  rating_score
   contains
   servings
   calories
@@ -50,6 +51,7 @@ prep_time: int .
 reviews: int .
 made_it_count: int .
 rating: float .
+rating_score: float .
 servings: int .
 calories: float .
 total_fat: float .
