@@ -50,7 +50,7 @@ export default class SearchToken {
       // $FlowFixMe
       return this.value;
     }
-    
+
     return `${this.keyword}_${this.value || ""}`;
   }
 
@@ -67,6 +67,10 @@ export default class SearchToken {
   }
 
   static decode(str: string): SearchToken | null {
+    if (str === "") {
+      return null;
+    }
+
     if (!str.includes("_")) {
       return new SearchToken(keywords.NONE, str);
     }
