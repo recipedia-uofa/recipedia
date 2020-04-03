@@ -173,7 +173,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
     url: result.url,
     title: result.title,
     rating: result.rating,
-    rating_score: result.rating_score,
+    ratingScore: result.rating_score,
     ingredientsMatched,
     ingredientsNotMatched: R.difference(recipeIngredients, ingredientsMatched),
     nutritionalInfo: {
@@ -191,7 +191,11 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
 
 const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
   R.prop("matchedRecipes"),
-  R.map(resultToRecipe)
+  R.map(resultToRecipe),
+  R.sortWith([
+    R.descend(r => r.ingredientsMatched.length),
+    R.descend(R.prop('ratingScore'))
+  ])
 );
 
 const matchRecipes = async (
