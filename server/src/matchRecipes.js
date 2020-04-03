@@ -64,6 +64,9 @@ const countClause = (countVar: string, tokensVar: string): string =>
     countVar
   )} : contains @filter(uid(${tokensVar})))`;
 
+const distanceClause = (params: QueryParams): string =>
+  `distance as math(5 * ((numTotal - numMatched) * 100 / numTotal) + 95 * ((${params.numTyped} - numMatched) * 100 / ${params.numTyped}))`;
+
 const matchedRecipesClause = (params: QueryParams): string => {
   const seedTokens = params.hasKeyIngredients ? "keyTokens" : "tokens";
 
@@ -81,10 +84,10 @@ const matchedRecipesClause = (params: QueryParams): string => {
         ${clauseArray([
           params.hasKeyIngredients && countClause("keyMatched", "keyTokens"),
           hasBlackClause && countClause("blackMatched", blackVars),
-          countClause("numMatched", "tokens"),
+          countClause("numMatched", "tokens")
         ])}
         numTotal as count(contains2 : contains)
-        distance as math(((numTotal - numMatched) * 100 / numTotal) + ((${params.numTyped} - numMatched) * 100 / ${params.numTyped}))
+        ${distanceClause(params)}
       }
     }
   `;
@@ -211,7 +214,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
       sugar: result.sugars
     },
     imageUrl: result.img_url,
-    nutritionScore: Math.round(result.nutrition_score),
+    nutritionScore: result.nutrition_score,
     servingSize: result.servings
   };
 };
