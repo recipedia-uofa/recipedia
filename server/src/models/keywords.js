@@ -8,8 +8,11 @@ const keywords = {
 
 export type Keyword = $Keys<typeof keywords>;
 
-export const isValidKeyword = (str: string): boolean => {
-  return str.toUpperCase() in keywords;
+// $FlowFixMe
+export const allKeywords: Array<Keyword> = Object.values(keywords);
+
+export const isValidKeyword = (str: ?string): boolean => {
+  return !!str && str.toUpperCase() in keywords;
 };
 
 export const toKeyword = (str: string): Keyword => {

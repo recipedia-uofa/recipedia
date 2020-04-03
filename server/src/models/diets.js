@@ -1,7 +1,7 @@
 // @flow
 import * as R from "ramda";
 import { constantCase } from "constant-case";
-import categories from "models/category";
+import categories, { toCategory } from "models/category";
 
 import type { Category } from "models/category";
 
@@ -16,8 +16,8 @@ export type Diet = $Values<typeof diets>;
 // $FlowFixMe
 export const allDiets: Array<Diet> = Object.values(diets);
 
-export const isValidDiet = (str: string): boolean => {
-  return constantCase(str) in diets;
+export const isValidDiet = (str: ?string): boolean => {
+  return !!str && constantCase(str) in diets;
 };
 
 export const toDiet = (str: string): Diet => {
@@ -39,6 +39,11 @@ const getDietBlacklists = (diet: Diet): Array<Category> => {
 
 export const getBlacklistedCategories: (
   Array<Diet>
-) => Array<Category> = R.pipe(R.map(getDietBlacklists), R.flatten, R.uniq);
+) => Array<Category> = R.pipe(
+  R.map(getDietBlacklists),
+  R.flatten,
+  R.uniq,
+  R.map(toCategory)
+);
 
 export default diets;

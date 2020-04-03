@@ -13,6 +13,7 @@ type FalsyString = ?(string | false);
 // Convert many clauses into one insertable string
 // filters false, null or undefined clauses
 export const clauseArray = (clauses: Array<FalsyString>): string => {
+  // $FlowFixMe
   return filterFalsy(clauses).join("\n");
 };
 
