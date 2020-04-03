@@ -54,7 +54,8 @@ type QueryParams = {
   hasKeyIngredients: boolean,
   hasBlacklists: boolean,
   hasDietRestrictions: boolean,
-  numKeyIngredients: number
+  numKeyIngredients: number,
+  numTyped: number
 };
 
 // countVar as count(count_var : contains @filter(uid(tokens)))
@@ -62,6 +63,9 @@ const countClause = (countVar: string, tokensVar: string): string =>
   `${countVar} as count(${camelToSnake(
     countVar
   )} : contains @filter(uid(${tokensVar})))`;
+
+const distanceClause = (params: QueryParams): string =>
+  `distance as math(5 * ((numTotal - numMatched) * 100 / numTotal) + 95 * ((${params.numTyped} - numMatched) * 100 / ${params.numTyped}))`;
 
 const matchedRecipesClause = (params: QueryParams): string => {
   const seedTokens = params.hasKeyIngredients ? "keyTokens" : "tokens";
@@ -82,6 +86,8 @@ const matchedRecipesClause = (params: QueryParams): string => {
           hasBlackClause && countClause("blackMatched", blackVars),
           countClause("numMatched", "tokens")
         ])}
+        numTotal as count(contains2 : contains)
+        ${distanceClause(params)}
       }
     }
   `;
@@ -137,7 +143,8 @@ export const matchQuery = (
     hasKeyIngredients: !R.isEmpty(keyIngredients),
     hasBlacklists: !R.isEmpty(blacklists),
     hasDietRestrictions: !R.isEmpty(dietRestrictions),
-    numKeyIngredients: keyIngredients.length
+    numKeyIngredients: keyIngredients.length,
+    numTyped: allIngredients.length
   };
 
   return `
@@ -151,7 +158,7 @@ export const matchQuery = (
 
     ${matchedRecipesClause(params)}
 
-    matchedRecipes(func: uid(matchedRecipes), orderdesc: val(numMatched), first: ${
+    matchedRecipes(func: uid(matchedRecipes), orderasc: val(distance), first: ${
       opts.limit
     }) ${filterResultClause(params)} {
       ${recipeElements}
@@ -207,7 +214,7 @@ const resultToRecipe = (result: MatchedRecipeResult): Recipe => {
       sugar: result.sugars
     },
     imageUrl: result.img_url,
-    nutritionScore: Math.round(result.nutrition_score),
+    nutritionScore: result.nutrition_score,
     servingSize: result.servings
   };
 };

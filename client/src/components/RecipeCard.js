@@ -166,11 +166,13 @@ type ScoreProps = {
 class RecipeScore extends React.PureComponent<ScoreProps> {
   render() {
     const { recipeScore } = this.props;
+    const score = Math.round(Math.max(0, Math.min(100, recipeScore)));
+
     return (
       <div className={styles.ScoreContainer}>
         <div className={styles.ScoreCircle}>
           <div className={styles.ScoreNumber} alt="0%">
-            {recipeScore}%
+            {score}%
           </div>
         </div>
       </div>
