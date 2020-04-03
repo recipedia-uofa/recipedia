@@ -9,8 +9,11 @@ const diets = {
 
 export type Diet = $Values<typeof diets>;
 
-export const isValidDiet = (str: string): boolean => {
-  return constantCase(str) in diets;
+// $FlowFixMe
+export const allDiets: Array<Diet> = Object.values(diets);
+
+export const isValidDiet = (str: ?string): boolean => {
+  return !!str && constantCase(str) in diets;
 };
 
 export const toDiet = (str: string): Diet => {

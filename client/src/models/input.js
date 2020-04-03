@@ -54,7 +54,7 @@ export const isDuplicateInput = (
     value: string
   ): boolean => {
     const valueUpper = value.toUpperCase();
-    return R.any(t => t.value && t.value.toUpperCase() === valueUpper, tokens);
+    return R.any(t => !!(t.value) && t.value.toUpperCase() === valueUpper, tokens);
   };
 
   return [

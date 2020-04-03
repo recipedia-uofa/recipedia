@@ -1,4 +1,6 @@
 // @flow
+import { constantCase } from "constant-case";
+
 const categories = {
   ADDED_SWEETENERS: "added sweeteners",
   ALCOHOL: "alcohol",
@@ -23,5 +25,9 @@ const categories = {
 };
 
 export type Category = $Values<typeof categories>;
+
+export const toCategory = (str: string): Category => {
+  return categories[constantCase(str)];
+};
 
 export default categories;
