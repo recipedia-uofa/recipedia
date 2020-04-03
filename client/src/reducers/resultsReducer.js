@@ -1,5 +1,9 @@
 // @flow
-import { EXECUTE_SEARCH, RECEIVE_SEARCH, INVALID_SEARCH } from "constants/actionTypes";
+import {
+  EXECUTE_SEARCH,
+  RECEIVE_SEARCH,
+  INVALID_SEARCH
+} from "constants/actionTypes";
 import getSuggestions from "models/suggestions";
 
 import type { Action } from "actions";

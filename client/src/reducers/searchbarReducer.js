@@ -76,11 +76,17 @@ const computeAutocompleteItems = (
   return R.take(MAX_AUTOCOMPLETE_ITEMS, items);
 };
 
-const filterForValidTokens = (tokens: Array<SearchToken>, validIngredients: IngredientMap): Array<SearchToken> => {
+const filterForValidTokens = (
+  tokens: Array<SearchToken>,
+  validIngredients: IngredientMap
+): Array<SearchToken> => {
   if (R.isEmpty(validIngredients)) {
     return tokens;
   }
-  return R.filter((t: SearchToken) => t.isValid(validIngredients) && !t.isPartial(), tokens);
+  return R.filter(
+    (t: SearchToken) => t.isValid(validIngredients) && !t.isPartial(),
+    tokens
+  );
 };
 
 const initialState: SearchbarState = {
@@ -143,12 +149,15 @@ export default (
         autocompleteSelection: 0
       };
     case RECIEVE_VALID_INGREDIENTS:
-      const ingredientMap: IngredientMap = R.indexBy(R.identity, action.ingredients);
+      const ingredientMap: IngredientMap = R.indexBy(
+        R.identity,
+        action.ingredients
+      );
       return {
         ...state,
         validIngredientInputs: ingredientsToInputs(action.ingredients),
         validIngredientMap: ingredientMap,
-        tokens: filterForValidTokens(state.tokens, ingredientMap),
+        tokens: filterForValidTokens(state.tokens, ingredientMap)
       };
     case CHANGE_AUTOCOMPLETE_SELECTION:
       return {
@@ -158,7 +167,7 @@ export default (
     case LOAD_FROM_URL:
       return {
         ...state,
-        tokens: filterForValidTokens(action.tokens, state.validIngredientMap),
+        tokens: filterForValidTokens(action.tokens, state.validIngredientMap)
       };
     default:
       return state;
