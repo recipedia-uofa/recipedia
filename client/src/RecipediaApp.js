@@ -3,13 +3,17 @@ import React from "react";
 import { connect } from "react-redux";
 import * as R from "ramda";
 import noResultsImg from "assets/Sad_Plate.svg";
-import { ReactComponent as RecipediaLogo } from "assets/RecipediaLogo.svg";
+import RecipediaLogo from "assets/RecipediaLogo";
+import RecipediaR from "assets/RecipediaR";
 import SearchBar from "components/SearchBar";
 import RecipeView from "components/RecipeView";
 import UserGuide from "components/UserGuide";
+import SuggestionToken from "components/SuggestionToken";
 import SearchToken from "models/SearchToken";
 import LoadingOverlay from "components/LoadingOverlay";
+import searchbarStyle from "styles/searchbar.module.css";
 
+import type { Ingredient } from "models/ingredient";
 import type { State } from "types/states";
 
 const noResultsStyle = {
@@ -35,20 +39,6 @@ const noResultsStyle = {
 };
 
 const withResultsStyle = {
-  upperContainer: {
-    position: "-webkit-sticky",
-    position: "sticky",
-    top: 0,
-    backdropFilter: "blur(5px)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "83%",
-    // marginLeft: "7%",
-    padding: "0 9%",
-    maxWidth: "90%",
-    zIndex: "10"
-  },
   title: {
     marginTop: 100,
     width: "20%"
@@ -75,8 +65,15 @@ const withResultsStyle = {
     color: "grey",
     fontSize: "30px"
   },
-  noOverflow: {
-    overflowX: "hidden"
+  flexColumn: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  suggestionTokenContainer: {
+    margin: "10px 0"
+  },
+  searchBarMinWidth: {
+    minWidth: "85%"
   }
 };
 
@@ -120,24 +117,40 @@ type Props = {
   resultsArePending: boolean,
   hasResults: boolean,
   showResults: boolean,
-  tokens: Array<SearchToken>
+  tokens: Array<SearchToken>,
+  suggestions: Array<Ingredient>
 };
 
 class RecipediaApp extends React.Component<Props> {
   render() {
-    const { resultsArePending, hasResults, showResults, tokens } = this.props;
+    const {
+      resultsArePending,
+      hasResults,
+      showResults,
+      tokens,
+      suggestions
+    } = this.props;
 
     const mode = getMode(resultsArePending, hasResults, showResults, tokens);
 
     if (mode !== resultModes.SEARCH_BAR_ONLY) {
       const style = withResultsStyle;
       return (
-        <div style={style.noOverflow}>
+        <div>
           {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           <UserGuide />
-          <div style={style.upperContainer}>
-            <RecipediaLogo data-testid="logo" />
-            <SearchBar withResults={true} />
+          <div className={searchbarStyle.resultsUpperContainer}>
+            <div className={searchbarStyle.recipediaLogoContainer}>
+              <RecipediaR data-testid="logo" />
+            </div>
+            <div style={style.searchBarMinWidth}>
+              <SearchBar withResults={true} />
+              <div style={style.suggestionTokenContainer}>
+                {suggestions.map(s => (
+                  <SuggestionToken key={s} suggestion={s} />
+                ))}
+              </div>
+            </div>
           </div>
           <br />
           {mode === resultModes.NO_RESULTS && (
@@ -172,7 +185,8 @@ const mapStateToProps = (state: State, ownProps) => ({
   resultsArePending: state.results.isPending,
   hasResults: !R.isEmpty(state.results.recipes),
   showResults: state.results.visible,
-  tokens: state.searchbar.tokens
+  tokens: state.searchbar.tokens,
+  suggestions: state.results.suggestions
 });
 
 export default connect(mapStateToProps)(RecipediaApp);

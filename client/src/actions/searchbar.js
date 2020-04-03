@@ -121,7 +121,7 @@ const addSearchToken = (token: SearchToken): AddSearchTokenAction => ({
 export const tryAddSearchToken = (input: string) => {
   return (dispatch: *, getState: GetState) => {
     const state = getState();
-    const { tokens, validIngredientMap } = state.searchbar;
+    const { tokens, validIngredientMap, showError } = state.searchbar;
 
     const [isValid, errorMessage] = isValidInput(
       input,
@@ -130,8 +130,10 @@ export const tryAddSearchToken = (input: string) => {
     );
 
     if (!isValid) {
-      dispatch(invalidSearchToken(errorMessage));
-      setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
+      if (!showError) {
+        dispatch(invalidSearchToken(errorMessage));
+        setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
+      }
       return;
     }
 
@@ -165,7 +167,8 @@ export const completeSearchToken = () => {
     const {
       autocompleteItems,
       autocompleteSelection,
-      tokens
+      tokens,
+      showError
     } = getState().searchbar;
 
     if (R.isEmpty(autocompleteItems)) {
@@ -183,8 +186,10 @@ export const completeSearchToken = () => {
     );
 
     if (isDuplicate) {
-      dispatch(invalidSearchToken(errorMessage));
-      setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
+      if (!showError) {
+        dispatch(invalidSearchToken(errorMessage));
+        setTimeout(() => dispatch(clearSearchError()), ERROR_TIMEOUT_FADE);
+      }
       return;
     }
 
@@ -211,6 +216,14 @@ export const completeSearchToken = () => {
     const mergedToken = new SearchToken(lastToken.keyword, selectedItem.value);
     dispatch(deleteSearchToken(tokens.length - 1));
     dispatch(addSearchToken(mergedToken));
+    dispatch(executeSearch());
+  };
+};
+
+export const addSuggestion = (suggestion: Ingredient) => {
+  const token = new SearchToken(keywords.NONE, suggestion);
+  return (dispatch: *, getState: GetState) => {
+    dispatch(addSearchToken(token));
     dispatch(executeSearch());
   };
 };
@@ -275,6 +288,21 @@ export const decrementAutocompleteSelection = () => {
     const { autocompleteSelection } = getState().searchbar;
     const newSelection = Math.max(autocompleteSelection - 1, 0);
     dispatch(changeAutocompleteSelection(newSelection));
+  };
+};
+
+export const onClickAutocompleteSelection = (autoCompleteItemValue: any) => {
+  return (dispatch: *, getState: GetState) => {
+    const { autocompleteItems } = getState().searchbar;
+
+    const foundIndex = R.findIndex(t => t.value === autoCompleteItemValue)(
+      autocompleteItems
+    );
+
+    if (foundIndex >= 0) {
+      dispatch(changeAutocompleteSelection(foundIndex));
+      dispatch(completeSearchToken());
+    }
   };
 };
 

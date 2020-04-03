@@ -1,6 +1,7 @@
 // @flow
 import React from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import * as colours from "constants/colours";
 import { inputTypes } from "models/input";
 import keywords, { toKeyword } from "models/keywords";
@@ -11,6 +12,8 @@ import type { Node } from "react";
 import type { State } from "types/states";
 import type { Input } from "models/input";
 import type { Keyword } from "models/keywords";
+
+import { onClickAutocompleteSelection } from "actions/searchbar";
 
 const getTokenColour = (keyword: Keyword): string => {
   switch (keyword) {
@@ -49,7 +52,8 @@ const AutocompleteItem = ({ item, ...props }: ItemProps): Node => {
 type Props = {
   // redux
   autocompleteItems: Array<Input>,
-  selectedIndex: number
+  selectedIndex: number,
+  clickSelection: (itemValue: any) => void
 };
 
 const mapStateToProps = (state: State, ownProps) => ({
@@ -57,9 +61,21 @@ const mapStateToProps = (state: State, ownProps) => ({
   selectedIndex: state.searchbar.autocompleteSelection
 });
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      clickSelection: onClickAutocompleteSelection
+    },
+    dispatch
+  );
+
 class Autocomplete extends React.PureComponent<Props> {
   render() {
-    const { autocompleteItems: items, selectedIndex } = this.props;
+    const {
+      autocompleteItems: items,
+      selectedIndex,
+      clickSelection
+    } = this.props;
 
     return (
       <div className={styles.autocomplete}>
@@ -71,6 +87,7 @@ class Autocomplete extends React.PureComponent<Props> {
               className={
                 index === selectedIndex ? styles.autocompleteActive : ""
               }
+              onClick={() => clickSelection(item.value)}
             />
           ))}
         </div>
@@ -79,4 +96,4 @@ class Autocomplete extends React.PureComponent<Props> {
   }
 }
 
-export default connect(mapStateToProps, null)(Autocomplete);
+export default connect(mapStateToProps, mapDispatchToProps)(Autocomplete);

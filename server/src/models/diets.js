@@ -1,18 +1,49 @@
 // @flow
+import * as R from "ramda";
+import { constantCase } from "constant-case";
+import categories, { toCategory } from "models/category";
+
+import type { Category } from "models/category";
+
 const diets = {
-  VEGETARIAN: "VEGETARIAN",
-  VEGAN: "VEGAN",
-  GLUTEN_FREE: "GLUTEN_FREE"
+  VEGETARIAN: "vegetarian",
+  VEGAN: "vegan",
+  GLUTEN_FREE: "gluten free"
 };
 
-export type Diet = $Keys<typeof diets>;
+export type Diet = $Values<typeof diets>;
 
-export const isValidDiet = (str: string): boolean => {
-  return str.toUpperCase() in diets;
+// $FlowFixMe
+export const allDiets: Array<Diet> = Object.values(diets);
+
+export const isValidDiet = (str: ?string): boolean => {
+  return !!str && constantCase(str) in diets;
 };
 
 export const toDiet = (str: string): Diet => {
-  return diets[str.toUpperCase()].toLowerCase();
+  return diets[constantCase(str)].toLowerCase();
 };
+
+const getDietBlacklists = (diet: Diet): Array<Category> => {
+  switch (diet) {
+    case diets.VEGETARIAN:
+      return [categories.MEATS, categories.FISH];
+    case diets.VEGAN:
+      return [categories.MEATS, categories.FISH, categories.DAIRY];
+    case diets.GLUTEN_FREE:
+      return [categories.BAKING_AND_GRAINS];
+    default:
+      return [];
+  }
+};
+
+export const getBlacklistedCategories: (
+  Array<Diet>
+) => Array<Category> = R.pipe(
+  R.map(getDietBlacklists),
+  R.flatten,
+  R.uniq,
+  R.map(toCategory)
+);
 
 export default diets;

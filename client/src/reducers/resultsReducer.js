@@ -1,5 +1,9 @@
 // @flow
-import { EXECUTE_SEARCH, RECEIVE_SEARCH } from "constants/actionTypes";
+import {
+  EXECUTE_SEARCH,
+  RECEIVE_SEARCH,
+  INVALID_SEARCH
+} from "constants/actionTypes";
 import getSuggestions from "models/suggestions";
 
 import type { Action } from "actions";
@@ -30,6 +34,9 @@ export default (
         isPending: false,
         visible: true
       };
+    case INVALID_SEARCH:
+      // TODO: Add error message in the results section?
+      return initialState;
     default:
       return state;
   }

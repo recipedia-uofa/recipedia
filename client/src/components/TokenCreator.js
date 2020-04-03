@@ -17,19 +17,6 @@ import styles from "styles/searchbar.module.css";
 
 import type { State } from "types/states";
 
-const style = {
-  noError: {
-    opacity: 0
-    // width: 0,
-    // padding: 0,
-  },
-  displayError: {
-    opacity: 1
-    // width: "200px",
-    // padding: "10px",
-  }
-};
-
 type Props = {
   autoFocus: boolean,
   placeholder: string,
@@ -155,9 +142,6 @@ class TokenCreator extends PureComponent<Props> {
           return;
       }
     },
-    handleBlur: e => {
-      this.actions.createToken();
-    },
     handlePaste: e => {
       e.preventDefault();
       const pastedText = e.clipboardData.getData("text");
@@ -184,17 +168,13 @@ class TokenCreator extends PureComponent<Props> {
           placeholder={placeholder}
           value={value}
           autoFocus={autoFocus}
-          onBlur={this.actions.handleBlur}
           onChange={this.actions.handleChangeValue}
           onKeyDown={this.actions.handleKeyDown}
           onPaste={this.actions.handlePaste}
         />
-        <span
-          className={styles.toolTipError}
-          style={showError ? style.displayError : style.noError}
-        >
-          {errorMessage}
-        </span>
+        {showError && (
+          <span className={styles.toolTipError}>{errorMessage}</span>
+        )}
       </div>
     );
   }
