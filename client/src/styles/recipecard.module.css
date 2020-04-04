@@ -8,6 +8,8 @@
 */
 :root {
   --pure-black: #000000;
+  --transition-time-normal: 0.3s;
+  --transition-time-secondary: 0.3s;
 }
 
 .RecipeCards {
@@ -16,12 +18,12 @@
 }
 
 .RecipeCardContainer {
-  border-radius: 70px;
+  border-radius: 50px;
   position: relative;
   cursor: pointer;
   left: 0px;
   top: 0px;
-  width: 400px;
+  width: 350px;
   color: var(--pure-black);
   background-color: white;
   text-align: center;
@@ -35,7 +37,7 @@
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 25px;
   z-index: 1;
-  transition: transform 0.7s;
+  transition: transform var(--transition-time-normal);
   transform: scale(1);
 }
 
@@ -45,7 +47,7 @@
   overflow-y: hidden;
   position: relative;
   transform: scale(1);
-  transition: transform 1s;
+  transition: transform var(--transition-time-secondary);
   z-index: inherit;
 }
 
@@ -70,7 +72,7 @@
   float: left;
   width: 100%;
   color: #eaeaea;
-  background-color: #4bbf84;
+  /* background-color: #4bbf84; */
   padding: 11px;
   white-space: normal;
   height: auto;
@@ -89,9 +91,6 @@
   white-space: normal;
   overflow-y: hidden;
   position: relative;
-  /* background-color: white;*/
-  /*color: #838383; */
-  background-color: white;
   color: rgb(140, 140, 140);
   max-height: 120px;
   height: max-content;
@@ -116,14 +115,14 @@
   font-size: 18px;
   padding: 5px;
   border-radius: 10px;
-  background-color: #4bbf84;
+  /* background-color: #4bbf84; */
   margin: 5px;
   color: white;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2);
 }
 
 .NotMatchedIngredient {
-  background-color: grey;
+  /* background-color: grey; */
 }
 
 /*Would like to match the colour of the site logo. Use the following site for inspiration:
@@ -135,7 +134,7 @@ For now, the colour will be hard coded*/
   position: absolute;
   z-index: 2;
   transform: translate(20px, 20px);
-  transition: transform 0.7s;
+  transition: transform var(--transition-time-normal);
 }
 
 .RecipeCardSiteLogo {
@@ -160,8 +159,8 @@ For now, the colour will be hard coded*/
   width: 75px;
   position: absolute;
   z-index: 2;
-  transition: transform 0.7s;
-  transform: translate(340px, -110px);
+  transition: transform var(--transition-time-normal);
+  transform: translate(300px, -110px);
   /* transform: translate(450%, -110%); */
 }
 
@@ -188,8 +187,8 @@ For now, the colour will be hard coded*/
 .RecipeCardOffset {
   position: relative;
   /* margin: 15px; */
-  margin-left: 30%;
-  margin-right: 5px;
+  margin-left: 26%;
+  /* margin-right: 5px; */
 }
 
 .SecondaryRecipeCardContainer {
@@ -198,7 +197,7 @@ For now, the colour will be hard coded*/
   cursor: pointer;
   left: 0px;
   top: 0px;
-  width: 415px;
+  width: 315px;
   color: #000000;
   background-color: transparent;
   text-align: center;
@@ -208,10 +207,10 @@ For now, the colour will be hard coded*/
   -webkit-flex-direction: column;
   display: flex;
   flex-direction: column;
-  height: 495px;
+  height: 420px;
   margin: 25px;
   z-index: 0;
-  transition: transform 0.9s;
+  transition: transform var(--transition-time-normal);
   transform: scale(1);
 }
 
@@ -219,7 +218,7 @@ For now, the colour will be hard coded*/
   display: flex;
   border-radius: 40px;
   background-color: white;
-  width: 80%;
+  width: 60%;
   height: auto;
   align-items: center;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
@@ -266,10 +265,18 @@ For now, the colour will be hard coded*/
   margin: 5px;
   /* padding: 5px; */
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Heebo";
+  font-size: 22px;
+}
+
+.NutritionDescriptionInnerItem {
+  display: flex;
   flex-direction: row;
   align-items: center;
   font-family: "Heebo";
-  font-size: 42px;
+  font-size: 22px;
 }
 
 .SetLeft {
@@ -285,18 +292,23 @@ For now, the colour will be hard coded*/
   margin-left: 5px;
 }
 
+.DietUnit {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
 .LargeWordFont {
-  font-size: 20px !important;
+  font-size: 16px !important;
 }
 
 .DietTitle {
   position: absolute;
-  transform: translateX(-10%);
-  font-size: 30px;
+  /* transform: translateX(-10%); */
+  font-size: 20px;
   align-self: center;
   opacity: 0;
   line-height: 2rem;
-  transition: transform 0.5s, opacity 0.5s;
+  transition: transform var(--transition-time-secondary), opacity var(--transition-time-secondary);
 }
 
 .Center {
@@ -305,9 +317,9 @@ For now, the colour will be hard coded*/
 }
 
 .NutritionDescriptionItemImage {
-  width: 26%;
+  width: 23%;
   opacity: 0.7;
-  transition: opacity 0.4s, transform 0.4s;
+  transition: opacity var(--transition-time-secondary), transform var(--transition-time-secondary);
   /* padding: 5px; */
 }
 
@@ -323,22 +335,22 @@ For now, the colour will be hard coded*/
 }
 
 .RecipeCards:hover .LogoContainer {
-  transform: translate(-125px, 20px);
+  transform: translate(-38px, 20px);
   z-index: 5;
 }
 
 .RecipeCards:hover .ScoreContainer {
   z-index: 5;
-  transform: translate(182px, -110px);
+  transform: translate(250px, -80px);
 }
 
 .RecipeCards:hover .RecipeCardContainer {
-  transform: scale(1.1) translateX(-137px);
+  transform: scale(1.1) translateX(-50px);
   z-index: 4;
 }
 
 .RecipeCards:hover .SecondaryRecipeCardContainer {
-  transform: scale(1.1) translateX(137px);
+  transform: scale(1.1) translateX(212px);
   z-index: 3;
 }
 
