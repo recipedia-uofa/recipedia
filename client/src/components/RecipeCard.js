@@ -284,11 +284,6 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
     return (
       <div
         className={styles.RecipeCardContainer}
-        style={
-          recipe.ingredientsNotMatched == 0
-            ? { backgroundColor: `${DARK_BACKGROUND_DEFAULT_COLOUR}` }
-            : { backgroundColor: "white" }
-        }
       >
         <div className={styles.RecipeCardImageContainer}>
           <img
@@ -300,7 +295,7 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
         <div
           className={styles.RecipeCardTitle}
           style={
-            recipe.ingredientsNotMatched == 0
+            recipe.ingredientsNotMatched.length == 0
               ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
               : { backgroundColor: `${INGREDIENT_COLOUR}` }
           }
