@@ -19,6 +19,7 @@ const dummyRecipe = (missingIngredients: Array<Ingredient>): Recipe => ({
   },
   imageUrl: "fake image",
   nutritionScore: 15,
+  ratingScore: 4.2,
   servingSize: 4
 });
 

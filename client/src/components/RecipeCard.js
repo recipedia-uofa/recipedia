@@ -174,11 +174,13 @@ type ScoreProps = {
 class RecipeScore extends React.PureComponent<ScoreProps> {
   render() {
     const { recipeScore } = this.props;
+    const score = Math.round(Math.max(0, Math.min(100, recipeScore)));
+
     return (
       <div className={styles.ScoreContainer}>
         <div className={styles.ScoreCircle}>
           <div className={styles.ScoreNumber} alt="0%">
-            {recipeScore}%
+            {score}%
           </div>
         </div>
       </div>
@@ -319,6 +321,27 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
   }
 }
 
+const LEFT_BUTTON = 0;
+const MIDDLE_BUTTON = 1;
+const RIGHT_BUTTON = 2;
+
+const recipeMouseDownHandler = (recipe_url: string) => event => {
+  switch (event.button) {
+    case LEFT_BUTTON:
+      // Open in the same tab
+      window.open(recipe_url, "_self");
+      break;
+    case MIDDLE_BUTTON:
+      // Open in a different tab
+      window.open(recipe_url, "_blank");
+      break;
+    case RIGHT_BUTTON:
+      break; // do nothing
+    default:
+      break;
+  }
+};
+
 class RecipeCard extends React.PureComponent<Props> {
   render() {
     const { recipe } = this.props;
@@ -345,8 +368,7 @@ class RecipeCard extends React.PureComponent<Props> {
     return (
       <div
         className={styles.RecipeCards}
-        onMouseUp={e => handleMouseEvent(e, recipe_url)}
-        onMouseDown={e => e.preventDefault()}
+        onMouseDown={recipeMouseDownHandler(recipe_url)}
       >
         <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
         <PrimaryRecipeCard recipe={recipe} />

@@ -10,15 +10,16 @@ import {
   CHANGE_AUTOCOMPLETE_SELECTION,
   LOAD_FROM_URL
 } from "constants/actionTypes";
-import diets from "models/diets";
+import { allDiets } from "models/diets";
 import { inputTypes, validInputTypes } from "models/input";
-import keywords from "models/keywords";
+import keywords, { allKeywords } from "models/keywords";
 import autocompleteSearch from "models/autocomplete";
+import SearchToken from "models/SearchToken";
 
 import type { Action } from "actions";
 import type { SearchbarState } from "types/states";
 import type { Diet } from "models/diets";
-import type { Ingredient } from "models/ingredient";
+import type { Ingredient, IngredientMap } from "models/ingredient";
 import type { Input } from "models/input";
 import type { Keyword } from "models/keywords";
 
@@ -34,7 +35,7 @@ const dietToInput = (d: Diet): Input => ({
   type: inputTypes.DIET,
   value: d.toLowerCase()
 });
-const dietInputs = R.map(dietToInput, Object.values(diets));
+const dietInputs = R.map(dietToInput, allDiets);
 
 const keywordToInput = (k: Keyword): Input => ({
   type: inputTypes.KEYWORD,
@@ -42,7 +43,7 @@ const keywordToInput = (k: Keyword): Input => ({
 });
 const keywordInputs = R.map(
   keywordToInput,
-  Object.values(keywords).filter(k => k !== keywords.NONE)
+  allKeywords.filter(k => k !== keywords.NONE)
 );
 
 const searchOptions = {
@@ -51,14 +52,41 @@ const searchOptions = {
 
 const computeAutocompleteItems = (
   searchText: string,
-  validInputs: Array<Input>
+  tokens: Array<SearchToken>,
+  validIngredientInputs: Array<Input>
 ): Array<Input> => {
+  const validTypes = validInputTypes(tokens);
+
   if (searchText === "") {
-    return [];
+    console.log(validTypes.includes(inputTypes.DIET));
+    return validTypes.includes(inputTypes.DIET)
+      ? R.take(MAX_AUTOCOMPLETE_ITEMS, dietInputs)
+      : [];
   }
 
-  const items = autocompleteSearch(searchText, validInputs, searchOptions);
+  const validItems = [
+    ...(validTypes.includes(inputTypes.KEYWORD) ? keywordInputs : []),
+    ...(validTypes.includes(inputTypes.INGREDIENT)
+      ? validIngredientInputs
+      : []),
+    ...(validTypes.includes(inputTypes.DIET) ? dietInputs : [])
+  ];
+
+  const items = autocompleteSearch(searchText, validItems, searchOptions);
   return R.take(MAX_AUTOCOMPLETE_ITEMS, items);
+};
+
+const filterForValidTokens = (
+  tokens: Array<SearchToken>,
+  validIngredients: IngredientMap
+): Array<SearchToken> => {
+  if (R.isEmpty(validIngredients)) {
+    return tokens;
+  }
+  return R.filter(
+    (t: SearchToken) => t.isValid(validIngredients) && !t.isPartial(),
+    tokens
+  );
 };
 
 const initialState: SearchbarState = {
@@ -78,11 +106,16 @@ export default (
 ): SearchbarState => {
   switch (action.type) {
     case ADD_SEARCH_TOKEN:
+      const newTokens = [...state.tokens, action.token];
       return {
         ...state,
         text: "",
-        tokens: [...state.tokens, action.token],
-        autocompleteItems: [],
+        tokens: newTokens,
+        autocompleteItems: computeAutocompleteItems(
+          "",
+          newTokens,
+          state.validIngredientInputs
+        ),
         autocompleteSelection: 0
       };
     case DELETE_SEARCH_TOKEN:
@@ -105,26 +138,26 @@ export default (
         showError: false
       };
     case CHANGE_SEARCH_TEXT:
-      const validTypes = validInputTypes(state.tokens);
-      const validItems = [
-        ...(validTypes.includes(inputTypes.KEYWORD) ? keywordInputs : []),
-        ...(validTypes.includes(inputTypes.INGREDIENT)
-          ? state.validIngredientInputs
-          : []),
-        ...(validTypes.includes(inputTypes.DIET) ? dietInputs : [])
-      ];
-
       return {
         ...state,
         text: action.text,
-        autocompleteItems: computeAutocompleteItems(action.text, validItems),
+        autocompleteItems: computeAutocompleteItems(
+          action.text,
+          state.tokens,
+          state.validIngredientInputs
+        ),
         autocompleteSelection: 0
       };
     case RECIEVE_VALID_INGREDIENTS:
+      const ingredientMap: IngredientMap = R.indexBy(
+        R.identity,
+        action.ingredients
+      );
       return {
         ...state,
         validIngredientInputs: ingredientsToInputs(action.ingredients),
-        validIngredientMap: R.indexBy(R.identity, action.ingredients)
+        validIngredientMap: ingredientMap,
+        tokens: filterForValidTokens(state.tokens, ingredientMap)
       };
     case CHANGE_AUTOCOMPLETE_SELECTION:
       return {
@@ -134,7 +167,7 @@ export default (
     case LOAD_FROM_URL:
       return {
         ...state,
-        tokens: action.tokens
+        tokens: filterForValidTokens(action.tokens, state.validIngredientMap)
       };
     default:
       return state;

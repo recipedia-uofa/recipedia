@@ -17,19 +17,6 @@ import styles from "styles/searchbar.module.css";
 
 import type { State } from "types/states";
 
-const style = {
-  noError: {
-    opacity: 0
-    // width: 0,
-    // padding: 0,
-  },
-  displayError: {
-    opacity: 1
-    // width: "200px",
-    // padding: "10px",
-  }
-};
-
 type Props = {
   autoFocus: boolean,
   placeholder: string,

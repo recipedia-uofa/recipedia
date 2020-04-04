@@ -1,6 +1,13 @@
 // @flow
 import SearchToken from "models/SearchToken";
 import keywords from "models/keywords";
+import diets from "models/diets";
+
+import type { IngredientMap } from "models/ingredient";
+
+const validIngredients: IngredientMap = {
+  test: "test"
+};
 
 test("ingredient token", () => {
   const token = new SearchToken(keywords.NONE, "test");
@@ -8,6 +15,7 @@ test("ingredient token", () => {
   expect(token.isSimpleIngredient()).toBeTruthy();
   expect(token.isPartial()).toBeFalsy();
   expect(token.hasKeyword()).toBeFalsy();
+  expect(token.isValid(validIngredients)).toBeTruthy();
 });
 
 test("full token", () => {
@@ -16,6 +24,7 @@ test("full token", () => {
   expect(token.isSimpleIngredient()).toBeFalsy();
   expect(token.isPartial()).toBeFalsy();
   expect(token.hasKeyword()).toBeTruthy();
+  expect(token.isValid(validIngredients)).toBeTruthy();
 });
 
 test("partial token", () => {
@@ -23,6 +32,38 @@ test("partial token", () => {
   expect(token.isPartial()).toBeTruthy();
   expect(token.hasKeyword()).toBeTruthy();
   expect(token.isIngredient()).toBeFalsy();
+  expect(token.isValid(validIngredients)).toBeTruthy();
+});
+
+test("valid tokens", () => {
+  expect(
+    new SearchToken(keywords.NONE, "test").isValid(validIngredients)
+  ).toBeTruthy();
+  expect(
+    new SearchToken(keywords.KEY, "test").isValid(validIngredients)
+  ).toBeTruthy();
+  expect(
+    new SearchToken(keywords.NOT, "test").isValid(validIngredients)
+  ).toBeTruthy();
+  expect(
+    new SearchToken(keywords.DIET, diets.GLUTEN_FREE).isValid(validIngredients)
+  ).toBeTruthy();
+});
+
+test("invalid tokens", () => {
+  expect(new SearchToken(null, null).isValid(validIngredients)).toBeFalsy();
+  expect(
+    new SearchToken(keywords.NONE, "bad").isValid(validIngredients)
+  ).toBeFalsy();
+  expect(
+    new SearchToken(keywords.KEY, "bad").isValid(validIngredients)
+  ).toBeFalsy();
+  expect(
+    new SearchToken(keywords.NOT, "bad").isValid(validIngredients)
+  ).toBeFalsy();
+  expect(
+    new SearchToken(keywords.DIET, "bad").isValid(validIngredients)
+  ).toBeFalsy();
 });
 
 test("equality", () => {
@@ -54,6 +95,23 @@ test("decode is reverse of encode", () => {
   const token = new SearchToken(keywords.KEY, "test");
   const decoded = SearchToken.decode(token.encode());
 
+  expect(decoded).not.toBeNull();
   expect(Object.is(token, decoded)).toBeFalsy(); // We created a new object
   expect(token.equals(decoded)).toBeTruthy();
+});
+
+test("decodes partial tokens", () => {
+  const partial = new SearchToken(keywords.NOT);
+  const decoded = SearchToken.decode(partial.encode());
+
+  expect(decoded).not.toBeNull();
+  if (decoded) {
+    expect(decoded.isPartial()).toBeTruthy();
+  }
+  expect(partial.equals(decoded)).toBeTruthy();
+});
+
+test("decoding invalid token returns null", () => {
+  const badEncodedToken = "DIE_";
+  expect(SearchToken.decode(badEncodedToken)).toBeNull();
 });

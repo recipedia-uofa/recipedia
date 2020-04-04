@@ -9,6 +9,7 @@ import type { State } from "types/states";
 
 const SEP = "&";
 
+//$FlowFixMe
 const stringToState: (s: string) => ?SyncState = R.pipe(
   R.split(SEP),
   R.map(SearchToken.decode),

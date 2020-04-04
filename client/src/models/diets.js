@@ -1,18 +1,23 @@
 // @flow
+import { constantCase } from "constant-case";
+
 const diets = {
-  VEGETARIAN: "VEGETARIAN",
-  VEGAN: "VEGAN",
-  GLUTEN_FREE: "GLUTEN_FREE"
+  VEGETARIAN: "vegetarian",
+  VEGAN: "vegan",
+  GLUTEN_FREE: "gluten free"
 };
 
-export type Diet = $Keys<typeof diets>;
+export type Diet = $Values<typeof diets>;
 
-export const isValidDiet = (str: string): boolean => {
-  return str.toUpperCase() in diets;
+// $FlowFixMe
+export const allDiets: Array<Diet> = Object.values(diets);
+
+export const isValidDiet = (str: ?string): boolean => {
+  return !!str && constantCase(str) in diets;
 };
 
 export const toDiet = (str: string): Diet => {
-  return diets[str.toUpperCase()].toLowerCase();
+  return diets[constantCase(str)].toLowerCase();
 };
 
 export default diets;
