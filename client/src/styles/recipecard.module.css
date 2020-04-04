@@ -8,8 +8,8 @@
 */
 :root {
   --pure-black: #000000;
-  --transition-time-normal: 0.2s;
-  --transition-time-secondary: 0.2s;
+  --transition-time-normal: 0.3s;
+  --transition-time-secondary: 0.3s;
 }
 
 .RecipeCards {
@@ -322,22 +322,22 @@ For now, the colour will be hard coded*/
 }
 
 .RecipeCards:hover .LogoContainer {
-  transform: translate(-125px, 20px);
+  transform: translate(-38px, 20px);
   z-index: 5;
 }
 
 .RecipeCards:hover .ScoreContainer {
   z-index: 5;
-  transform: translate(132px, -110px);
+  transform: translate(250px, -80px);
 }
 
 .RecipeCards:hover .RecipeCardContainer {
-  transform: scale(1.1) translateX(-137px);
+  transform: scale(1.1) translateX(-50px);
   z-index: 4;
 }
 
 .RecipeCards:hover .SecondaryRecipeCardContainer {
-  transform: scale(1.1) translateX(125px);
+  transform: scale(1.1) translateX(212px);
   z-index: 3;
 }
 
