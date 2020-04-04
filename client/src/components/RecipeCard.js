@@ -63,11 +63,11 @@ class NutritionInfoCard extends React.PureComponent<NutritionInfoProps> {
             <div
               className={classNames(
                 styles.Center,
-                styles.NutritionDescriptionItem
+                styles.NutritionDescriptionInnerItem
               )}
             >
               <div className={styles.Bold}>{details}</div>
-              <div className={isLargeTitle ? styles.SmallFont : styles.Bold}>
+              <div className={classNames(styles.DietUnit, styles.Bold)}>
                 {tag}
               </div>
             </div>
@@ -89,7 +89,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
           title="Calories"
           tag="kcal"
           className={styles.CaloriesColor}
-          isLargeTitle={true}
+          isLargeTitle={false}
         />
         <NutritionInfoCard
           details={recipe.nutritionalInfo.fat}
@@ -128,7 +128,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
           icon={servingsizeImg}
           title={
             <span>
-              Serving<br></br>Size
+              Serving Size
             </span>
           }
           tag="people"

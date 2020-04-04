@@ -188,7 +188,7 @@ For now, the colour will be hard coded*/
   position: relative;
   /* margin: 15px; */
   margin-left: 26%;
-  margin-right: 5px;
+  /* margin-right: 5px; */
 }
 
 .SecondaryRecipeCardContainer {
@@ -218,7 +218,7 @@ For now, the colour will be hard coded*/
   display: flex;
   border-radius: 40px;
   background-color: white;
-  width: 80%;
+  width: 60%;
   height: auto;
   align-items: center;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
@@ -265,10 +265,18 @@ For now, the colour will be hard coded*/
   margin: 5px;
   /* padding: 5px; */
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Heebo";
+  font-size: 22px;
+}
+
+.NutritionDescriptionInnerItem {
+  display: flex;
   flex-direction: row;
   align-items: center;
   font-family: "Heebo";
-  font-size: 38px;
+  font-size: 22px;
 }
 
 .SetLeft {
@@ -284,14 +292,19 @@ For now, the colour will be hard coded*/
   margin-left: 5px;
 }
 
+.DietUnit {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
 .LargeWordFont {
-  font-size: 20px !important;
+  font-size: 16px !important;
 }
 
 .DietTitle {
   position: absolute;
-  transform: translateX(-10%);
-  font-size: 22px;
+  /* transform: translateX(-10%); */
+  font-size: 20px;
   align-self: center;
   opacity: 0;
   line-height: 2rem;
@@ -304,7 +317,7 @@ For now, the colour will be hard coded*/
 }
 
 .NutritionDescriptionItemImage {
-  width: 26%;
+  width: 23%;
   opacity: 0.7;
   transition: opacity var(--transition-time-secondary), transform var(--transition-time-secondary);
   /* padding: 5px; */
