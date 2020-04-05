@@ -179,19 +179,19 @@ class RecipeScore extends React.PureComponent<ScoreProps> {
 
     let circleStyle;
     if (score < 30) {
-      circleStyle =  {
+      circleStyle = {
         backgroundColor: NOT_KEYWORD_COLOUR,
-        border: `10px solid ${NOT_KEYWORD_LIGHT_COLOUR}`,
+        border: `10px solid ${NOT_KEYWORD_LIGHT_COLOUR}`
       };
     } else if (score >= 70) {
-      circleStyle =  {
+      circleStyle = {
         backgroundColor: DARK_BACKGROUND_DEFAULT_COLOUR,
-        border: `10px solid ${INGREDIENT_COLOUR}`,
+        border: `10px solid ${INGREDIENT_COLOUR}`
       };
     } else {
-      circleStyle =  {
+      circleStyle = {
         backgroundColor: KEY_KEYWORD_COLOUR,
-        border: `10px solid ${KEY_KEYWORD_LIGHT_COLOUR}`,
+        border: `10px solid ${KEY_KEYWORD_LIGHT_COLOUR}`
       };
     }
 

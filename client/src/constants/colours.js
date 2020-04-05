@@ -1,7 +1,7 @@
 // @flow
 // Site colour constants
 
-export const KEY_KEYWORD_COLOUR = "#D2A734"
+export const KEY_KEYWORD_COLOUR = "#D2A734";
 export const KEY_KEYWORD_LIGHT_COLOUR = "#E8BE4F";
 
 export const NOT_KEYWORD_COLOUR = "#CD4632";
