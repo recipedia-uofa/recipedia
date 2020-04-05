@@ -197,7 +197,7 @@ For now, the colour will be hard coded*/
   cursor: pointer;
   left: 0px;
   top: 0px;
-  width: 315px;
+  width: 175px;
   color: #000000;
   background-color: transparent;
   text-align: center;
@@ -208,7 +208,7 @@ For now, the colour will be hard coded*/
   display: flex;
   flex-direction: column;
   height: 420px;
-  margin: 25px;
+  margin: 25px 0 0 25px;
   z-index: 0;
   transition: transform var(--transition-time-normal);
   transform: scale(1);
@@ -218,7 +218,7 @@ For now, the colour will be hard coded*/
   display: flex;
   border-radius: 40px;
   background-color: white;
-  width: 60%;
+  width: 100%;
   height: auto;
   align-items: center;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
@@ -293,8 +293,8 @@ For now, the colour will be hard coded*/
 }
 
 .DietUnit {
-  font-size: 16px;
-  margin-left: 5px;
+  font-size: 18px;
+  margin-left: 3px;
 }
 
 .LargeWordFont {
