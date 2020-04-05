@@ -308,7 +308,8 @@ For now, the colour will be hard coded*/
   align-self: center;
   opacity: 0;
   line-height: 2rem;
-  transition: transform var(--transition-time-secondary), opacity var(--transition-time-secondary);
+  transition: transform var(--transition-time-secondary),
+    opacity var(--transition-time-secondary);
 }
 
 .Center {
@@ -319,7 +320,8 @@ For now, the colour will be hard coded*/
 .NutritionDescriptionItemImage {
   width: 23%;
   opacity: 0.7;
-  transition: opacity var(--transition-time-secondary), transform var(--transition-time-secondary);
+  transition: opacity var(--transition-time-secondary),
+    transform var(--transition-time-secondary);
   /* padding: 5px; */
 }
 

@@ -126,11 +126,7 @@ class SecondaryRecipeCards extends React.PureComponent<Props> {
         <NutritionInfoCard
           details={recipe.servingSize}
           icon={servingsizeImg}
-          title={
-            <span>
-              Serving Size
-            </span>
-          }
+          title={<span>Serving Size</span>}
           tag="people"
           className={styles.ServingSize}
           isLargeTitle={true}
@@ -284,9 +280,7 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
       }
     };
     return (
-      <div
-        className={styles.RecipeCardContainer}
-      >
+      <div className={styles.RecipeCardContainer}>
         <div className={styles.RecipeCardImageContainer}>
           <img
             className={styles.RecipeCardImage}
