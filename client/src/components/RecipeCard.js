@@ -4,7 +4,10 @@ import styles from "styles/recipecard.module.css";
 import classNames from "classnames";
 import allRecipesLogo from "assets/AllRecipes_logo.jpg";
 import {
+  NOT_KEYWORD_COLOUR,
+  NOT_KEYWORD_LIGHT_COLOUR,
   KEY_KEYWORD_COLOUR,
+  KEY_KEYWORD_LIGHT_COLOUR,
   INGREDIENT_COLOUR,
   DARK_BACKGROUND_DEFAULT_COLOUR,
   DARK_FONT_COLOUR
@@ -171,10 +174,30 @@ class RecipeScore extends React.PureComponent<ScoreProps> {
   render() {
     const { recipeScore } = this.props;
     const score = Math.round(Math.max(0, Math.min(100, recipeScore)));
+    // background-color: #3c996a;
+    // border: 10px solid #4bbf84;
+
+    let circleStyle;
+    if (score < 30) {
+      circleStyle = {
+        backgroundColor: NOT_KEYWORD_COLOUR,
+        border: `10px solid ${NOT_KEYWORD_LIGHT_COLOUR}`
+      };
+    } else if (score >= 70) {
+      circleStyle = {
+        backgroundColor: DARK_BACKGROUND_DEFAULT_COLOUR,
+        border: `10px solid ${INGREDIENT_COLOUR}`
+      };
+    } else {
+      circleStyle = {
+        backgroundColor: KEY_KEYWORD_COLOUR,
+        border: `10px solid ${KEY_KEYWORD_LIGHT_COLOUR}`
+      };
+    }
 
     return (
       <div className={styles.ScoreContainer}>
-        <div className={styles.ScoreCircle}>
+        <div className={styles.ScoreCircle} style={circleStyle}>
           <div className={styles.ScoreNumber} alt="0%">
             {score}%
           </div>
