@@ -227,7 +227,7 @@ const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
   R.map(resultToRecipe),
   R.sortWith([
     R.descend(r => r.ingredientsMatched.length),
-    R.descend(R.prop('ratingScore'))
+    R.descend(R.prop("ratingScore"))
   ])
 );
 

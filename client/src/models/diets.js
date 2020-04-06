@@ -4,7 +4,9 @@ import { constantCase } from "constant-case";
 const diets = {
   VEGETARIAN: "vegetarian",
   VEGAN: "vegan",
-  GLUTEN_FREE: "gluten free"
+  GLUTEN_FREE: "gluten free",
+  LACTOSE_FREE: "lactose free",
+  PESCATARIAN: "pescatarian"
 };
 
 export type Diet = $Values<typeof diets>;
