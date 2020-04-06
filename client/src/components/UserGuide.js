@@ -181,8 +181,11 @@ class UserGuide extends React.PureComponent<Props, State> {
                     supported:
                   </i>
                   <ul>
-                    <li>Diet 1</li>
-                    <li>Diet 2</li>
+                    <li>Vegetarian</li>
+                    <li>Vegan</li>
+                    <li>Gluten free</li>
+                    <li>Lactose Free</li>
+                    <li>Pescatarian</li>
                   </ul>
                 </div>
               </div>
