@@ -3,7 +3,7 @@ import React from "react";
 
 // prettier-ignore
 const RecipediaR = (props: any) => (
-  <svg {...props} version="1.1" viewBox="0 0 85.889 90.896">
+  <svg {...props} version="1.1" viewBox="0 0 85.889 100">
     <defs>
       <marker id="marker3157" overflow="visible" orient="auto">
         <path transform="matrix(.8 0 0 .8 10 0)" d="m0 0 5-5-17.5 5 17.5 5z" fill="#000000" fillRule="evenodd" stroke="#000000" strokeWidth="1pt"/>
