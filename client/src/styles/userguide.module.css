@@ -68,12 +68,14 @@
   height: 100%;
   padding: 10px;
   overflow: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   transition: opacity 0.5s;
   /* text-align: center; */
 }
 
 .endStartHeader {
+  width: 450px;
   text-align: center;
   font-size: 3rem;
   color: white;
@@ -84,7 +86,7 @@
 }
 
 .guideContainer h1 {
-  margin: 5px 0;
+  margin: 0 auto;
 }
 
 .guideScrollContainer h2 {
@@ -100,6 +102,8 @@
 .guideImage {
   object-fit: contain;
   width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar {

@@ -137,7 +137,7 @@ class RecipediaApp extends React.Component<Props> {
       const style = withResultsStyle;
       return (
         <div>
-          <UserGuide />
+          <UserGuide withResults={true} />
           <div className={searchbarStyle.resultsUpperContainer}>
             <div className={searchbarStyle.recipediaLogoContainer}>
               <RecipediaR data-testid="logo" />
@@ -171,7 +171,7 @@ class RecipediaApp extends React.Component<Props> {
     const style = noResultsStyle;
     return (
       <div style={style.upperContainer}>
-        <UserGuide />
+        <UserGuide withResults={false} />
         <div style={style.verticalContainer}>
           <RecipediaLogo data-testid="logo" />
           <SearchBar withResults={false} />
