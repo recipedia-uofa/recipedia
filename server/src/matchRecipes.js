@@ -226,7 +226,11 @@ const extractFullRecipes: QueryResult => Array<Recipe> = R.pipe(
   R.prop("matchedRecipes"),
   R.map(resultToRecipe),
   R.sortWith([
+    // High to low by number of ingredients matched
     R.descend(r => r.ingredientsMatched.length),
+    // Bring to the top if no ingredients are missing
+    r => (r.ingredientsNotMatched.length === 0 ? 0 : 1),
+    // High to low by rating
     R.descend(R.prop("ratingScore"))
   ])
 );
