@@ -260,13 +260,24 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
   }
 }
 
-type PrimaryCardState = {
+type RecipeIngredientListProps = {
+  recipe: Recipe,
+  recipeTitleHeight: ?number,
+  hovered: ?boolean
+}
+
+type IngredientListState = {
   ingredientBoxWidth: ?number
 };
 
-// NOTE: May need to fix the typing to fit well with flow
-class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
-  constructor(props: Props) {
+const RecipeCardMargin = 25;
+const RecipeImgHeight = 230; //Image height + recipe card container margin height
+const MaxRecipeCardHeight = 500;
+const IngredientPadding = 20;
+
+
+class RecipeIngredientList extends React.PureComponent<RecipeIngredientListProps, IngredientListState> {
+  constructor(props: RecipeIngredientListProps) {
     super(props);
     this.state = {
       ingredientBoxWidth: null
@@ -296,43 +307,88 @@ class PrimaryRecipeCard extends React.PureComponent<Props, PrimaryCardState> {
   }
 
   render() {
-    const { recipe } = this.props;
-    const recipeCardColourStyle = {
-      isGold: {
-        backgroundColor: `${DARK_BACKGROUND_DEFAULT_COLOUR}`
-      }
-    };
+    const { recipe, recipeTitleHeight, hovered } = this.props;
+    const { ingredientBoxWidth } = this.state;
     return (
-      <div className={styles.RecipeCardContainer}>
-        <div className={styles.RecipeCardImageContainer}>
-          <img
-            className={styles.RecipeCardImage}
-            src={recipe.imageUrl}
-            alt={recipe.title}
-          />
-        </div>
-        <div
-          className={styles.RecipeCardTitle}
-          style={
-            recipe.ingredientsNotMatched.length == 0
-              ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
-              : { backgroundColor: `${INGREDIENT_COLOUR}` }
+      <div>
+        <div 
+          className={styles.RecipeCardDescription}
+          style={(hovered && ingredientBoxWidth > MAX_INGREDIENT_SIZE) ? 
+            {top: `${RecipeImgHeight + RecipeCardMargin + recipeTitleHeight}px`, height: `${ingredientBoxWidth}px`} : 
+            {top: `${RecipeImgHeight + RecipeCardMargin + recipeTitleHeight}px`, height: `${MaxRecipeCardHeight - (RecipeImgHeight + recipeTitleHeight + 2*IngredientPadding)}px`}
           }
+          // style={
+          //   {top: `${RecipeImgHeight + RecipeCardMargin + recipeTitleHeight}px`, height: `${MaxRecipeCardHeight - (RecipeImgHeight + recipeTitleHeight + 2*IngredientPadding)}px`}
+          // }
         >
-          {recipe.title}
-        </div>
-        <div className={styles.RecipeCardDescription}>
-          <div
-            className={styles.RecipeCardDescriptionContainer}
-            ref={el => el && this.setIngredientBoxWidth(el.offsetHeight)}
-          >
-            <RecipeIngredientBox
-              matchedIngredients={recipe.ingredientsMatched}
-              notMatchedIngredients={recipe.ingredientsNotMatched}
-            />
+          <div className={styles.RecipeCardDescriptionContainer}>
+            <div ref={el => el && this.setIngredientBoxWidth(el.offsetHeight)}>
+              <RecipeIngredientBox
+                matchedIngredients={recipe.ingredientsMatched}
+                notMatchedIngredients={recipe.ingredientsNotMatched}
+              />
+            </div>
           </div>
         </div>
         {this.checkLargeIngredientAmount()}
+      </div>
+    );
+  }
+}
+
+type PrimaryCardProps = {
+  recipe: Recipe,
+  hovered: ?boolean
+}
+
+type PrimaryCardState = {
+  recipeTitleHeight: ?number
+};
+
+// NOTE: May need to fix the typing to fit well with flow
+class PrimaryRecipeCard extends React.PureComponent<PrimaryCardProps, PrimaryCardState> {
+  constructor(props: PrimaryCardProps) {
+    super(props);
+    this.state = {
+      recipeTitleHeight: null
+    };
+    this.setRecipeTitleHeight = this.setRecipeTitleHeight.bind(this);
+  }
+
+  setRecipeTitleHeight = (h: number) => {
+    if (this.state.recipeTitleHeight === h) {
+      return;
+    }
+
+    this.setState({ recipeTitleHeight: h });
+  };
+
+  render() {
+    const { recipe, hovered } = this.props;
+    const { recipeTitleHeight } = this.state;
+    return (
+      <div>
+        <div className={styles.RecipeCardContainer}>
+          <div className={styles.RecipeCardImageContainer}>
+            <img
+              className={styles.RecipeCardImage}
+              src={recipe.imageUrl}
+              alt={recipe.title}
+            />
+          </div>
+          <div
+            className={styles.RecipeCardTitle}
+            style={
+              recipe.ingredientsNotMatched.length == 0
+                ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
+                : { backgroundColor: `${INGREDIENT_COLOUR}` }
+            }
+            ref={el => el && this.setRecipeTitleHeight(el.offsetHeight)}
+          >
+            {recipe.title}
+          </div>
+        </div>
+        <RecipeIngredientList recipe={recipe} recipeTitleHeight={recipeTitleHeight} hovered={hovered}/>
       </div>
     );
   }
@@ -359,10 +415,30 @@ const recipeMouseDownHandler = (recipe_url: string) => event => {
   }
 };
 
-class RecipeCard extends React.PureComponent<Props> {
+type RecipeCardState = {
+  hovered: boolean
+};
+
+class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hovered: false
+    };
+    this.toggleHovered = this.toggleHovered.bind(this);
+  }
+
+  toggleHovered = (h: boolean) => {
+    if (this.state.hovered === h) {
+      return;
+    }
+
+    this.setState({ hovered: h });
+  };
+
   render() {
     const { recipe } = this.props;
-
+    const { hovered } = this.state;
     const recipe_url = recipe.url;
 
     const handleMouseEvent = (e, recipe_url) => {
@@ -386,9 +462,11 @@ class RecipeCard extends React.PureComponent<Props> {
       <div
         className={styles.RecipeCards}
         onMouseDown={recipeMouseDownHandler(recipe_url)}
+        onMouseEnter={() => this.toggleHovered(true)}
+        onMouseLeave={() => this.toggleHovered(false)}
       >
         <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
-        <PrimaryRecipeCard recipe={recipe} />
+        <PrimaryRecipeCard recipe={recipe} hovered={hovered}/>
         <RecipeScore recipeScore={recipe.nutritionScore} />
         <SecondaryRecipeCards recipe={recipe} />
       </div>

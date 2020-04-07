@@ -152,7 +152,7 @@ class UserGuide extends React.PureComponent<Props, State> {
               searching for meaningful recipes. Keywords have been created to
               help you search for unique recipes
             </p>
-            <p>
+            <div>
               <div style={localStyle.keywordDiv}>
                 <div
                   className={keywordStyle.autocompleteItemKeyword}
@@ -181,8 +181,11 @@ class UserGuide extends React.PureComponent<Props, State> {
                     supported:
                   </i>
                   <ul>
-                    <li>Diet 1</li>
-                    <li>Diet 2</li>
+                    <li>Vegetarian</li>
+                    <li>Vegan</li>
+                    <li>Gluten free</li>
+                    <li>Lactose Free</li>
+                    <li>Pescatarian</li>
                   </ul>
                 </div>
               </div>
@@ -200,7 +203,7 @@ class UserGuide extends React.PureComponent<Props, State> {
                   </i>
                 </div>
               </div>
-            </p>
+            </div>
             <p>
               To create keywords, simply type out the keyword fully and pressing
               enter
