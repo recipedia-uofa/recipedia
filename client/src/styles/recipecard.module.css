@@ -98,9 +98,10 @@
   /* height: max-content; */
   width: 310px;
   z-index: 3;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.0);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0);
   background-color: white;
-  transition: height 1s, box-shadow 0.7s, transform var(--transition-time-normal);
+  transition: height 0.5s, box-shadow 0.8s,
+    transform var(--transition-time-normal);
 }
 
 .RecipeCardDescriptionContainer {
@@ -112,7 +113,8 @@
   overflow: hidden;
   /* padding: 5px; */
   /* padding-bottom: 0px; */
-  transition: height var(--transition-time-normal), max-height var(--transition-time-normal);
+  transition: height var(--transition-time-normal),
+    max-height var(--transition-time-normal);
 }
 
 .RecipeCardIngredientBox {
@@ -405,7 +407,8 @@ For now, the colour will be hard coded*/
   left: 11%;
   z-index: 3;
   opacity: 1;
-  transition: opacity 0.4s ease-out, height 0.4s ease-out, margin 0.4s ease-out, transform var(--transition-time-normal);
+  transition: opacity 0.4s ease-out, height 0.4s ease-out, margin 0.4s ease-out,
+    transform var(--transition-time-normal);
 }
 
 .maxIngredientContainer div {
