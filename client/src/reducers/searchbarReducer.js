@@ -130,7 +130,7 @@ export default (
           state.text,
           tokensAfterDelete,
           state.validIngredientInputs
-        ),
+        )
       };
     case INVALID_SEARCH_ENTRY:
       return {
