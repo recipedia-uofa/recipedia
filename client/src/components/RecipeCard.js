@@ -24,7 +24,6 @@ import servingsizeImg from "assets/icons/Fork_1.svg";
 import type { Node } from "react";
 import type { Recipe } from "models/recipe";
 import type { Ingredient } from "models/ingredient";
-import { none } from "ramda";
 
 //Constants
 const MAX_INGREDIENT_SIZE = 135;
@@ -244,7 +243,7 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
             key={i}
             ingredient={i}
             isMatched={true}
-            isGold={notMatchedIngredients.length == 0}
+            isGold={notMatchedIngredients.length === 0}
           />
         ))}
         {notMatchedIngredients.map(i => (
@@ -395,7 +394,7 @@ class PrimaryRecipeCard extends React.PureComponent<
           <div
             className={styles.RecipeCardTitle}
             style={
-              recipe.ingredientsNotMatched.length == 0
+              recipe.ingredientsNotMatched.length === 0
                 ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
                 : { backgroundColor: `${INGREDIENT_COLOUR}` }
             }
@@ -474,6 +473,9 @@ class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
           break;
         case 2:
           // Right Click
+          break;
+        default:
+          // do nothing
           break;
       }
     };
