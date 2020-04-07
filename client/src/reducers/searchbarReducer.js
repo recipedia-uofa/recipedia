@@ -58,7 +58,6 @@ const computeAutocompleteItems = (
   const validTypes = validInputTypes(tokens);
 
   if (searchText === "") {
-    console.log(validTypes.includes(inputTypes.DIET));
     return validTypes.includes(inputTypes.DIET)
       ? R.take(MAX_AUTOCOMPLETE_ITEMS, dietInputs)
       : [];

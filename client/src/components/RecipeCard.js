@@ -264,7 +264,7 @@ type RecipeIngredientListProps = {
   recipe: Recipe,
   recipeTitleHeight: ?number,
   hovered: ?boolean
-}
+};
 
 type IngredientListState = {
   ingredientBoxWidth: ?number
@@ -275,8 +275,10 @@ const RecipeImgHeight = 230; //Image height + recipe card container margin heigh
 const MaxRecipeCardHeight = 500;
 const IngredientPadding = 20;
 
-
-class RecipeIngredientList extends React.PureComponent<RecipeIngredientListProps, IngredientListState> {
+class RecipeIngredientList extends React.PureComponent<
+  RecipeIngredientListProps,
+  IngredientListState
+> {
   constructor(props: RecipeIngredientListProps) {
     super(props);
     this.state = {
@@ -311,11 +313,25 @@ class RecipeIngredientList extends React.PureComponent<RecipeIngredientListProps
     const { ingredientBoxWidth } = this.state;
     return (
       <div>
-        <div 
+        <div
           className={styles.RecipeCardDescription}
-          style={(hovered && ingredientBoxWidth > MAX_INGREDIENT_SIZE) ? 
-            {top: `${RecipeImgHeight + RecipeCardMargin + recipeTitleHeight}px`, height: `${ingredientBoxWidth}px`} : 
-            {top: `${RecipeImgHeight + RecipeCardMargin + recipeTitleHeight}px`, height: `${MaxRecipeCardHeight - (RecipeImgHeight + recipeTitleHeight + 2*IngredientPadding)}px`}
+          style={
+            hovered && ingredientBoxWidth > MAX_INGREDIENT_SIZE
+              ? {
+                  top: `${RecipeImgHeight +
+                    RecipeCardMargin +
+                    recipeTitleHeight}px`,
+                  height: `${ingredientBoxWidth}px`
+                }
+              : {
+                  top: `${RecipeImgHeight +
+                    RecipeCardMargin +
+                    recipeTitleHeight}px`,
+                  height: `${MaxRecipeCardHeight -
+                    (RecipeImgHeight +
+                      recipeTitleHeight +
+                      2 * IngredientPadding)}px`
+                }
           }
           // style={
           //   {top: `${RecipeImgHeight + RecipeCardMargin + recipeTitleHeight}px`, height: `${MaxRecipeCardHeight - (RecipeImgHeight + recipeTitleHeight + 2*IngredientPadding)}px`}
@@ -339,14 +355,17 @@ class RecipeIngredientList extends React.PureComponent<RecipeIngredientListProps
 type PrimaryCardProps = {
   recipe: Recipe,
   hovered: ?boolean
-}
+};
 
 type PrimaryCardState = {
   recipeTitleHeight: ?number
 };
 
 // NOTE: May need to fix the typing to fit well with flow
-class PrimaryRecipeCard extends React.PureComponent<PrimaryCardProps, PrimaryCardState> {
+class PrimaryRecipeCard extends React.PureComponent<
+  PrimaryCardProps,
+  PrimaryCardState
+> {
   constructor(props: PrimaryCardProps) {
     super(props);
     this.state = {
@@ -388,7 +407,11 @@ class PrimaryRecipeCard extends React.PureComponent<PrimaryCardProps, PrimaryCar
             {recipe.title}
           </div>
         </div>
-        <RecipeIngredientList recipe={recipe} recipeTitleHeight={recipeTitleHeight} hovered={hovered}/>
+        <RecipeIngredientList
+          recipe={recipe}
+          recipeTitleHeight={recipeTitleHeight}
+          hovered={hovered}
+        />
       </div>
     );
   }
@@ -466,7 +489,7 @@ class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
         onMouseLeave={() => this.toggleHovered(false)}
       >
         <RecipeLogo logoImg={allRecipesLogo} logoAlt="A|R" />
-        <PrimaryRecipeCard recipe={recipe} hovered={hovered}/>
+        <PrimaryRecipeCard recipe={recipe} hovered={hovered} />
         <RecipeScore recipeScore={recipe.nutritionScore} />
         <SecondaryRecipeCards recipe={recipe} />
       </div>

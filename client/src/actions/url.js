@@ -29,3 +29,7 @@ export const loadSyncState = (syncState: SyncState) => {
 };
 
 export type UrlActions = LoadFromUrlAction;
+
+export const internal = {
+  loadFromUrl
+};
