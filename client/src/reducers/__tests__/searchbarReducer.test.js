@@ -9,7 +9,7 @@ import { internal as urlActionsInternal } from "actions/url";
 import SearchToken from "models/SearchToken";
 import keywords from "models/keywords";
 
-import type { SearchBarState } from "types/states";
+import type { SearchbarState } from "types/states";
 import type { SyncState } from "actions/url";
 
 const {
@@ -42,7 +42,7 @@ const lastToken = (tokens: Array<SearchToken>): SearchToken => {
 };
 
 test("adds search token", () => {
-  const currentState: SearchBarState = {
+  const currentState: SearchbarState = {
     ...defaultState,
     tokens: [testToken]
   };
@@ -65,7 +65,7 @@ test("shows autocomplete on adding partial diet token", () => {
 });
 
 test("removes search token", () => {
-  const currentState: SearchBarState = {
+  const currentState: SearchbarState = {
     ...defaultState,
     text: "sometext",
     tokens: [testToken, testToken2]
@@ -78,7 +78,7 @@ test("removes search token", () => {
 });
 
 test("removes autocomplete on removing partial diet token", () => {
-  const startState: SearchBarState = {
+  const startState: SearchbarState = {
     ...defaultState,
     tokens: [testToken]
   };
@@ -107,7 +107,7 @@ test("get invalid search", () => {
 });
 
 test("clears search error", () => {
-  const currentState: SearchBarState = {
+  const currentState: SearchbarState = {
     ...defaultState,
     showError: true
   };
@@ -117,7 +117,7 @@ test("clears search error", () => {
 });
 
 test("responds to changed text", () => {
-  const currentState: SearchBarState = {
+  const currentState: SearchbarState = {
     ...defaultState,
     text: "k",
     autocompleteItems: [],
@@ -132,7 +132,7 @@ test("responds to changed text", () => {
 });
 
 test("loads valid ingredients", () => {
-  const currentState: SearchBarState = {
+  const currentState: SearchbarState = {
     ...defaultState,
     validIngredientInputs: [],
     validIngredientMap: {},
@@ -151,7 +151,7 @@ test("loads valid ingredients", () => {
 });
 
 test("change autocomplete selection", () => {
-  const currentState: SearchBarState = {
+  const currentState: SearchbarState = {
     ...defaultState,
     autocompleteSelection: 1
   };
@@ -166,7 +166,7 @@ test("change autocomplete selection", () => {
 test("load tokens from url", () => {
   const urlState: SyncState = [testToken, testToken2];
 
-  const currentState: SearchBarState = {
+  const currentState: SearchbarState = {
     ...defaultState,
     tokens: []
   };
