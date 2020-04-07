@@ -8,7 +8,9 @@ import type { Category } from "models/category";
 const diets = {
   VEGETARIAN: "vegetarian",
   VEGAN: "vegan",
-  GLUTEN_FREE: "gluten free"
+  GLUTEN_FREE: "gluten free",
+  LACTOSE_FREE: "lactose free",
+  PESCATARIAN: "pescatarian"
 };
 
 export type Diet = $Values<typeof diets>;
@@ -27,11 +29,20 @@ export const toDiet = (str: string): Diet => {
 const getDietBlacklists = (diet: Diet): Array<Category> => {
   switch (diet) {
     case diets.VEGETARIAN:
-      return [categories.MEATS, categories.FISH];
+      return [categories.MEATS, categories.FISH, categories.SEAFOOD];
     case diets.VEGAN:
-      return [categories.MEATS, categories.FISH, categories.DAIRY];
+      return [
+        categories.MEATS,
+        categories.FISH,
+        categories.SEAFOOD,
+        categories.DAIRY
+      ];
     case diets.GLUTEN_FREE:
       return [categories.BAKING_AND_GRAINS];
+    case diets.LACTOSE_FREE:
+      return [categories.DAIRY];
+    case diets.PESCATARIAN:
+      return [categories.MEATS];
     default:
       return [];
   }

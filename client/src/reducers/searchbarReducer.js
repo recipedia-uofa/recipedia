@@ -119,12 +119,18 @@ export default (
         autocompleteSelection: 0
       };
     case DELETE_SEARCH_TOKEN:
+      const tokensAfterDelete = [
+        ...state.tokens.slice(0, action.index),
+        ...state.tokens.slice(action.index + 1)
+      ];
       return {
         ...state,
-        tokens: [
-          ...state.tokens.slice(0, action.index),
-          ...state.tokens.slice(action.index + 1)
-        ]
+        tokens: tokensAfterDelete,
+        autocompleteItems: computeAutocompleteItems(
+          state.text,
+          tokensAfterDelete,
+          state.validIngredientInputs
+        )
       };
     case INVALID_SEARCH_ENTRY:
       return {

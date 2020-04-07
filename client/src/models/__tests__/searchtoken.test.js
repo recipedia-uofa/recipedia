@@ -51,6 +51,7 @@ test("valid tokens", () => {
 });
 
 test("invalid tokens", () => {
+  // $FlowFixMe
   expect(new SearchToken(null, null).isValid(validIngredients)).toBeFalsy();
   expect(
     new SearchToken(keywords.NONE, "bad").isValid(validIngredients)
