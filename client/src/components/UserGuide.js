@@ -152,7 +152,7 @@ class UserGuide extends React.PureComponent<Props, State> {
               searching for meaningful recipes. Keywords have been created to
               help you search for unique recipes
             </p>
-            <p>
+            <div>
               <div style={localStyle.keywordDiv}>
                 <div
                   className={keywordStyle.autocompleteItemKeyword}
@@ -203,7 +203,7 @@ class UserGuide extends React.PureComponent<Props, State> {
                   </i>
                 </div>
               </div>
-            </p>
+            </div>
             <p>
               To create keywords, simply type out the keyword fully and pressing
               enter
