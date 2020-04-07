@@ -108,6 +108,7 @@ class TokenCreator extends PureComponent<Props> {
       }
 
       switch (eventKey) {
+        // REQ 3-5: Search token BACKSPACE deletion
         case "Backspace":
           if (value.length === 0) {
             this.props.deleteLastToken();
@@ -117,9 +118,10 @@ class TokenCreator extends PureComponent<Props> {
           e.preventDefault();
           this.props.completeToken();
           break;
+        // REQ 1-4: Search on enter.
         case "Enter":
           if (trimmedValue.length === 0) {
-            // this.props.executeSearch();
+            this.props.executeSearch();
           } else {
             this.actions.createToken();
           }

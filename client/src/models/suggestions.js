@@ -17,6 +17,7 @@ const extractSortedSuggestions: IngredientScores => Array<Ingredient> = R.pipe(
   R.take(MAX_SUGGESTIONS)
 );
 
+// REQ 6-2: Suggestion query
 const getSuggestions = (recipes: Array<Recipe>): Array<Ingredient> => {
   // Find the ingredients that are most missing from the recipes
 

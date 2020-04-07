@@ -40,6 +40,7 @@ export const validInputTypes = (
   }
 };
 
+// REQ 4-3: Error Handling
 const INVALID_INGREDIENT_MESSAGE = "Entered an invalid ingredient";
 const INVALID_DIET_MESSAGE = "Entered an invalid diet";
 const INVALID_KEY_OR_INGREDIENT_MESSAGE =
@@ -66,6 +67,7 @@ export const isDuplicateInput = (
   ];
 };
 
+// REQ 3-8: Invalid Ingredient Input
 // Returns if the ingredient is valid, and the appropriate error message IF
 // it is invalid
 // NOTE: Is it possible to store the tokens in a dictionary for faster speed up?

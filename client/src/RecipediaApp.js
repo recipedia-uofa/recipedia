@@ -122,6 +122,7 @@ type Props = {
 };
 
 class RecipediaApp extends React.Component<Props> {
+  // REQ 8-1: Website Render Results State
   render() {
     const {
       resultsArePending,
@@ -162,6 +163,7 @@ class RecipediaApp extends React.Component<Props> {
               <div style={style.noResultsDescription}>No results found.</div>
             </div>
           )}
+          {/* REQ 7-3: Recipe result loading bar */}
           {mode === resultModes.IS_LOADING && <LoadingOverlay />}
           {mode === resultModes.SHOW_RESULTS && <RecipeView />}
         </div>

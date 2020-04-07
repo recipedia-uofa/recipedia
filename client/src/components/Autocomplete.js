@@ -69,6 +69,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+// REQ 3-7: Ingredient autocomplete
 class Autocomplete extends React.PureComponent<Props> {
   render() {
     const {
