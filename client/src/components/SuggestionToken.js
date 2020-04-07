@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch: *) =>
     dispatch
   );
 
+// REQ 6-1: Recipe suggestion token
 class SuggestionToken extends React.PureComponent<Props> {
   render() {
     const { suggestion, addSuggestion } = this.props;

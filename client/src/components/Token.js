@@ -105,6 +105,7 @@ const renderFullToken = (props: Props) => {
     >
       {token.hasKeyword() && <div style={style.fullTokenName}>{keyword}</div>}
       <div style={style.tokenContent}>{content}</div>
+      {/* REQ 3-6: Search token “X” button deletion */}
       <div className={tokenStyle.tokenX} onClick={() => props.delete(token)}>
         X
       </div>

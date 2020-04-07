@@ -243,6 +243,7 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
             key={i}
             ingredient={i}
             isMatched={true}
+            // REQ 7-5: Recipe completion
             isGold={notMatchedIngredients.length === 0}
           />
         ))}
@@ -394,6 +395,7 @@ class PrimaryRecipeCard extends React.PureComponent<
           <div
             className={styles.RecipeCardTitle}
             style={
+              // REQ 7-5: Recipe completion
               recipe.ingredientsNotMatched.length === 0
                 ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
                 : { backgroundColor: `${INGREDIENT_COLOUR}` }
@@ -438,6 +440,8 @@ type RecipeCardState = {
   hovered: boolean
 };
 
+// REQ 4-1: Recipe Results card
+// REQ 7-1: Website Visual Recipe card object
 class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
   constructor(props: Props) {
     super(props);
@@ -460,6 +464,7 @@ class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
     const { hovered } = this.state;
     const recipe_url = recipe.url;
 
+    // REQ 7-2: Recipe Result select url
     const handleMouseEvent = (e, recipe_url) => {
       switch (e.button) {
         case 0:
