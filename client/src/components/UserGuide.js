@@ -17,8 +17,7 @@ import keywordStyle from "styles/autocomplete.module.css";
 import {
   KEY_KEYWORD_COLOUR,
   NOT_KEYWORD_COLOUR,
-  DIET_KEYWORD_COLOUR,
-  INGREDIENT_COLOUR
+  DIET_KEYWORD_COLOUR
 } from "constants/colours";
 
 const localStyle = {

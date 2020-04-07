@@ -139,8 +139,10 @@ export const tryAddSearchToken = (input: string) => {
 
     const hasLastToken = tokens.length > 0;
     if (!hasLastToken || !tokens[tokens.length - 1].isPartial()) {
+      // REQ 5-4: Keywords parsing
       if (isValidKeyword(input)) {
         // create a partial token
+        // REQ 5-5: Partial tokens
         const newToken = new SearchToken(toKeyword(input));
         dispatch(addSearchToken(newToken));
         return;

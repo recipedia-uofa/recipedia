@@ -49,6 +49,7 @@ const buildRecipeRequest = (tokens: Array<SearchToken>): string => {
   return `${recipeRequestBase}/?${tokens.map(tokenToRequestArg).join("&")}`;
 };
 
+// REQ 1-3: Search request.
 export const executeSearch = () => {
   // (dispatch, getState) =>
   return (dispatch: *, getState: GetState) => {

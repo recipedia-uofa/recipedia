@@ -9,6 +9,7 @@ import type { State } from "types/states";
 
 const SEP = "&";
 
+// REQ 8-2: URL query format
 //$FlowFixMe
 const stringToState: (s: string) => ?SyncState = R.pipe(
   R.split(SEP),

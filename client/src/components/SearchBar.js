@@ -69,6 +69,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
+// REQ 3-1: Search bar
 class SearchBar extends React.PureComponent<Props> {
   componentDidMount() {
     this.props.loadValidIngredients();

@@ -6,6 +6,8 @@ import type { Ingredient, IngredientMap } from "models/ingredient";
 import type { Diet } from "models/diets";
 import type { Keyword } from "models/keywords";
 
+// REQ 3-2: Ingredient Search Tokens
+// REQ 3-4: Merged Search Token
 export default class SearchToken {
   keyword: Keyword;
   value: ?(Diet | Ingredient);
@@ -18,6 +20,7 @@ export default class SearchToken {
     this.value = value;
   }
 
+  // REQ 3-3: Partial Search Token
   isPartial(): boolean {
     return this.value === null;
   }
@@ -66,6 +69,7 @@ export default class SearchToken {
     }
   }
 
+  // REQ 8-3: Query hashing.
   encode(): string {
     if (this.isSimpleIngredient()) {
       // $FlowFixMe
@@ -87,6 +91,7 @@ export default class SearchToken {
     return false;
   }
 
+  // REQ 8-3: Query hashing.
   static decode(str: string): SearchToken | null {
     if (str === "") {
       return null;

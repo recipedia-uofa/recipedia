@@ -13,6 +13,7 @@ type MatchQueryOpts = {
   limit: number
 };
 
+// REQ 4-2: Nutritional Information Query
 // Assumes there exists a variable "tokens" with the ingredients to match
 const recipeElements = `
   url
@@ -40,12 +41,15 @@ const recipeElements = `
 const allTokenClause = (allIngredients: Array<string>): string =>
   `tokens as var(func: eq(iname, ${varArray(allIngredients)}))`;
 
+// REQ 5-3: Key ingredients
 const keyTokenClause = (keyIngredients: Array<string>): string =>
   `keyTokens as var(func: eq(iname, ${varArray(keyIngredients)}))`;
 
+// REQ 5-1: Blacklisting functionality
 const blackTokenClause = (blacklists: Array<string>): string =>
   `blackTokens as var(func: eq(iname, ${varArray(blacklists)}))`;
 
+// REQ 5-2: Diet Filtering
 const dietRestrictionClause = (dietRestrictions: Array<string>): string => `
   var(func: eq(cname, ${varArray(dietRestrictions)})) {
     dietRestrictions as ~categorized_as
@@ -65,6 +69,7 @@ const countClause = (countVar: string, tokensVar: string): string =>
     countVar
   )} : contains @filter(uid(${tokensVar})))`;
 
+// REQ 2-2: Recipe Ingredient Distance Cost, REQ 2-3: Recipe Simplicity Cost.
 const distanceClause = (params: QueryParams): string =>
   `distance as math(5 * ((numTotal - numMatched) * 100 / numTotal) + 95 * ((${params.numTyped} - numMatched) * 100 / ${params.numTyped}))`;
 
@@ -131,6 +136,7 @@ const getDietRestrictions: (Array<SearchToken>) => Array<string> = R.pipe(
   getBlacklistedCategories
 );
 
+// REQ 1-5: Match query, REQ 2-1: Search ranking.
 export const matchQuery = (
   tokens: Array<SearchToken>,
   opts: MatchQueryOpts = { limit: 50 }

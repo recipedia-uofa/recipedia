@@ -24,7 +24,6 @@ import servingsizeImg from "assets/icons/Fork_1.svg";
 import type { Node } from "react";
 import type { Recipe } from "models/recipe";
 import type { Ingredient } from "models/ingredient";
-import { none } from "ramda";
 
 //Constants
 const MAX_INGREDIENT_SIZE = 135;
@@ -244,7 +243,8 @@ class RecipeIngredientBox extends React.PureComponent<IngredientBoxProps> {
             key={i}
             ingredient={i}
             isMatched={true}
-            isGold={notMatchedIngredients.length == 0}
+            // REQ 7-5: Recipe completion
+            isGold={notMatchedIngredients.length === 0}
           />
         ))}
         {notMatchedIngredients.map(i => (
@@ -333,9 +333,6 @@ class RecipeIngredientList extends React.PureComponent<
                       2 * IngredientPadding)}px`
                 }
           }
-          // style={
-          //   {top: `${RecipeImgHeight + RecipeCardMargin + recipeTitleHeight}px`, height: `${MaxRecipeCardHeight - (RecipeImgHeight + recipeTitleHeight + 2*IngredientPadding)}px`}
-          // }
         >
           <div className={styles.RecipeCardDescriptionContainer}>
             <div ref={el => el && this.setIngredientBoxWidth(el.offsetHeight)}>
@@ -398,7 +395,8 @@ class PrimaryRecipeCard extends React.PureComponent<
           <div
             className={styles.RecipeCardTitle}
             style={
-              recipe.ingredientsNotMatched.length == 0
+              // REQ 7-5: Recipe completion
+              recipe.ingredientsNotMatched.length === 0
                 ? { backgroundColor: `${KEY_KEYWORD_COLOUR}` }
                 : { backgroundColor: `${INGREDIENT_COLOUR}` }
             }
@@ -442,6 +440,8 @@ type RecipeCardState = {
   hovered: boolean
 };
 
+// REQ 4-1: Recipe Results card
+// REQ 7-1: Website Visual Recipe card object
 class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
   constructor(props: Props) {
     super(props);
@@ -464,6 +464,7 @@ class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
     const { hovered } = this.state;
     const recipe_url = recipe.url;
 
+    // REQ 7-2: Recipe Result select url
     const handleMouseEvent = (e, recipe_url) => {
       switch (e.button) {
         case 0:
@@ -477,6 +478,9 @@ class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
           break;
         case 2:
           // Right Click
+          break;
+        default:
+          // do nothing
           break;
       }
     };
