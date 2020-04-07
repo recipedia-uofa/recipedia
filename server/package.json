@@ -29,7 +29,7 @@
     "transpile": "babel src --out-dir .dist",
     "clean": "rimraf .dist",
     "lint": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
-    "test": "jest"
+    "test": "jest --collectCoverage"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",

@@ -71,3 +71,9 @@ export type SearchActions =
   | ExecuteSearchAction
   | ReceiveSearchAction
   | InvalidSearchAction;
+
+export const internal = {
+  requestSearch,
+  receiveSearch,
+  invalidSearch
+};

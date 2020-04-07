@@ -1,7 +1,8 @@
 // @flow
 import keywords, { toKeyword, isValidKeyword } from "models/keywords";
+import { isValidDiet } from "models/diets";
 
-import type { Ingredient } from "models/ingredient";
+import type { Ingredient, IngredientMap } from "models/ingredient";
 import type { Diet } from "models/diets";
 import type { Keyword } from "models/keywords";
 
@@ -43,6 +44,26 @@ export default class SearchToken {
 
   hasKeyword(): boolean {
     return this.keyword !== keywords.NONE;
+  }
+
+  // Test if this token is valid on its own,
+  // without considering other tokens in the searchbar
+  isValid(validIngredients: IngredientMap): boolean {
+    const isValidIngredient = (i: ?string) => !!i && i in validIngredients;
+
+    if (this.hasKeyword() && !isValidKeyword(this.keyword)) {
+      return false;
+    } else if (this.hasKeyword()) {
+      if (this.isPartial()) {
+        return true;
+      } else if (this.isDiet()) {
+        return isValidDiet(this.value);
+      } else {
+        return isValidIngredient(this.value);
+      }
+    } else {
+      return isValidIngredient(this.value);
+    }
   }
 
   encode(): string {

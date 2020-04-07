@@ -317,3 +317,12 @@ export type SearchBarActions =
   | ChangeSearchTextAction
   | RecieveValidIngredientsAction
   | ChangeAutocompleteSelectionAction;
+
+export const internal = {
+  invalidSearchToken,
+  clearSearchError,
+  deleteSearchToken,
+  addSearchToken,
+  changeAutocompleteSelection,
+  receiveValidIngredients
+};

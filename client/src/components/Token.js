@@ -5,7 +5,7 @@ import * as colours from "constants/colours";
 import keywords from "models/keywords";
 import tokenStyle from "styles/searchbar.module.css";
 import { deleteSpecificToken } from "actions/searchbar";
-import type { SearchToken } from "models/SearchToken";
+import SearchToken from "models/SearchToken";
 
 const CORNER_RADIUS = 15;
 const KEYWORD_MARGIN = 5;
@@ -76,7 +76,7 @@ const getTokenColour = (token: SearchToken): string => {
   }
 };
 
-const renderPartialToken = (token: SearchToken) => {
+const renderPartialToken = (token: SearchToken): React.Node => {
   const tokenColour = getTokenColour(token);
   const keyword = token.keyword.toUpperCase();
   return (
@@ -91,7 +91,7 @@ const renderPartialToken = (token: SearchToken) => {
   );
 };
 
-const renderFullToken = (props: Props) => {
+const renderFullToken = (props: Props): React.Node => {
   const token = props.data;
   const tokenColour = getTokenColour(token);
   const keyword = token.keyword.toUpperCase();
@@ -113,7 +113,7 @@ const renderFullToken = (props: Props) => {
   );
 };
 
-const Token = (props: Props) => {
+const Token = (props: Props): React.Node => {
   const token = props.data;
   return token.isPartial() ? renderPartialToken(token) : renderFullToken(props);
 };
