@@ -6,3 +6,6 @@ yarn-error.log
 
 # Babel
 .dist/
+
+# Jest
+/coverage
