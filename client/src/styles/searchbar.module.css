@@ -32,6 +32,15 @@
   z-index: 10;
 }
 
+.verticalContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 35%;
+  max-width: 90%;
+}
+
 .buttonContainer {
   display: flex;
   flex-direction: row;
@@ -44,6 +53,23 @@
   max-width: 100%;
   margin-top: 5%;
   display: flex;
+}
+
+.searchBar {
+  border: 1px solid rgb(234, 234, 234);
+  background-color: white;
+  border-radius: 15px;
+  padding: 14px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 8px 15px;
+  height: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.searchBarMinWidth {
+  min-width: 85%;
 }
 
 .searchButtonAttitude {
@@ -63,6 +89,15 @@
   background-color: #4bbf84;
   padding: 15px;
   color: white !important;
+}
+
+.recipeView {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  max-width: 90%;
+  margin-left: 5%;
 }
 
 .searchIconContainer {
@@ -299,6 +334,10 @@ input {
 }
 
 /*The following styles are for the suggestion token*/
+.suggestionBoxContainer {
+  margin: 10px 0px;
+}
+
 .suggestionBox {
   display: inline-block;
   cursor: pointer;
@@ -319,4 +358,74 @@ input {
 
 .suggestionBox:active {
   filter: brightness(1.1);
+}
+
+/*The following styles are to adapt the styles for phone usage*/
+/* PHONES - PORTAIT */
+@media only screen and (max-width: 414px) and (orientation: portrait) {
+  .resultsUpperContainer {
+    height: 180px;
+    width: 95%;
+    padding-left: 5%;
+    padding-right: 5%;
+    flex-direction: column;
+    padding-bottom: 56px;
+  }
+
+  .verticalContainer {
+    min-width: 75%;
+  }
+
+  .recipediaLogoContainer {
+    min-width: 40px;
+    margin-top: 70px;
+  }
+
+  .searchBar {
+    max-height: 100px;
+  }
+
+  .searchBarMinWidth {
+    min-width: 95%;
+  }
+
+  .searchContainer {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .searchIconContainer {
+    display: none;
+  }
+
+  .inputContainer {
+    overflow-y: auto;
+  }
+
+  .suggestionBoxContainer {
+    height: 50px;
+    overflow: hidden;
+  }
+
+  .suggestionBox {
+    font-size: 12px;
+    padding: 3px 7px 7px 7px;
+  }
+
+  .recipeView {
+    max-width: 50%;
+    transform: translateY(-100px);
+  }
+}
+
+@media screen and (max-width: 414px) and (max-height: 763px) and (orientation: portrait) {
+}
+
+@media screen and (max-width: 414px) and (max-height: 667px) and (orientation: portrait) {
+}
+
+@media screen and (max-width: 414px) and (max-height: 568px) and (orientation: portrait) {
+}
+
+@media screen and (max-width: 414px) and (max-height: 480px) and (orientation: portrait) {
 }

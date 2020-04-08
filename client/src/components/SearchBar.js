@@ -82,7 +82,7 @@ class SearchBar extends React.PureComponent<Props> {
         className={styles.searchContainer}
         style={withResults ? style.rowResults : style.columnResults}
       >
-        <div style={style.outerSearchBox}>
+        <div className={styles.searchBar}>
           <TokenInput autoFocus />
           {withResults && (
             <div

@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import RecipeCard from "components/RecipeCard";
 import type { Recipe } from "models/recipe";
+import styles from "styles/searchbar.module.css";
 
 type Props = {
   recipes: Array<Recipe>
@@ -25,7 +26,7 @@ class RecipeView extends React.PureComponent<Props> {
     const { recipes } = this.props;
     const recipeItems = recipes.map(r => <RecipeCard key={r.url} recipe={r} />);
 
-    return <div style={style.recipeView}>{recipeItems}</div>;
+    return <div className={styles.recipeView}>{recipeItems}</div>;
   }
 }
 

@@ -19,6 +19,7 @@ import {
   NOT_KEYWORD_COLOUR,
   DIET_KEYWORD_COLOUR
 } from "constants/colours";
+import classNames from "classnames";
 
 const localStyle = {
   closed: {
@@ -96,15 +97,16 @@ class UserGuide extends React.PureComponent<Props, State> {
 
     return (
       <div
-        style={
-          withResults
-            ? localStyle.stickyUserGuide
-            : localStyle.absoluteUserGuide
+        className={
+          withResults ? styles.stickyUserGuide : styles.absoluteUserGuide
         }
       >
         <div
-          className={styles.guideContainer}
-          style={isOpen ? localStyle.open : localStyle.closed}
+          className={
+            isOpen
+              ? classNames(styles.guideContainer, styles.open)
+              : classNames(styles.guideContainer, styles.closed)
+          }
         >
           <div
             className={styles.guideScrollContainer}
@@ -289,8 +291,11 @@ class UserGuide extends React.PureComponent<Props, State> {
           </div>
         </div>
         <div
-          className={styles.infoIconContainer}
-          style={isOpen ? localStyle.moveIcon : { left: "2%" }}
+          className={
+            isOpen
+              ? classNames(styles.infoIconContainer, styles.moveIcon)
+              : styles.infoIconContainer
+          }
           onClick={this.changeState}
         >
           <div className={isOpen ? styles.closeIcon : styles.infoIcon}>
