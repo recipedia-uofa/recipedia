@@ -143,9 +143,9 @@ class RecipediaApp extends React.Component<Props> {
             <div className={searchbarStyle.recipediaLogoContainer}>
               <RecipediaR data-testid="logo" />
             </div>
-            <div style={style.searchBarMinWidth}>
+            <div className={searchbarStyle.searchBarMinWidth}>
               <SearchBar withResults={true} />
-              <div style={style.suggestionTokenContainer}>
+              <div className={searchbarStyle.suggestionBoxContainer}>
                 {suggestions.map(s => (
                   <SuggestionToken key={s} suggestion={s} />
                 ))}
@@ -174,7 +174,7 @@ class RecipediaApp extends React.Component<Props> {
     return (
       <div style={style.upperContainer}>
         <UserGuide withResults={false} />
-        <div style={style.verticalContainer}>
+        <div className={searchbarStyle.verticalContainer}>
           <RecipediaLogo data-testid="logo" />
           <SearchBar withResults={false} />
         </div>
