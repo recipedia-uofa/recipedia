@@ -334,7 +334,14 @@ class RecipeIngredientList extends React.PureComponent<
                 }
           }
         >
-          <div className={styles.RecipeCardDescriptionContainer}>
+          <div
+            className={styles.RecipeCardDescriptionContainer}
+            style={
+              recipeTitleHeight > 55
+                ? { maxHeight: "95px" }
+                : { maxHeight: "135px" }
+            }
+          >
             <div ref={el => el && this.setIngredientBoxWidth(el.offsetHeight)}>
               <RecipeIngredientBox
                 matchedIngredients={recipe.ingredientsMatched}
