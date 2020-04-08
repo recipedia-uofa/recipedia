@@ -162,7 +162,7 @@
   }
 
   .moveIcon {
-    left: 82%;
+    left: 86%;
   }
 
   .endStartHeader {
@@ -172,6 +172,10 @@
 
   .absoluteUserGuide {
     left: 3px;
+  }
+
+  .stickyUserGuide {
+    top: 10px;
   }
 }
 
@@ -182,7 +186,7 @@
   }
 
   .moveIcon {
-    left: 82%;
+    left: 86%;
   }
 
   .endStartHeader {
@@ -192,6 +196,10 @@
 
   .absoluteUserGuide {
     left: 3px;
+  }
+
+  .stickyUserGuide {
+    top: 10px;
   }
 }
 
@@ -202,7 +210,7 @@
   }
 
   .moveIcon {
-    left: 82%;
+    left: 85%;
   }
 
   .endStartHeader {
@@ -212,6 +220,10 @@
 
   .absoluteUserGuide {
     left: 3px;
+  }
+
+  .stickyUserGuide {
+    top: 10px;
   }
 }
 
@@ -222,7 +234,7 @@
   }
 
   .moveIcon {
-    left: 82%;
+    left: 85%;
   }
 
   .endStartHeader {
@@ -232,6 +244,10 @@
 
   .absoluteUserGuide {
     left: 3px;
+  }
+
+  .stickyUserGuide {
+    top: 10px;
   }
 }
 
@@ -242,7 +258,7 @@
   }
 
   .moveIcon {
-    left: 82%;
+    left: 85%;
   }
 
   .endStartHeader {
@@ -252,5 +268,9 @@
 
   .absoluteUserGuide {
     left: 3px;
+  }
+
+  .stickyUserGuide {
+    top: 10px;
   }
 }
