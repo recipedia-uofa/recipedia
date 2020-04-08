@@ -380,7 +380,7 @@ For now, the colour will be hard coded*/
 }
 
 .RecipeCards:hover .RecipeCardDescriptionContainer {
-  max-height: max-content;
+  max-height: max-content !important;
 }
 
 .RecipeCards:hover .maxIngredientContainer {
