@@ -26,7 +26,7 @@ import type { Recipe } from "models/recipe";
 import type { Ingredient } from "models/ingredient";
 
 //Constants
-const MAX_INGREDIENT_SIZE = 135;
+const MAX_INGREDIENT_SIZE = 230; //135;
 
 type Props = {
   recipe: Recipe
@@ -267,7 +267,8 @@ type RecipeIngredientListProps = {
 };
 
 type IngredientListState = {
-  ingredientBoxWidth: ?number
+  ingredientBoxWidth: ?number,
+  recipeTitleHeight: ?number
 };
 
 const RecipeCardMargin = 25;
@@ -282,22 +283,29 @@ class RecipeIngredientList extends React.PureComponent<
   constructor(props: RecipeIngredientListProps) {
     super(props);
     this.state = {
-      ingredientBoxWidth: null
+      ingredientBoxWidth: null,
+      recipeTitleHeight: null
     };
     this.setIngredientBoxWidth = this.setIngredientBoxWidth.bind(this);
   }
 
-  setIngredientBoxWidth = (w: number) => {
-    if (this.state.ingredientBoxWidth === w) {
+  setIngredientBoxWidth = (w: number, r: number) => {
+    if (
+      this.state.ingredientBoxWidth === w &&
+      this.state.recipeTitleHeight === r
+    ) {
       return;
     }
 
-    this.setState({ ingredientBoxWidth: w });
+    this.setState({ ingredientBoxWidth: w, recipeTitleHeight: r });
   };
 
   checkLargeIngredientAmount() {
-    const { ingredientBoxWidth } = this.state;
-    if (ingredientBoxWidth && ingredientBoxWidth > MAX_INGREDIENT_SIZE) {
+    const { ingredientBoxWidth, recipeTitleHeight } = this.state;
+    if (
+      ingredientBoxWidth &&
+      ingredientBoxWidth > MAX_INGREDIENT_SIZE - (recipeTitleHeight + 20)
+    ) {
       return (
         <div className={styles.maxIngredientContainer}>
           <div></div>
@@ -316,7 +324,8 @@ class RecipeIngredientList extends React.PureComponent<
         <div
           className={styles.RecipeCardDescription}
           style={
-            hovered && ingredientBoxWidth > MAX_INGREDIENT_SIZE
+            hovered &&
+            ingredientBoxWidth > MAX_INGREDIENT_SIZE - (recipeTitleHeight + 20)
               ? {
                   top: `${RecipeImgHeight +
                     RecipeCardMargin +
@@ -336,13 +345,16 @@ class RecipeIngredientList extends React.PureComponent<
         >
           <div
             className={styles.RecipeCardDescriptionContainer}
-            style={
-              recipeTitleHeight > 55
-                ? { maxHeight: "95px" }
-                : { maxHeight: "135px" }
-            }
+            style={{
+              maxHeight: `${MAX_INGREDIENT_SIZE - (recipeTitleHeight + 20)}px`
+            }}
           >
-            <div ref={el => el && this.setIngredientBoxWidth(el.offsetHeight)}>
+            <div
+              ref={el =>
+                el &&
+                this.setIngredientBoxWidth(el.offsetHeight, recipeTitleHeight)
+              }
+            >
               <RecipeIngredientBox
                 matchedIngredients={recipe.ingredientsMatched}
                 notMatchedIngredients={recipe.ingredientsNotMatched}
