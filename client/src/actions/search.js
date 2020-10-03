@@ -1,5 +1,6 @@
 // @flow
 import axios, { AxiosError } from "axios";
+import env from "env";
 import {
   EXECUTE_SEARCH,
   RECEIVE_SEARCH,
@@ -41,7 +42,7 @@ type RecipeReturn = {
   data: Array<Recipe>
 };
 
-const recipeRequestBase = "http://localhost:9000/recipes";
+const recipeRequestBase = `${env.serverUrl}/recipes`;
 
 const tokenToRequestArg = (token: SearchToken): string => `q=${token.encode()}`;
 
