@@ -7,7 +7,11 @@ const initialize = (): void => {
   ReactGA.initialize("UA-179020481-1", {
     debug: env.debug,
   });
-  ReactGA.pageview(window.location.pathname);
+
+  // Only log pageviews in prod
+  if (!env.debug) {
+    ReactGA.pageview(window.location.pathname);
+  }
 }
 
 export default initialize;
