@@ -21,7 +21,7 @@ const prod: Environment = {
 
 let env: Environment;
 
-if (process.env.RCP_ENV === 'prod') {
+if (process.env.NODE_ENV === 'production') {
   env = prod;
 } else {
   env = dev;
