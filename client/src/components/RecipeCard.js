@@ -268,7 +268,6 @@ type RecipeIngredientListProps = {
 
 type IngredientListState = {
   ingredientBoxWidth: ?number,
-  recipeTitleHeight: ?number
 };
 
 const RecipeCardMargin = 25;
@@ -284,26 +283,23 @@ class RecipeIngredientList extends React.PureComponent<
     super(props);
     this.state = {
       ingredientBoxWidth: null,
-      recipeTitleHeight: null
     };
     this.setIngredientBoxWidth = this.setIngredientBoxWidth.bind(this);
   }
 
-  setIngredientBoxWidth = (w: number, r: number) => {
-    if (
-      this.state.ingredientBoxWidth === w &&
-      this.state.recipeTitleHeight === r
-    ) {
+  setIngredientBoxWidth = (w: number) => {
+    if (this.state.ingredientBoxWidth === w) {
       return;
     }
 
-    this.setState({ ingredientBoxWidth: w, recipeTitleHeight: r });
+    this.setState({ ingredientBoxWidth: w });
   };
 
   checkLargeIngredientAmount() {
-    const { ingredientBoxWidth, recipeTitleHeight } = this.state;
+    const { recipeTitleHeight } = this.props;
+    const { ingredientBoxWidth } = this.state;
     if (
-      ingredientBoxWidth &&
+      ingredientBoxWidth && recipeTitleHeight &&
       ingredientBoxWidth > MAX_INGREDIENT_SIZE - (recipeTitleHeight + 20)
     ) {
       return (
@@ -324,7 +320,7 @@ class RecipeIngredientList extends React.PureComponent<
         <div
           className={styles.RecipeCardDescription}
           style={
-            hovered &&
+            hovered && ingredientBoxWidth && recipeTitleHeight &&
             ingredientBoxWidth > MAX_INGREDIENT_SIZE - (recipeTitleHeight + 20)
               ? {
                   top: `${RecipeImgHeight +
@@ -352,7 +348,7 @@ class RecipeIngredientList extends React.PureComponent<
             <div
               ref={el =>
                 el &&
-                this.setIngredientBoxWidth(el.offsetHeight, recipeTitleHeight)
+                this.setIngredientBoxWidth(el.offsetHeight)
               }
             >
               <RecipeIngredientBox
@@ -438,6 +434,7 @@ const LEFT_BUTTON = 0;
 const MIDDLE_BUTTON = 1;
 const RIGHT_BUTTON = 2;
 
+// REQ 7-2: Recipe Result select url
 const recipeMouseDownHandler = (recipe_url: string) => event => {
   switch (event.button) {
     case LEFT_BUTTON:
@@ -482,27 +479,6 @@ class RecipeCard extends React.PureComponent<Props, RecipeCardState> {
     const { recipe } = this.props;
     const { hovered } = this.state;
     const recipe_url = recipe.url;
-
-    // REQ 7-2: Recipe Result select url
-    const handleMouseEvent = (e, recipe_url) => {
-      switch (e.button) {
-        case 0:
-          // Left Click
-          window.open(recipe_url, "_blank");
-          break;
-        case 1:
-          // Middle Click
-          e.preventDefault();
-          window.open(recipe_url, "_blank");
-          break;
-        case 2:
-          // Right Click
-          break;
-        default:
-          // do nothing
-          break;
-      }
-    };
 
     return (
       <div

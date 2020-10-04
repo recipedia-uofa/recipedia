@@ -1,6 +1,7 @@
 // @flow
 import * as R from "ramda";
 import axios, { AxiosError } from "axios";
+import env from "env";
 
 import {
   ADD_SEARCH_TOKEN,
@@ -258,7 +259,7 @@ export const loadValidIngredients = () => {
     }
 
     axios
-      .get("http://localhost:9000/ingredients")
+      .get(`${env.serverUrl}/ingredients`)
       .then((res: ValidIngredientReturn) =>
         dispatch(receiveValidIngredients(res.data))
       )
