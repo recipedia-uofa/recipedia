@@ -1,0 +1,25 @@
+# pull official base image
+FROM node:12.16.0
+
+# set working directory
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY yarn.lock ./
+RUN npm install -g serve@11.3.2 react-scripts@3.4.1 --silent
+
+# add app
+COPY . ./
+
+# Build application
+RUN yarn install --silent
+RUN yarn build
+
+EXPOSE 80
+
+# start app
+CMD ["serve", "-s", "build", "-l", "80"]
