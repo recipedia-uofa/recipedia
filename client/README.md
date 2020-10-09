@@ -30,14 +30,6 @@ yarn test
 
 Once logged into the Cybera instance:
 ```bash
-# Build the new client
 cd ~/recipedia/client
-yarn build
-
-# Kill the served client
-ps -aux | grep serve # find the PID of the client
-kill -9 <PID>
-
-# Serve the new client on port 80
-serve -s build -l 80
+docker-compose -f docker-compose.prod.yml up
 ```
